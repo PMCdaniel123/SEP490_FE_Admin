@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Banknote,
   ChevronsUpDown,
   LockKeyhole,
   LogOut,
@@ -9,7 +10,7 @@ import {
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Separator } from "../ui/separator";
-import AdminNotification from "../admin-notification/admin-notification";
+import OwnerNotification from "../owner-notification/owner-notification";
 
 function TopNav() {
   const [open, setOpen] = useState(false);
@@ -36,8 +37,15 @@ function TopNav() {
 
   return (
     <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between w-[590px] bg-white rounded-xl py-2 px-4">
+        <p className="font-bold text-primary">Số tiền trên hệ thống:</p>
+        <p className="bg-primary text-white text-sm px-3 py-1 rounded-lg flex items-center gap-2">
+          <Banknote />
+          1,000,000 VND
+        </p>
+      </div>
       <div className="flex items-center justify-end w-full mb-4 gap-4">
-        <AdminNotification />
+        <OwnerNotification />
         <div ref={dropdownRef} className="relative">
           <div
             className="group flex items-center justify-center bg-white rounded-xl py-2 px-4 gap-4 group hover:bg-primary hover:text-white cursor-pointer transition-colors duration-200"
@@ -51,8 +59,8 @@ function TopNav() {
               className="rounded-full border group-hover:bg-white"
             />
             <div className="flex flex-col justify-center items-start">
-              <p className="text-sm font-semibold">WorkHive Admin</p>
-              <p className="text-sm">admin@gmail.com</p>
+              <p className="text-sm font-semibold">WorkHive Owners</p>
+              <p className="text-sm">owners@gmail.com</p>
             </div>
             <ChevronsUpDown size={20} />
           </div>
@@ -67,8 +75,8 @@ function TopNav() {
                   className="rounded-full border"
                 />
                 <div className="flex flex-col justify-center items-start">
-                  <p className="text-sm font-semibold">WorkHive Admin</p>
-                  <p className="text-sm">admin@gmail.com</p>
+                  <p className="text-sm font-semibold">WorkHive Owners</p>
+                  <p className="text-sm">owners@gmail.com</p>
                 </div>
               </div>
               <Separator className="my-2" />

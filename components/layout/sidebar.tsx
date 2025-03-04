@@ -1,6 +1,15 @@
 "use client";
 
-import { BriefcaseBusiness, Home, UsersRound } from "lucide-react";
+import {
+  Boxes,
+  DiamondPercent,
+  Home,
+  KeyRound,
+  Landmark,
+  Sofa,
+  UsersRound,
+  UtensilsCrossed,
+} from "lucide-react";
 import SidebarItem from "./sidebar-item";
 
 function Sidebar() {
@@ -17,10 +26,27 @@ function Sidebar() {
           href="/customers"
         />
         <SidebarItem
-          icon={BriefcaseBusiness}
-          label="Quản lý doanh nghiệp"
-          href="/owners"
+          icon={Sofa}
+          label="Quản lý không gian"
+          href="/workspaces"
         />
+        <SidebarItem icon={Boxes} label="Quản lý tiện ích" href="/amenities" />
+        <SidebarItem
+          icon={UtensilsCrossed}
+          label="Quản lý thực đơn"
+          href="/beverages"
+        />
+        <SidebarItem
+          icon={DiamondPercent}
+          label="Khuyến mãi"
+          href="/promotions"
+        />
+        <SidebarItem
+          icon={KeyRound}
+          label="Xác thực doanh nghiệp"
+          href="/authentication"
+        />
+        <SidebarItem icon={Landmark} label="Rút tiền" href="/withdrawal" />
       </nav>
     </aside>
   );

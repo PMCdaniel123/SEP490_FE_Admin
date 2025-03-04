@@ -93,17 +93,6 @@ export interface CustomerProps {
   dateOfBirth: string;
 }
 
-export interface OwnerProps {
-  id: string;
-  avatar: string;
-  name: string;
-  phone: string;
-  email: string;
-  location: string;
-  gender: string;
-  dateOfBirth: string;
-}
-
 export interface WorkspaceProps {
   id: string;
   name: string;
