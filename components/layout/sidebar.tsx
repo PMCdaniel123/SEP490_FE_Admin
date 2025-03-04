@@ -47,6 +47,16 @@ function Sidebar() {
           href="/authentication"
         />
         <SidebarItem icon={Landmark} label="Rút tiền" href="/withdrawal" />
+        <SidebarItem
+          icon={UsersRound}
+          label="Quản lý chủ cửa hàng"
+          href="/owners"
+        />
+        <SidebarItem
+          icon={UsersRound}
+          label="Xác thực doanh nghiệp"
+          href="/verify-owner"
+        />
       </nav>
     </aside>
   );

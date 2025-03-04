@@ -93,6 +93,17 @@ export interface CustomerProps {
   dateOfBirth: string;
 }
 
+export interface OwnerProps {
+  id: string;
+  avatar: string;
+  name: string;
+  phone: string;
+  email: string;
+  location: string;
+  gender: string;
+  dateOfBirth: string;
+}
+
 export interface WorkspaceProps {
   id: string;
   name: string;
@@ -203,4 +214,18 @@ export interface TimeItemProps {
   startDate: string;
   endDate: string;
   status: string;
+}
+
+export interface VerifyProps {
+  id: string;
+  name: string;
+  email: string;
+  location: string;
+  phone: string;
+  status: string;
+  createdAt: string;
+  identify: IdentifyProps;
+  social: SocialProps;
+  license: LicenseProps;
+  verifyPhone: PhoneProps;
 }
