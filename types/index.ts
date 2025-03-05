@@ -229,3 +229,20 @@ export interface VerifyProps {
   license: LicenseProps;
   verifyPhone: PhoneProps;
 }
+export interface UserProps {
+  name: string;
+  dob: string;
+  email: string;
+  phone: string
+}
+
+export interface WithdrawalRequestProps {
+  id: string;
+  number: string;
+  bank: string;
+  money: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  user: UserProps;
+}

@@ -11,6 +11,7 @@ import {
   TopWorkspace,
   VerifyProps,
   WithdrawalProps,
+  WithdrawalRequestProps,
   WorkspaceProps,
 } from "@/types";
 
@@ -741,5 +742,52 @@ export const verifyList: VerifyProps[] = [
       phone: "0123456789",
     },
   },
-  // Add more entries as needed
+];
+
+export const withdrawalListRequest: WithdrawalRequestProps[] = [
+  {
+    id: "1",
+    number: "123456789",
+    bank: "Vietcombank",
+    money: "100000",
+    status: "1",
+    createdAt: "2023-01-01",
+    updatedAt: "2023-01-01",
+    user: {
+      name: "Nguyen Van A",
+      dob: "1990-01-01",
+      email: "nguyenvana@example.com",
+      phone: "0123456789",
+    },
+  },
+  {
+    id: "2",
+    number: "987654321",
+    bank: "Techcombank",
+    money: "200000",
+    status: "2",
+    createdAt: "2023-01-01",
+    updatedAt: "2023-01-01",
+    user: {
+      name: "Tran Thi B",
+      dob: "1992-02-02",
+      email: "tranthib@example.com",
+      phone: "0987654321",
+    },
+  },
+  {
+    id: "3",
+    number: "555555555",
+    bank: "Vietinbank",
+    money: "150000",
+    status: "3",
+    createdAt: "2023-01-01",
+    updatedAt: "2023-01-01",
+    user: {
+      name: "Le Van C",
+      dob: "1985-03-03",
+      email: "levanc@example.com",
+      phone: "0912345678",
+    },
+  },
 ];

@@ -19,6 +19,7 @@ import { Ban, Eye, MoreHorizontal } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ArrowUpDown } from "lucide-react";
@@ -1191,6 +1192,130 @@ export const VerifyTableColumns: ColumnDef<VerifyProps>[] = [
             <li className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer">
               <Ban size={16} /> <span>Chặn</span>
             </li>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
+  },
+];
+
+export const WithdrawalRequestTableColumns: ColumnDef<WithdrawalProps>[] = [
+  {
+    accessorKey: "number",
+    header: ({ column }) => {
+      return (
+        <div
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+        >
+          Số tài khoản
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return <p className="text-center font-medium">{row.getValue("number")}</p>;
+    },
+  },
+  {
+    accessorKey: "bank",
+    header: ({ column }) => {
+      return (
+        <div
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+        >
+          Ngân hàng
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return <p className="text-center font-medium">{row.getValue("bank")}</p>;
+    },
+  },
+  {
+    accessorKey: "money",
+    header: ({ column }) => {
+      return (
+        <div
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+        >
+          Số tiền
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return <p className="text-center font-medium">{row.getValue("money")}</p>;
+    },
+  },
+  {
+    accessorKey: "createdAt",
+    header: ({ column }) => {
+      return (
+        <div
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+        >
+          Ngày tạo
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return <p className="text-center font-medium">{row.getValue("createdAt")}</p>;
+    },
+  },
+  {
+    accessorKey: "status",
+    header: ({ column }) => {
+      return (
+        <div
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+        >
+          Trạng thái
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      const status = row.getValue("status");
+      const statusColor =
+        status === "1"
+          ? "text-yellow-500"
+          : status === "2"
+          ? "text-green-500"
+          : "text-red-500";
+      const statusText =
+        status === "1"
+          ? "Đang chờ"
+          : status === "2"
+          ? "Đã duyệt"
+          : "Đã từ chối";
+      return <p className={`text-center font-medium ${statusColor}`}>{statusText}</p>;
+    },
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      const withdrawal = row.original;
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="py-2">
+            <DropdownMenuItem
+              onClick={() => window.location.href = `/withdrawal-request/${withdrawal.id}`}
+            >
+              Xem chi tiết
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

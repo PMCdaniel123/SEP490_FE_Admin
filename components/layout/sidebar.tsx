@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Banknote,
   Boxes,
   DiamondPercent,
   Home,
@@ -57,6 +58,12 @@ function Sidebar() {
           label="Xác thực doanh nghiệp"
           href="/verify-owner"
         />
+        <SidebarItem
+          icon={Banknote}
+          label="Yêu cầu rút tiền"
+          href="/withdrawal-request"
+        />
+
       </nav>
     </aside>
   );
