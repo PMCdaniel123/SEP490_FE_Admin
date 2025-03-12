@@ -2,6 +2,7 @@ import {
   AmenityProps,
   BeverageProps,
   CustomerProps,
+  EmployeeProps,
   MenuItemProps,
   NewCustomerItemProps,
   OwnerProps,
@@ -200,6 +201,7 @@ export const customerList: CustomerProps[] = [
     location: "Hà Nội, Việt Nam",
     gender: "Nam",
     dateOfBirth: "14/02/2005",
+    status: "1",
   },
   {
     id: "2",
@@ -210,6 +212,7 @@ export const customerList: CustomerProps[] = [
     location: "Hà Nội, Việt Nam",
     gender: "Nữ",
     dateOfBirth: "14/02/2005",
+    status: "1",
   },
   {
     id: "3",
@@ -220,6 +223,7 @@ export const customerList: CustomerProps[] = [
     location: "Hà Nội, Việt Nam",
     gender: "Nam",
     dateOfBirth: "14/02/2005",
+    status: "1",
   },
   {
     id: "4",
@@ -230,6 +234,7 @@ export const customerList: CustomerProps[] = [
     location: "Hà Nội, Việt Nam",
     gender: "Nữ",
     dateOfBirth: "14/02/2005",
+    status: "1",
   },
   {
     id: "5",
@@ -240,6 +245,7 @@ export const customerList: CustomerProps[] = [
     location: "Hà Nội, Việt Nam",
     gender: "Nam",
     dateOfBirth: "14/02/2005",
+    status: "1",
   },
   {
     id: "6",
@@ -250,6 +256,7 @@ export const customerList: CustomerProps[] = [
     location: "Hà Nội, Việt Nam",
     gender: "Nữ",
     dateOfBirth: "14/02/2005",
+    status: "2",
   },
 ];
 
@@ -263,6 +270,7 @@ export const ownerList: OwnerProps[] = [
     location: "Hà Nội, Việt Nam",
     gender: "Nam",
     dateOfBirth: "14/02/2005",
+    status: "1",
   },
   {
     id: "2",
@@ -273,6 +281,7 @@ export const ownerList: OwnerProps[] = [
     location: "Hà Nội, Việt Nam",
     gender: "Nữ",
     dateOfBirth: "14/02/2005",
+    status: "1",
   },
   {
     id: "3",
@@ -283,36 +292,36 @@ export const ownerList: OwnerProps[] = [
     location: "Hà Nội, Việt Nam",
     gender: "Nam",
     dateOfBirth: "14/02/2005",
+    status: "2",
   },
+];
+
+export const employeeList: EmployeeProps[] = [
   {
-    id: "4",
+    id: "1",
     avatar: "/logo.png",
-    name: "Nguyễn Văn D",
+    name: "Nguyễn Văn A",
     phone: "0123456789",
     email: "RyYKd@example.com",
+    password: "abcdef",
     location: "Hà Nội, Việt Nam",
-    gender: "Nữ",
+    gender: "1",
+    role: "1",
     dateOfBirth: "14/02/2005",
+    status: "1",
   },
   {
-    id: "5",
+    id: "2",
     avatar: "/logo.png",
-    name: "Nguyễn Văn E",
+    name: "Nguyễn Văn B",
     phone: "0123456789",
     email: "RyYKd@example.com",
+    password: "abcdef",
     location: "Hà Nội, Việt Nam",
-    gender: "Nam",
+    gender: "2",
+    role: "2",
     dateOfBirth: "14/02/2005",
-  },
-  {
-    id: "6",
-    avatar: "/logo.png",
-    name: "Nguyễn Văn F",
-    phone: "0123456789",
-    email: "RyYKd@example.com",
-    location: "Hà Nội, Việt Nam",
-    gender: "Nữ",
-    dateOfBirth: "14/02/2005",
+    status: "2",
   },
 ];
 

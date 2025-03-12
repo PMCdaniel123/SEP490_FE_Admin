@@ -2,21 +2,24 @@
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { WithdrawalRequestProps } from "@/types";
+import { formatCurrency, WithdrawalRequestProps } from "@/types";
 import { withdrawalListRequest } from "@/constants/constant";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { Banknote, User,  } from "lucide-react";
+import { Banknote, User } from "lucide-react";
 
 function WithdrawalRequestDetail() {
   const params = useParams();
   const withdrawalRequestId = params?.["withdrawal-requestId"];
-  const [withdrawalDetail, setWithdrawalDetail] = useState<WithdrawalRequestProps | null>(null);
+  const [withdrawalDetail, setWithdrawalDetail] =
+    useState<WithdrawalRequestProps | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (withdrawalRequestId) {
-      const detail = withdrawalListRequest.find((item) => item.id === withdrawalRequestId) || null;
+      const detail =
+        withdrawalListRequest.find((item) => item.id === withdrawalRequestId) ||
+        null;
       setWithdrawalDetail(detail);
       setLoading(false);
     }
@@ -40,7 +43,9 @@ function WithdrawalRequestDetail() {
 
   return (
     <div className="p-6 bg-white rounded-xl shadow-md">
-      <h1 className="text-2xl font-bold text-primary mb-4">Chi tiết yêu cầu rút tiền</h1>
+      <h1 className="text-2xl font-bold text-primary mb-4">
+        Chi tiết yêu cầu rút tiền
+      </h1>
       <Separator className="my-4" />
       <div className="flex flex-col gap-6">
         <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
@@ -56,10 +61,16 @@ function WithdrawalRequestDetail() {
               <strong>Ngân hàng:</strong> {withdrawalDetail.bank}
             </p>
             <p>
-              <strong>Số tiền:</strong> {withdrawalDetail.money}
+              <strong>Số tiền:</strong>{" "}
+              {formatCurrency(Number(withdrawalDetail.money))}
             </p>
             <p>
-              <strong>Trạng thái:</strong> {withdrawalDetail.status === "1" ? "Đang chờ" : withdrawalDetail.status === "2" ? "Đã duyệt" : "Đã từ chối"}
+              <strong>Trạng thái:</strong>{" "}
+              {withdrawalDetail.status === "1"
+                ? "Đang chờ"
+                : withdrawalDetail.status === "2"
+                ? "Đã duyệt"
+                : "Đã từ chối"}
             </p>
             <p>
               <strong>Ngày tạo:</strong> {withdrawalDetail.createdAt}

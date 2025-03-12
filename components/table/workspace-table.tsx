@@ -33,8 +33,7 @@ import {
 
 import { useState } from "react";
 import { Separator } from "../ui/separator";
-import { CirclePlus, Info } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { Info } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -49,7 +48,6 @@ export default function WorkspaceTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
-  const router = useRouter();
 
   const table = useReactTable({
     data,
@@ -74,13 +72,6 @@ export default function WorkspaceTable<TData, TValue>({
     <div className="flex flex-col gap-4">
       <div className="mt-4 flex items-center justify-between">
         <h1 className="font-bold text-primary text-xl">Danh sách không gian</h1>
-        <Button
-          className="flex items-center gap-2 text-white font-semibold"
-          onClick={() => router.push("workspaces/new")}
-        >
-          <CirclePlus />
-          <span>Tạo không gian mới</span>
-        </Button>
       </div>
       <Separator className="mb-4" />
       <div className="flex items-center">
