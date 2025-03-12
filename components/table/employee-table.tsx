@@ -41,7 +41,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
-export default function WithdrawalTable<TData, TValue>({
+export default function EmployeeTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -73,22 +73,22 @@ export default function WithdrawalTable<TData, TValue>({
   return (
     <div className="flex flex-col gap-4">
       <div className="mt-4 flex items-center justify-between">
-        <h1 className="font-bold text-primary text-xl">Lịch sử rút tiền</h1>
+        <h1 className="font-bold text-primary text-xl">Danh sách nhân viên</h1>
         <Button
           className="flex items-center gap-2 text-white font-semibold"
-          onClick={() => router.push("withdrawal/new")}
+          onClick={() => router.push("employees/new")}
         >
           <CirclePlus />
-          <span>Tạo yêu cầu rút tiền mới</span>
+          <span>Tạo nhân viên mới</span>
         </Button>
       </div>
       <Separator className="mb-4" />
       <div className="flex items-center">
         <Input
-          placeholder="Số tài khoản ngân hàng..."
-          value={(table.getColumn("number")?.getFilterValue() as string) ?? ""}
+          placeholder="Tên nhân viên..."
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("number")?.setFilterValue(event.target.value)
+            table.getColumn("name")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

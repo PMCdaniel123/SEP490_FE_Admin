@@ -1,16 +1,6 @@
 "use client";
 
-import {
-  Banknote,
-  Boxes,
-  DiamondPercent,
-  Home,
-  KeyRound,
-  Landmark,
-  Sofa,
-  UsersRound,
-  UtensilsCrossed,
-} from "lucide-react";
+import { Banknote, BriefcaseBusiness, CircleUserRound, Home, KeyRound, Sofa, UsersRound } from "lucide-react";
 import SidebarItem from "./sidebar-item";
 
 function Sidebar() {
@@ -23,38 +13,26 @@ function Sidebar() {
         <SidebarItem icon={Home} label="Trang chủ" href="/" />
         <SidebarItem
           icon={UsersRound}
-          label="Quản lý khách hàng"
+          label="Khách hàng"
           href="/customers"
         />
         <SidebarItem
-          icon={Sofa}
-          label="Quản lý không gian"
-          href="/workspaces"
-        />
-        <SidebarItem icon={Boxes} label="Quản lý tiện ích" href="/amenities" />
-        <SidebarItem
-          icon={UtensilsCrossed}
-          label="Quản lý thực đơn"
-          href="/beverages"
-        />
-        <SidebarItem
-          icon={DiamondPercent}
-          label="Khuyến mãi"
-          href="/promotions"
-        />
-        <SidebarItem
-          icon={KeyRound}
-          label="Xác thực doanh nghiệp"
-          href="/authentication"
-        />
-        <SidebarItem icon={Landmark} label="Rút tiền" href="/withdrawal" />
-        <SidebarItem
-          icon={UsersRound}
-          label="Quản lý chủ cửa hàng"
+          icon={BriefcaseBusiness}
+          label="Doanh nghiệp"
           href="/owners"
         />
         <SidebarItem
-          icon={UsersRound}
+          icon={Sofa}
+          label="Không gian"
+          href="/workspaces"
+        />
+        <SidebarItem
+          icon={CircleUserRound}
+          label="Nhân viên"
+          href="/employees"
+        />
+        <SidebarItem
+          icon={KeyRound}
           label="Xác thực doanh nghiệp"
           href="/verify-owner"
         />
@@ -63,7 +41,6 @@ function Sidebar() {
           label="Yêu cầu rút tiền"
           href="/withdrawal-request"
         />
-
       </nav>
     </aside>
   );
