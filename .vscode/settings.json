@@ -1,0 +1,8 @@
+{
+  "conventionalCommits.scopes": [
+    "adminFunction",
+    "verify-Owner",
+    "withdrawal-request",
+    "update admin"
+  ]
+}

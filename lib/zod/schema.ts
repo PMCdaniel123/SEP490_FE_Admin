@@ -19,106 +19,23 @@ export const passwordSchema = z.object({
   password: z.string().min(6, "Mật khẩu phải có ít nhất 6 ký tự"),
 });
 
-export const workspaceSchema = z.object({
+export const employeeSchema = z.object({
   name: z.string().min(3, "Tên không gian phải có ít nhất 3 ký tự"),
-  address: z.string().min(3, "Địa chỉ không gian phải có ít nhất 3 ký tự"),
-  googleMapUrl: z.string().min(3, "Google map url phải có ít nhất 3 ký tự"),
-  category: z.string({
-    required_error: "Vui lòng loại không gian hợp lệ",
+  dateOfBirth: z.string().nonempty("Vui lòng chọn ngày sinh"),
+  avatar: z.string().nonempty("Vui lòng chọn avatar"),
+  gender: z.string({
+    required_error: "Vui lòng chọn giới tính hợp lệ",
   }),
-  area: z.string().refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
-    message: "Diện tích phải lớn hơn 0 m2",
-  }),
-  capacity: z
-    .string()
-    .refine((val) => !isNaN(Number(val)) && Number(val) >= 1, {
-      message: "Sức chứa tối đa phải >= 1 người",
-    }),
-  cleanTime: z
-    .string()
-    .refine((val) => !isNaN(Number(val)) && Number(val) >= 1, {
-      message: "Thời gian dọn dẹp phải >= 1 phút",
-    }),
-  description: z.string().min(3, "Mô tả không gian phải có ít nhất 3 ký tự"),
-  shortTermPrice: z
-    .string()
-    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
-      message: "Giá theo giờ phải lớn hơn 0",
-    }),
-  longTermPrice: z
-    .string()
-    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
-      message: "Giá theo ngày phải lớn hơn 0",
-    }),
-  facilities: z.array(z.string(), {
-    required_error: "Vui lòng nhập ít nhất một tiện ích",
-  }),
-  policies: z.array(z.string(), {
-    required_error: "Vui lòng nhập ít nhất một chính sách",
-  }),
-  images: z.array(z.string(), {
-    required_error: "Vui lòng tải lên ít nhất một hình ảnh",
-  }),
+  location: z.string().min(3, "Địa chỉ không gian phải có ít nhất 3 ký tự"),
   status: z.string({
     required_error: "Vui lòng chọn trạng thái hợp lệ",
   }),
-});
-
-export const amenitySchema = z.object({
-  name: z.string().min(3, "Tên tiện ích phải có ít nhất 3 ký tự"),
-  category: z.string().min(1, "Phân loại không được để trống"),
-  description: z.string().min(3, "Mô tả tiện ích phải có ít nhất 3 ký tự"),
-  price: z.string().refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
-    message: "Giá phải lớn hơn 0",
+  role: z.string({
+    required_error: "Vui lòng chọn chức vụ hợp lệ",
   }),
-  quantity: z.string().refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
-    message: "Số lượng phải lớn hơn 0",
-  }),
-  image: z.string().url("Vui lòng tải lên một hình ảnh hợp lệ"),
-  status: z.string({
-    required_error: "Vui lòng chọn trạng thái hợp lệ",
-  }),
-});
-
-export const beverageSchema = z.object({
-  name: z.string().min(3, "Tên món phải có ít nhất 3 ký tự"),
-  category: z.string().min(1, "Phân loại không được để trống"),
-  description: z.string().min(3, "Mô tả món phải có ít nhất 3 ký tự"),
-  price: z.string().refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
-    message: "Giá phải lớn hơn 0",
-  }),
-  image: z.string().url("Vui lòng tải lên một hình ảnh hợp lệ"),
-  status: z.string({
-    required_error: "Vui lòng chọn trạng thái hợp lệ",
-  }),
-});
-
-export const promotionSchema = z
-  .object({
-    code: z.string().min(3, "Mã code phải có ít nhất 3 ký tự"),
-    description: z.string().min(3, "Mô tả món phải có ít nhất 3 ký tự"),
-    discount: z
-      .string()
-      .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
-        message: "Giảm giá phải lớn hơn 0",
-      }),
-    startDate: z.string().nonempty("Vui lòng chọn ngày bắt đầu"),
-    endDate: z.string().nonempty("Vui lòng chọn ngày kết thúc"),
-    status: z.string({
-      required_error: "Vui lòng chọn trạng thái hợp lệ",
-    }),
-  })
-  .refine((data) => new Date(data.endDate) > new Date(data.startDate), {
-    message: "Ngày kết thúc phải lớn hơn ngày bắt đầu",
-    path: ["endDate"],
-  });
-
-export const withdrawalSchema = z.object({
-  number: z.string().nonempty("Vui lòng nhập số tài khoản ngân hàng"),
-  bank: z.string().nonempty("Vui lòng tên ngân hàng"),
-  money: z.string().refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
-    message: "Giá phải lớn hơn 0",
-  }),
+  email: z.string().email("Địa chỉ email không hợp lệ"),
+  phone: z.string().min(10, "Số điện thoại phải có ít nhất 10 ký tự"),
+  password: z.string().min(6, "Mật khẩu phải có ít nhất 6 ký tự"),
 });
 
 export const identifySchema = z.object({

@@ -1,5 +1,12 @@
 import { LucideIcon } from "lucide-react";
 
+export const formatCurrency = (value: number) => {
+  return new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  }).format(value);
+};
+
 export interface SignInFormProps {
   className?: string;
   onClose: () => void;
@@ -91,6 +98,7 @@ export interface CustomerProps {
   location: string;
   gender: string;
   dateOfBirth: string;
+  status: string;
 }
 
 export interface OwnerProps {
@@ -102,6 +110,21 @@ export interface OwnerProps {
   location: string;
   gender: string;
   dateOfBirth: string;
+  status: string;
+}
+
+export interface EmployeeProps {
+  id: string;
+  avatar: string;
+  name: string;
+  phone: string;
+  email: string;
+  password: string;
+  location: string;
+  gender: string;
+  role: string;
+  dateOfBirth: string;
+  status: string;
 }
 
 export interface WorkspaceProps {
@@ -214,4 +237,35 @@ export interface TimeItemProps {
   startDate: string;
   endDate: string;
   status: string;
+}
+
+export interface VerifyProps {
+  id: string;
+  name: string;
+  email: string;
+  location: string;
+  phone: string;
+  status: string;
+  createdAt: string;
+  identify: IdentifyProps;
+  social: SocialProps;
+  license: LicenseProps;
+  verifyPhone: PhoneProps;
+}
+export interface UserProps {
+  name: string;
+  dob: string;
+  email: string;
+  phone: string;
+}
+
+export interface WithdrawalRequestProps {
+  id: string;
+  number: string;
+  bank: string;
+  money: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  user: UserProps;
 }
