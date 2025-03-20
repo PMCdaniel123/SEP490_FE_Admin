@@ -70,14 +70,16 @@ export default function OwnerTable<TData, TValue>({
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="font-bold mt-4 text-primary text-xl">Danh sách doanh nghiệp</h1>
+      <h1 className="font-bold mt-4 text-primary text-xl">
+        Danh sách doanh nghiệp
+      </h1>
       <Separator className="mb-4" />
       <div className="flex items-center">
         <Input
-          placeholder="Tên doanh nghiệp..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          placeholder="Số điện thoại doanh nghiệp..."
+          value={(table.getColumn("phone")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
+            table.getColumn("phone")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

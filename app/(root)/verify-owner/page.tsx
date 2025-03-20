@@ -1,3 +1,5 @@
+"use client";
+
 import VerifyTable from "@/components/table/verify-table";
 import { verifyList } from "@/constants/constant";
 import { VerifyTableColumns } from "@/constants/table-columns";

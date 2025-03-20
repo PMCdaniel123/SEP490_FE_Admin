@@ -1,3 +1,5 @@
+"use client";
+
 import EmployeeTable from "@/components/table/employee-table";
 import { employeeList } from "@/constants/constant";
 import { EmployeeTableColumns } from "@/constants/table-columns";

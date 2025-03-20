@@ -1,15 +1,10 @@
 "use client";
 
-import {
-  ChevronsUpDown,
-  LockKeyhole,
-  LogOut,
-  Settings,
-} from "lucide-react";
+import { ChevronsUpDown, LockKeyhole, LogOut, Settings } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Separator } from "../ui/separator";
-import OwnerNotification from "../owner-notification/owner-notification";
+import AdminNotification from "../notification/notification";
 
 function TopNav() {
   const [open, setOpen] = useState(false);
@@ -37,7 +32,7 @@ function TopNav() {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center justify-end w-full mb-4 gap-4">
-        <OwnerNotification />
+        <AdminNotification />
         <div ref={dropdownRef} className="relative">
           <div
             className="group flex items-center justify-center bg-white rounded-xl py-2 px-4 gap-4 group hover:bg-primary hover:text-white cursor-pointer transition-colors duration-200"

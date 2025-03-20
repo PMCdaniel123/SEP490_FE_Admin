@@ -1,3 +1,5 @@
+"use client";
+
 import EmployeeForm from "@/components/admin-form/employee-form";
 
 function NewEmployee() {
