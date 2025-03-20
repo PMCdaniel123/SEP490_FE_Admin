@@ -9,7 +9,7 @@ interface Notification {
   time: string;
 }
 
-const OwnerNotification = () => {
+const AdminNotification = () => {
   const [notifications, setNotifications] = useState<Notification[]>([
     {
       id: 1,
@@ -115,4 +115,4 @@ const OwnerNotification = () => {
   );
 };
 
-export default OwnerNotification;
+export default AdminNotification;

@@ -1,3 +1,5 @@
+"use client";
+
 import WithdrawalRequestTable from "@/components/table/withdrawal-request-table";
 import { withdrawalListRequest } from "@/constants/constant";
 import { WithdrawalRequestTableColumns } from "@/constants/table-columns";

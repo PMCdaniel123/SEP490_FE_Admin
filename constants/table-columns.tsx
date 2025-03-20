@@ -8,7 +8,7 @@ import {
   TopWorkspace,
   VerifyProps,
   WithdrawalProps,
-  WorkspaceProps,
+  Workspace,
 } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 
@@ -24,11 +24,7 @@ import {
 import { ArrowUpDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
-// const formatDate = (dateStr: string): string => {
-//   const [year, month, day] = dateStr.split("-");
-//   return `${day}-${month}-${year}`;
-// };
+import dayjs from "dayjs";
 
 export const topWorkspaceTableColumns: ColumnDef<TopWorkspace>[] = [
   {
@@ -128,20 +124,7 @@ export const CustomerTableColumns: ColumnDef<CustomerProps>[] = [
       );
     },
     cell: ({ row }) => {
-      return (
-        <div className="flex items-center justify-center gap-2">
-          <Image
-            src={row.original.avatar}
-            alt=""
-            width={46}
-            height={46}
-            className="border rounded-full"
-          />
-          <div>
-            <p className="font-medium text-base">{row.original.name}</p>
-          </div>
-        </div>
-      );
+      return <p className="text-center font-medium">{row.getValue("name")}</p>;
     },
   },
   {
@@ -193,12 +176,14 @@ export const CustomerTableColumns: ColumnDef<CustomerProps>[] = [
     },
     cell: ({ row }) => {
       return (
-        <p className="text-center font-medium">{row.getValue("dateOfBirth")}</p>
+        <p className="text-center font-medium">
+          {dayjs(row.getValue("dateOfBirth")).format("DD/MM/YYYY")}
+        </p>
       );
     },
   },
   {
-    accessorKey: "gender",
+    accessorKey: "sex",
     header: ({ column }) => {
       return (
         <div
@@ -211,8 +196,31 @@ export const CustomerTableColumns: ColumnDef<CustomerProps>[] = [
       );
     },
     cell: ({ row }) => {
+      return <p className="text-center font-medium">{row.getValue("sex")}</p>;
+    },
+  },
+  {
+    accessorKey: "status",
+    header: ({ column }) => {
       return (
-        <p className="text-center font-medium">{row.getValue("gender")}</p>
+        <div
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+        >
+          <p>Trạng thái</p>
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return row.getValue("status") === "Active" ? (
+        <p className="text-center font-medium flex items-center justify-center text-green-500">
+          <span>Hoạt động</span>
+        </p>
+      ) : (
+        <p className="text-center font-medium flex items-center justify-center text-red-500">
+          <span>Ngừng hoạt động</span>
+        </p>
       );
     },
   },
@@ -247,33 +255,20 @@ export const CustomerTableColumns: ColumnDef<CustomerProps>[] = [
 
 export const OwnerTableColumns: ColumnDef<OwnerProps>[] = [
   {
-    accessorKey: "name",
+    accessorKey: "email",
     header: ({ column }) => {
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
-          <p>Họ và tên</p>
+          <p>Email</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </div>
       );
     },
     cell: ({ row }) => {
-      return (
-        <div className="flex items-center justify-center gap-2">
-          <Image
-            src={row.original.avatar}
-            alt=""
-            width={46}
-            height={46}
-            className="border rounded-full"
-          />
-          <div>
-            <p className="font-medium text-base">{row.original.name}</p>
-          </div>
-        </div>
-      );
+      return <p className="text-center font-medium">{row.getValue("email")}</p>;
     },
   },
   {
@@ -294,57 +289,31 @@ export const OwnerTableColumns: ColumnDef<OwnerProps>[] = [
     },
   },
   {
-    accessorKey: "email",
+    accessorKey: "status",
     header: ({ column }) => {
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
-          <p>Email</p>
+          <p>Xác thực</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </div>
       );
     },
     cell: ({ row }) => {
-      return <p className="text-center font-medium">{row.getValue("email")}</p>;
-    },
-  },
-  {
-    accessorKey: "dateOfBirth",
-    header: ({ column }) => {
-      return (
-        <div
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
-        >
-          <p>Ngày sinh</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </div>
-      );
-    },
-    cell: ({ row }) => {
-      return (
-        <p className="text-center font-medium">{row.getValue("dateOfBirth")}</p>
-      );
-    },
-  },
-  {
-    accessorKey: "gender",
-    header: ({ column }) => {
-      return (
-        <div
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
-        >
-          <p>Giới tính</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </div>
-      );
-    },
-    cell: ({ row }) => {
-      return (
-        <p className="text-center font-medium">{row.getValue("gender")}</p>
+      return row.getValue("status") === "Success" ? (
+        <p className="text-center font-medium flex items-center justify-center text-green-500">
+          <span>Thành công</span>
+        </p>
+      ) : row.getValue("status") === "Fail" ? (
+        <p className="text-center font-medium flex items-center justify-center text-red-500">
+          <span>Thất bại</span>
+        </p>
+      ) : (
+        <p className="text-center font-medium flex items-center justify-center text-yellow-500">
+          <span>Chưa xác thực</span>
+        </p>
       );
     },
   },
@@ -535,13 +504,13 @@ export const EmployeeTableColumns: ColumnDef<EmployeeProps>[] = [
 ];
 
 const workspaceCategory: Record<string, string> = {
-  "1": "Bàn cá nhân",
-  "2": "Văn phòng",
-  "3": "Phòng họp",
-  "4": "Phòng hội thảo",
+  "Bàn cá nhân": "Bàn cá nhân",
+  "Văn phòng": "Văn phòng",
+  "Phòng họp": "Phòng họp",
+  "Phòng hội thảo": "Phòng hội thảo",
 };
 
-export const WorkspaceTableColumns: ColumnDef<WorkspaceProps>[] = [
+export const WorkspaceTableColumns: ColumnDef<Workspace>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -570,10 +539,10 @@ export const WorkspaceTableColumns: ColumnDef<WorkspaceProps>[] = [
       return (
         <div className="flex items-center justify-center">
           <Image
-            src={row.original.images[0]}
+            src={row.original.images[0].imgUrl}
             alt={row.original.name}
-            width={160}
-            height={160}
+            width={100}
+            height={100}
             className="object-cover rounded-md"
           />
         </div>
@@ -626,21 +595,42 @@ export const WorkspaceTableColumns: ColumnDef<WorkspaceProps>[] = [
     },
   },
   {
-    accessorKey: "rating",
+    accessorKey: "capacity",
     header: ({ column }) => {
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
-          <p>Đánh giá</p>
+          <p>Sức chứa</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </div>
       );
     },
     cell: ({ row }) => {
       return (
-        <p className="text-center font-medium">{row.getValue("rating")}</p>
+        <p className="text-center font-medium">
+          {row.getValue("capacity")} người
+        </p>
+      );
+    },
+  },
+  {
+    accessorKey: "area",
+    header: ({ column }) => {
+      return (
+        <div
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+        >
+          <p>Diện tích</p>
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <p className="text-center font-medium">{row.getValue("area")} m²</p>
       );
     },
   },
@@ -658,7 +648,7 @@ export const WorkspaceTableColumns: ColumnDef<WorkspaceProps>[] = [
       );
     },
     cell: ({ row }) => {
-      return row.getValue("status") === "1" ? (
+      return row.getValue("status") === "Active" ? (
         <p className="text-center font-medium flex items-center justify-center text-green-500">
           <span>Hoạt động</span>
         </p>
