@@ -59,7 +59,7 @@ function EmployeeForm({ initialData }: EmployeeFormProps) {
     alert(JSON.stringify(values));
   };
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-card">
       <h1 className="text-xl font-bold text-primary flex items-center gap-4 mt-4">
         <SquarePen />
         {initialData ? (
@@ -71,7 +71,7 @@ function EmployeeForm({ initialData }: EmployeeFormProps) {
       <Separator className="mt-4 mb-8 bg-primary" />
       <Form {...form}>
         <form
-          className="grid sm:grid-cols-3 gap-6"
+          className="grid sm:grid-cols-3 gap-6 "
           onSubmit={form.handleSubmit(onCreate)}
         >
           <div className="sm:col-span-3 flex flex-col gap-2 w-full">
@@ -80,12 +80,12 @@ function EmployeeForm({ initialData }: EmployeeFormProps) {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                  <FormLabel className="text-fourth dark:text-gray-300 font-bold text-base ml-6">
                     Họ và tên
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="py-6 px-4 rounded-md file:bg-seventh"
+                      className="py-6 px-4 rounded-md file:bg-seventh dark:bg-gray-800 dark:text-white dark:border-gray-700"
                       placeholder="Nhập họ và tên..."
                       {...field}
                     />
@@ -102,12 +102,12 @@ function EmployeeForm({ initialData }: EmployeeFormProps) {
               name="location"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                  <FormLabel className="text-fourth dark:text-gray-300 font-bold text-base ml-6">
                     Địa chỉ
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="py-6 px-4 rounded-md file:bg-seventh"
+                      className="py-6 px-4 rounded-md file:bg-seventh dark:bg-gray-800 dark:text-white dark:border-gray-700"
                       placeholder="Nhập địa chỉ..."
                       {...field}
                     />
@@ -124,12 +124,12 @@ function EmployeeForm({ initialData }: EmployeeFormProps) {
                 name="dateOfBirth"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-fourth font-bold text-base ml-6">
+                    <FormLabel className="text-fourth dark:text-gray-300 font-bold text-base ml-6">
                       Ngày bắt đầu
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="py-6 px-4 rounded-md file:bg-seventh"
+                        className="py-6 px-4 rounded-md file:bg-seventh dark:bg-gray-800 dark:text-white dark:border-gray-700"
                         placeholder="Nhập ngày bắt đầu..."
                         type="date"
                         {...field}
@@ -147,12 +147,12 @@ function EmployeeForm({ initialData }: EmployeeFormProps) {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                  <FormLabel className="text-fourth dark:text-gray-300 font-bold text-base ml-6">
                     Email
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="py-6 px-4 rounded-md file:bg-seventh"
+                      className="py-6 px-4 rounded-md file:bg-seventh dark:bg-gray-800 dark:text-white dark:border-gray-700"
                       type="email"
                       placeholder="Nhập email..."
                       {...field}
@@ -169,12 +169,12 @@ function EmployeeForm({ initialData }: EmployeeFormProps) {
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                  <FormLabel className="text-fourth dark:text-gray-300 font-bold text-base ml-6">
                     Số điện thoại
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="py-6 px-4 rounded-md file:bg-seventh"
+                      className="py-6 px-4 rounded-md file:bg-seventh dark:bg-gray-800 dark:text-white dark:border-gray-700"
                       placeholder="Nhập số điện thoại..."
                       {...field}
                     />
@@ -190,12 +190,12 @@ function EmployeeForm({ initialData }: EmployeeFormProps) {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                  <FormLabel className="text-fourth dark:text-gray-300 font-bold text-base ml-6">
                     Mật khẩu
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="py-6 px-4 rounded-md file:bg-seventh"
+                      className="py-6 px-4 rounded-md file:bg-seventh dark:bg-gray-800 dark:text-white dark:border-gray-700"
                       placeholder="Nhập mật khẩu..."
                       {...field}
                     />
@@ -211,7 +211,7 @@ function EmployeeForm({ initialData }: EmployeeFormProps) {
               name="avatar"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                  <FormLabel className="text-fourth dark:text-gray-300 font-bold text-base ml-6">
                     Hình ảnh
                   </FormLabel>
                   <FormControl>
@@ -232,7 +232,7 @@ function EmployeeForm({ initialData }: EmployeeFormProps) {
               name="gender"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                  <FormLabel className="text-fourth dark:text-gray-300 font-bold text-base ml-6">
                     Giới tính
                   </FormLabel>
                   <FormControl>
@@ -240,7 +240,7 @@ function EmployeeForm({ initialData }: EmployeeFormProps) {
                       value={field.value || "2"}
                       onValueChange={(value) => field.onChange(value)}
                     >
-                      <SelectTrigger className="py-6 px-4 rounded-md w-full">
+                      <SelectTrigger className="py-6 px-4 rounded-md w-full dark:bg-gray-800 dark:text-white dark:border-gray-700">
                         <SelectValue placeholder="Chọn giới tính" />
                       </SelectTrigger>
                       <SelectContent>
@@ -276,7 +276,8 @@ function EmployeeForm({ initialData }: EmployeeFormProps) {
               name="role"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                  <FormLabel className="text-fourth dark:text-gray-300
+ font-bold text-base ml-6">
                     Chức vụ
                   </FormLabel>
                   <FormControl>
@@ -284,7 +285,7 @@ function EmployeeForm({ initialData }: EmployeeFormProps) {
                       value={field.value || "2"}
                       onValueChange={(value) => field.onChange(value)}
                     >
-                      <SelectTrigger className="py-6 px-4 rounded-md w-full">
+                      <SelectTrigger className="py-6 px-4 rounded-md w-full dark:bg-gray-800 dark:text-white dark:border-gray-700">
                         <SelectValue placeholder="Chọn chức vụ" />
                       </SelectTrigger>
                       <SelectContent>
@@ -314,7 +315,7 @@ function EmployeeForm({ initialData }: EmployeeFormProps) {
               name="status"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                  <FormLabel className="text-fourth dark:text-gray-300 font-bold text-base ml-6">
                     Trạng thái
                   </FormLabel>
                   <FormControl>
@@ -322,7 +323,7 @@ function EmployeeForm({ initialData }: EmployeeFormProps) {
                       value={field.value || "2"}
                       onValueChange={(value) => field.onChange(value)}
                     >
-                      <SelectTrigger className="py-6 px-4 rounded-md w-full">
+                      <SelectTrigger className="py-6 px-4 rounded-md w-full dark:bg-gray-800 dark:text-white dark:border-gray-700 ">
                         <SelectValue placeholder="Chọn trạng thái" />
                       </SelectTrigger>
                       <SelectContent>

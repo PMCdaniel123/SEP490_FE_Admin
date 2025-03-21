@@ -15,7 +15,7 @@ function LoginPage() {
           priority
         />
       </div>
-      <div className="flex flex-col bg-white flex-1/2 h-[600px] rounded-r-md">
+      <div className="flex flex-col bg-card flex-1/2 h-[600px] rounded-r-md">
         <h1 className="text-xl font-bold bg-primary text-white py-6 px-6 rounded-tr-md">
           <span>Đăng nhập</span>
         </h1>

@@ -6,7 +6,7 @@ import { EmployeeTableColumns } from "@/constants/table-columns";
 
 function EmployeeManagement() {
   return (
-    <div className="p-4 bg-white rounded-xl">
+    <div className="p-4 bg-card rounded-xl">
       <EmployeeTable columns={EmployeeTableColumns} data={employeeList} />
     </div>
   );

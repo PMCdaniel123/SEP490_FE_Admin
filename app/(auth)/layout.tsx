@@ -2,6 +2,7 @@ import "../globals.css";
 import { Montserrat } from "next/font/google";
 import type { Metadata } from "next";
 import { Providers } from "@/stores/Providers";
+import { ThemeProvider } from "next-themes";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -17,11 +18,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={montserrat.className}>
-      <body className="min-h-screen bg-third flex items-center justify-center w-full">
-        <Providers>
-          <div>{children}</div>
-        </Providers>
+    <html lang="en" className={montserrat.className} suppressHydrationWarning>
+      <body className="min-h-screen bg-card text-foreground flex items-center justify-center w-full">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Providers>
+            <div>{children}</div>
+          </Providers>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -7,7 +7,7 @@ import { WithdrawalRequestTableColumns } from "@/constants/table-columns";
 
 function WithdrawalRequestManagement() {
   return (
-    <div className="p-4 bg-white rounded-xl">
+    <div className="p-4 bg-card rounded-xl">
       <WithdrawalRequestTable columns={WithdrawalRequestTableColumns} data={withdrawalListRequest} />
     </div>
   );

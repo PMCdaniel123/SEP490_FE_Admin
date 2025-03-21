@@ -49,7 +49,7 @@ function CustomerManagement() {
   }
 
   return (
-    <div className="p-4 bg-white rounded-xl">
+    <div className="p-4 bg-card rounded-xl">
       <CustomerTable columns={CustomerTableColumns} data={customerList} />
     </div>
   );

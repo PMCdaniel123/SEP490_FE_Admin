@@ -6,7 +6,7 @@ import { VerifyTableColumns } from "@/constants/table-columns";
 
 function VerifyOwnerManagement() {
   return (
-    <div className="p-4 bg-white rounded-xl">
+    <div className="p-4 bg-card rounded-xl">
       <VerifyTable columns={VerifyTableColumns} data={verifyList} />
     </div>
   );

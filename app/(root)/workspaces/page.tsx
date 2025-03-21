@@ -57,7 +57,7 @@ function WorkspaceManagement() {
   }
 
   return (
-    <div className="p-4 bg-white rounded-xl">
+    <div className="p-4 bg-card rounded-xl">
       <WorkspaceTable columns={WorkspaceTableColumns} data={workspaceList} />
     </div>
   );

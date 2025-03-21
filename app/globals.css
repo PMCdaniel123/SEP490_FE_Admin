@@ -42,6 +42,22 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  
+  /* Thêm các màu mới */
+  --primary-light: #835101;
+  --primary-dark: #B49057;
+  --secondary-light: #B49057;
+  --secondary-dark: #D0BEA0;
+  --third-light: #D0BEA0;
+  --third-dark: #E0E2E6;
+  --fourth-light: #484848;
+  --fourth-dark: #9A9A9A;
+  --fifth-light: #9A9A9A;
+  --fifth-dark: #C2C6CC;
+  --sixth-light: #C2C6CC;
+  --sixth-dark: #E0E2E6;
+  --seventh-light: #E0E2E6;
+  --seventh-dark: #D0BEA0;
 }
 
 .dark {
@@ -77,6 +93,15 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
+  
+  /* Áp dụng các màu tối cho chế độ tối */
+  --primary: var(--primary-dark);
+  --secondary: var(--secondary-dark);
+  --third: var(--third-dark);
+  --fourth: var(--fourth-dark);
+  --fifth: var(--fifth-dark);
+  --sixth: var(--sixth-dark);
+  --seventh: var(--seventh-dark);
 }
 
 @theme inline {
@@ -116,16 +141,27 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  
+  /* Thêm các màu mới vào theme */
+  --color-third: var(--third);
+  --color-fourth: var(--fourth);
+  --color-fifth: var(--fifth);
+  --color-sixth: var(--sixth);
+  --color-seventh: var(--seventh);
 }
 
 @theme {
-  --color-primary: #835101;
-  --color-secondary: #B49057;
-  --color-third: #D0BEA0;
-  --color-fourth: #484848;
-  --color-fifth: #9A9A9A;
-  --color-sixth: #C2C6CC;
-  --color-seventh: #E0E2E6;
+  --color-primary: var(--primary-light);
+  --color-secondary: var(--secondary-light);
+  --color-third: var(--third-light);
+  --color-fourth: var(--fourth-light);
+  --color-fifth: var(--fifth-light);
+  --color-sixth: var(--sixth-light);
+  --color-seventh: var(--seventh-light);
+}
+
+.dark {
+  --color-third: oklch(0.269 0 0); 
 }
 
 @layer base {

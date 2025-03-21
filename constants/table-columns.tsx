@@ -30,7 +30,7 @@ export const topWorkspaceTableColumns: ColumnDef<TopWorkspace>[] = [
   {
     accessorKey: "name",
     header: () => (
-      <div className="text-black font-semibold text-base text-center">
+      <div className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer">
         Tên không gian
       </div>
     ),
@@ -42,11 +42,15 @@ export const topWorkspaceTableColumns: ColumnDef<TopWorkspace>[] = [
             alt=""
             width={50}
             height={50}
-            className="border rounded-full"
+            className="border rounded-full dark:border-gray-700"
           />
           <div className="flex flex-col gap-1">
-            <p className="font-semibold text-base">{row.original.title}</p>
-            <p className="text-sm text-gray-600">{row.original.roomType}</p>
+            <p className="font-semibold text-base dark:text-gray-300">
+              {row.original.title}
+            </p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              {row.original.roomType}
+            </p>
           </div>
         </div>
       );
@@ -58,16 +62,18 @@ export const topWorkspaceTableColumns: ColumnDef<TopWorkspace>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
         >
           <p>Tổng lượt đặt</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-2 h-4 w-4 dark:text-gray-300" />
         </div>
       );
     },
     cell: ({ row }) => {
       return (
-        <p className="text-center font-medium">{row.getValue("booking")}</p>
+        <p className="text-center font-medium dark:text-gray-300">
+          {row.getValue("booking")}
+        </p>
       );
     },
   },
@@ -77,15 +83,19 @@ export const topWorkspaceTableColumns: ColumnDef<TopWorkspace>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
         >
           <p>Đơn giá</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-2 h-4 w-4 dark:text-gray-300" />
         </div>
       );
     },
     cell: ({ row }) => {
-      return <p className="text-center font-medium">{row.getValue("price")}</p>;
+      return (
+        <p className="text-center font-medium dark:text-gray-300">
+          {row.getValue("price")}
+        </p>
+      );
     },
   },
   {
@@ -94,21 +104,22 @@ export const topWorkspaceTableColumns: ColumnDef<TopWorkspace>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
         >
           <p>Doanh thu</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-2 h-4 w-4 dark:text-gray-300" />
         </div>
       );
     },
     cell: ({ row }) => {
       return (
-        <p className="text-center font-medium">{row.getValue("amount")}</p>
+        <p className="text-center font-medium dark:text-gray-300">
+          {row.getValue("amount")}
+        </p>
       );
     },
   },
 ];
-
 export const CustomerTableColumns: ColumnDef<CustomerProps>[] = [
   {
     accessorKey: "name",
@@ -116,7 +127,7 @@ export const CustomerTableColumns: ColumnDef<CustomerProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Họ và tên</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -133,7 +144,7 @@ export const CustomerTableColumns: ColumnDef<CustomerProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Số điện thoại</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -150,7 +161,7 @@ export const CustomerTableColumns: ColumnDef<CustomerProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Email</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -167,7 +178,7 @@ export const CustomerTableColumns: ColumnDef<CustomerProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Ngày sinh</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -188,7 +199,7 @@ export const CustomerTableColumns: ColumnDef<CustomerProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
+          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
         >
           <p>Giới tính</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -205,7 +216,7 @@ export const CustomerTableColumns: ColumnDef<CustomerProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Trạng thái</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -260,7 +271,7 @@ export const OwnerTableColumns: ColumnDef<OwnerProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Email</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -277,7 +288,7 @@ export const OwnerTableColumns: ColumnDef<OwnerProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Số điện thoại</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -294,7 +305,7 @@ export const OwnerTableColumns: ColumnDef<OwnerProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Xác thực</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -353,7 +364,7 @@ export const EmployeeTableColumns: ColumnDef<EmployeeProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Họ và tên</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -383,7 +394,7 @@ export const EmployeeTableColumns: ColumnDef<EmployeeProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Số điện thoại</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -400,7 +411,7 @@ export const EmployeeTableColumns: ColumnDef<EmployeeProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Email</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -417,7 +428,7 @@ export const EmployeeTableColumns: ColumnDef<EmployeeProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Ngày sinh</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -436,7 +447,7 @@ export const EmployeeTableColumns: ColumnDef<EmployeeProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
         >
           <p>Giới tính</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -455,7 +466,7 @@ export const EmployeeTableColumns: ColumnDef<EmployeeProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
         >
           <p>Chức vụ</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -517,7 +528,7 @@ export const WorkspaceTableColumns: ColumnDef<Workspace>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Tên không gian</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -531,7 +542,7 @@ export const WorkspaceTableColumns: ColumnDef<Workspace>[] = [
   {
     accessorKey: "image",
     header: () => (
-      <div className="text-black font-semibold text-base text-center">
+      <div className="text-black dark:text-white  font-semibold text-base text-center">
         Hình ảnh
       </div>
     ),
@@ -556,7 +567,7 @@ export const WorkspaceTableColumns: ColumnDef<Workspace>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Đơn giá</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -578,7 +589,7 @@ export const WorkspaceTableColumns: ColumnDef<Workspace>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Loại không gian</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -600,7 +611,7 @@ export const WorkspaceTableColumns: ColumnDef<Workspace>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Sức chứa</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -621,7 +632,7 @@ export const WorkspaceTableColumns: ColumnDef<Workspace>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Diện tích</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -640,7 +651,7 @@ export const WorkspaceTableColumns: ColumnDef<Workspace>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Trạng thái</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -692,7 +703,7 @@ export const VerifyTableColumns: ColumnDef<VerifyProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Họ và tên</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -715,7 +726,7 @@ export const VerifyTableColumns: ColumnDef<VerifyProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Số điện thoại</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -732,7 +743,7 @@ export const VerifyTableColumns: ColumnDef<VerifyProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Email</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -749,7 +760,7 @@ export const VerifyTableColumns: ColumnDef<VerifyProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Địa chỉ</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -768,7 +779,7 @@ export const VerifyTableColumns: ColumnDef<VerifyProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
         >
           <p>Trạng thái</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -796,7 +807,7 @@ export const VerifyTableColumns: ColumnDef<VerifyProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Ngày tạo</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -845,7 +856,7 @@ export const WithdrawalRequestTableColumns: ColumnDef<WithdrawalProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           Số tài khoản
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -864,7 +875,7 @@ export const WithdrawalRequestTableColumns: ColumnDef<WithdrawalProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           Ngân hàng
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -881,7 +892,7 @@ export const WithdrawalRequestTableColumns: ColumnDef<WithdrawalProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           Số tiền
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -902,7 +913,7 @@ export const WithdrawalRequestTableColumns: ColumnDef<WithdrawalProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           Ngày tạo
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -921,7 +932,7 @@ export const WithdrawalRequestTableColumns: ColumnDef<WithdrawalProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           Trạng thái
           <ArrowUpDown className="ml-2 h-4 w-4" />

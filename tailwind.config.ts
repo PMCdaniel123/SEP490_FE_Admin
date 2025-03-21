@@ -1,7 +1,8 @@
 import type { Config } from "tailwindcss";
 
 export default {
-  darkMode: ["class"],
+  darkMode: "class",
+
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -20,13 +21,43 @@ export default {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
         },
-        primary: "#835101",
-        secondary: "#B49057",
-        third: "#D0BEA0",
-        fourth: "#484848",
-        fifth: "#9A9A9A",
-        sixth: "#C2C6CC",
-        seventh: "#E0E2E6",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+          light: "#835101",
+          dark: "#B49057",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+          light: "#B49057",
+          dark: "#D0BEA0",
+        },
+        third: {
+          DEFAULT: "hsl(var(--third))",
+          light: "#D0BEA0",
+          dark: "#E0E2E6",
+        },
+        fourth: {
+          DEFAULT: "hsl(var(--fourth))",
+          light: "#484848",
+          dark: "#9A9A9A",
+        },
+        fifth: {
+          DEFAULT: "hsl(var(--fifth))",
+          light: "#9A9A9A",
+          dark: "#C2C6CC",
+        },
+        sixth: {
+          DEFAULT: "hsl(var(--sixth))",
+          light: "#C2C6CC",
+          dark: "#E0E2E6",
+        },
+        seventh: {
+          DEFAULT: "hsl(var(--seventh))",
+          light: "#E0E2E6",
+          dark: "#D0BEA0",
+        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",

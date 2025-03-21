@@ -19,7 +19,7 @@ function EmployeeDetail() {
   }, [employeeId]);
 
   return (
-    <div className="p-4 bg-white rounded-xl">
+    <div className="p-4 bg-card rounded-xl ">
       <EmployeeForm initialData={employeeDetail} />
     </div>
   );

@@ -42,18 +42,18 @@ function WithdrawalRequestDetail() {
   };
 
   return (
-    <div className="p-6 bg-white rounded-xl shadow-md">
-      <h1 className="text-2xl font-bold text-primary mb-4">
+    <div className="p-6 bg-card rounded-xl shadow-md">
+      <h1 className="text-2xl font-bold text-primary dark:text-primary-dark mb-4">
         Chi tiết yêu cầu rút tiền
       </h1>
-      <Separator className="my-4" />
+      <Separator className="my-4 dark:border-gray-700" />
       <div className="flex flex-col gap-6">
-        <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
-          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2">
-            <Banknote className="h-5 w-5 text-primary" />
+        <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-gray-800 dark:text-gray-300">
+            <Banknote className="h-5 w-5 text-primary dark:text-primary-dark" />
             Thông tin yêu cầu
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300">
             <p>
               <strong>Số tài khoản:</strong> {withdrawalDetail.number}
             </p>
@@ -80,13 +80,13 @@ function WithdrawalRequestDetail() {
             </p>
           </div>
         </div>
-        <Separator className="my-4" />
-        <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
-          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2">
-            <User className="h-5 w-5 text-primary" />
+        <Separator className="my-4 dark:border-gray-700" />
+        <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-gray-800 dark:text-gray-300">
+            <User className="h-5 w-5 text-primary dark:text-primary-dark" />
             Thông tin người dùng
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300">
             <p>
               <strong>Họ và tên:</strong> {withdrawalDetail.user.name}
             </p>
@@ -101,12 +101,21 @@ function WithdrawalRequestDetail() {
             </p>
           </div>
         </div>
-        <Separator className="my-4" />
+        <Separator className="my-4 dark:border-gray-700" />
         <div className="flex justify-end gap-4">
-          <Button variant="outline" onClick={handleReject}>
+          <Button
+            variant="outline"
+            onClick={handleReject}
+            className="dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700"
+          >
             Từ chối
           </Button>
-          <Button onClick={handleApprove}>Chấp nhận</Button>
+          <Button
+            onClick={handleApprove}
+            className="dark:bg-primary-dark dark:hover:bg-secondary-dark"
+          >
+            Chấp nhận
+          </Button>
         </div>
       </div>
     </div>

@@ -40,18 +40,18 @@ function VerifyOwnerDetail() {
   };
 
   return (
-    <div className="p-6 bg-white rounded-xl shadow-md">
-      <h1 className="text-2xl font-bold text-primary mb-4">
+    <div className="p-6 bg-card rounded-xl shadow-md">
+      <h1 className="text-2xl font-bold text-primary dark:text-primary-dark mb-4">
         Chi tiết xác minh
       </h1>
-      <Separator className="my-4" />
+      <Separator className="my-4 dark:border-gray-700" />
       <div className="flex flex-col gap-6">
-        <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
-          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2">
-            <User className="h-5 w-5 text-primary" />
+        <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-gray-800 dark:text-gray-300">
+            <User className="h-5 w-5 text-primary dark:text-primary-dark" />
             Thông tin cá nhân
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300">
             <p>
               <strong>Họ và tên:</strong> {verifyDetail.name}
             </p>
@@ -72,13 +72,13 @@ function VerifyOwnerDetail() {
             </p>
           </div>
         </div>
-        <Separator className="my-4" />
-        <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
-          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2">
-            <IdCard className="h-5 w-5 text-primary" />
+        <Separator className="my-4 dark:border-gray-700" />
+        <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-gray-800 dark:text-gray-300">
+            <IdCard className="h-5 w-5 text-primary dark:text-primary-dark" />
             Căn cước công dân
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300">
             <p>
               <strong>Họ và tên:</strong> {verifyDetail.identify.name}
             </p>
@@ -114,20 +114,20 @@ function VerifyOwnerDetail() {
                 href={verifyDetail.identify.file}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-500 underline"
+                className="text-blue-500 dark:text-blue-400 underline"
               >
                 Xem tệp
               </a>
             </p>
           </div>
         </div>
-        <Separator className="my-4" />
-        <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
-          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2">
-            <Globe className="h-5 w-5 text-primary" />
+        <Separator className="my-4 dark:border-gray-700" />
+        <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-gray-800 dark:text-gray-300">
+            <Globe className="h-5 w-5 text-primary dark:text-primary-dark" />
             Tài khoản mạng xã hội
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300">
             <p>
               <strong>Facebook:</strong> {verifyDetail.social.facebook}
             </p>
@@ -145,13 +145,13 @@ function VerifyOwnerDetail() {
             </p>
           </div>
         </div>
-        <Separator className="my-4" />
-        <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
-          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2">
-            <FileText className="h-5 w-5 text-primary" />
+        <Separator className="my-4 dark:border-gray-700" />
+        <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-gray-800 dark:text-gray-300">
+            <FileText className="h-5 w-5 text-primary dark:text-primary-dark" />
             Giấy phép kinh doanh
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300">
             <p>
               <strong>Tên công ty:</strong> {verifyDetail.license.name}
             </p>
@@ -171,29 +171,35 @@ function VerifyOwnerDetail() {
                 href={verifyDetail.license.file}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-500 underline"
+                className="text-blue-500 dark:text-blue-400 underline"
               >
                 Xem tệp
               </a>
             </p>
           </div>
         </div>
-        <Separator className="my-4" />
-        <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
-          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2">
-            <Phone className="h-5 w-5 text-primary" />
+        <Separator className="my-4 dark:border-gray-700" />
+        <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-gray-800 dark:text-gray-300">
+            <Phone className="h-5 w-5 text-primary dark:text-primary-dark" />
             Xác thực số điện thoại
           </h2>
-          <p>
+          <p className="text-gray-700 dark:text-gray-300">
             <strong>Số điện thoại:</strong> {verifyDetail.verifyPhone.phone}
           </p>
         </div>
-        <Separator className="my-4" />
+        <Separator className="my-4 dark:border-gray-700" />
         <div className="flex justify-end gap-4">
-          <Button variant="outline" onClick={handleReject}>
+          <Button
+            variant="outline"
+            onClick={handleReject}
+            className="dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700"
+          >
             Từ chối
           </Button>
-          <Button onClick={handleApprove}>Chấp nhận</Button>
+          <Button onClick={handleApprove} className="dark:bg-primary-dark dark:hover:bg-secondary-dark">
+            Chấp nhận
+          </Button>
         </div>
       </div>
     </div>
