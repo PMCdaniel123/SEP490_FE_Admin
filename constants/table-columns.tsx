@@ -25,6 +25,7 @@ import { ArrowUpDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import dayjs from "dayjs";
+import CustomerDropdown from "@/components/dropdown/customer-dropdown";
 
 export const topWorkspaceTableColumns: ColumnDef<TopWorkspace>[] = [
   {
@@ -240,26 +241,7 @@ export const CustomerTableColumns: ColumnDef<CustomerProps>[] = [
     cell: ({ row }) => {
       const customer = row.original;
 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="py-2">
-            <li
-              className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer"
-              onClick={() => console.log(customer.id)}
-            >
-              <Eye size={16} /> <span>Xem thông tin</span>
-            </li>
-            <li className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer">
-              <Ban size={16} /> <span>Chặn</span>
-            </li>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+      return <CustomerDropdown customer={customer} />;
     },
   },
 ];
@@ -300,30 +282,62 @@ export const OwnerTableColumns: ColumnDef<OwnerProps>[] = [
     },
   },
   {
-    accessorKey: "status",
+    accessorKey: "identityName",
     header: ({ column }) => {
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
-          <p>Xác thực</p>
+          <p>Chủ sở hữu</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </div>
       );
     },
     cell: ({ row }) => {
-      return row.getValue("status") === "Success" ? (
-        <p className="text-center font-medium flex items-center justify-center text-green-500">
-          <span>Thành công</span>
+      return (
+        <p className="text-center font-medium">
+          {row.getValue("identityName")}
         </p>
-      ) : row.getValue("status") === "Fail" ? (
-        <p className="text-center font-medium flex items-center justify-center text-red-500">
-          <span>Thất bại</span>
-        </p>
-      ) : (
-        <p className="text-center font-medium flex items-center justify-center text-yellow-500">
-          <span>Chưa xác thực</span>
+      );
+    },
+  },
+  {
+    accessorKey: "licenseName",
+    header: ({ column }) => {
+      return (
+        <div
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+        >
+          <p>Tên doanh nghiệp</p>
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <p className="text-center font-medium">{row.getValue("licenseName")}</p>
+      );
+    },
+  },
+  {
+    accessorKey: "licenseAddress",
+    header: ({ column }) => {
+      return (
+        <div
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+        >
+          <p>Địa chỉ</p>
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <p className="text-center font-medium w-52 truncate">
+          {row.getValue("licenseAddress")}
         </p>
       );
     },
@@ -341,12 +355,12 @@ export const OwnerTableColumns: ColumnDef<OwnerProps>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="py-2">
-            <li
+            <Link
               className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer"
-              onClick={() => console.log(owner.id)}
+              href={`owners/${owner.id}`}
             >
               <Eye size={16} /> <span>Xem thông tin</span>
-            </li>
+            </Link>
             <li className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer">
               <Ban size={16} /> <span>Chặn</span>
             </li>

@@ -1,6 +1,6 @@
 "use client";
 
-import EmployeeForm from "@/components/admin-form/employee-form";
+import EmployeeForm from "@/components/form/employee-form";
 
 function NewEmployee() {
   return (

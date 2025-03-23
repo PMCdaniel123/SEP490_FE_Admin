@@ -1,7 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Banknote, BriefcaseBusiness, CircleUserRound, Home, KeyRound, Sofa, UsersRound, Moon, Sun } from "lucide-react";
+import {
+  Banknote,
+  BriefcaseBusiness,
+  CircleUserRound,
+  Home,
+  KeyRound,
+  Sofa,
+  UsersRound,
+  Moon,
+  Sun,
+} from "lucide-react";
 import SidebarItem from "./sidebar-item";
 
 function Sidebar() {
@@ -30,27 +40,63 @@ function Sidebar() {
         <h1 className="text-2xl font-extrabold my-4 text-primary dark:text-white text-center">
           WorkHive
         </h1>
-        <button 
-          onClick={toggleTheme} 
+        <button
+          onClick={toggleTheme}
           className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300"
-          aria-label={theme === "light" ? "Chuyển sang chế độ tối" : "Chuyển sang chế độ sáng"}
-          title={theme === "light" ? "Chuyển sang chế độ tối" : "Chuyển sang chế độ sáng"}
+          aria-label={
+            theme === "light"
+              ? "Chuyển sang chế độ tối"
+              : "Chuyển sang chế độ sáng"
+          }
+          title={
+            theme === "light"
+              ? "Chuyển sang chế độ tối"
+              : "Chuyển sang chế độ sáng"
+          }
           aria-live="polite"
         >
           <div className="relative w-6 h-6 flex items-center justify-center overflow-hidden">
-            <Sun className={`absolute text-amber-500 transition-all duration-300 ${theme === 'light' ? 'opacity-100 transform-none' : 'opacity-0 rotate-90 scale-0'}`} />
-            <Moon className={`absolute text-indigo-400 transition-all duration-300 ${theme === 'dark' ? 'opacity-100 transform-none' : 'opacity-0 -rotate-90 scale-0'}`} />
+            <Sun
+              className={`absolute text-amber-500 transition-all duration-300 ${
+                theme === "light"
+                  ? "opacity-100 transform-none"
+                  : "opacity-0 rotate-90 scale-0"
+              }`}
+            />
+            <Moon
+              className={`absolute text-indigo-400 transition-all duration-300 ${
+                theme === "dark"
+                  ? "opacity-100 transform-none"
+                  : "opacity-0 -rotate-90 scale-0"
+              }`}
+            />
           </div>
         </button>
       </div>
       <nav className="flex flex-col gap-2 mt-10 ">
         <SidebarItem icon={Home} label="Trang chủ" href="/" />
         <SidebarItem icon={UsersRound} label="Khách hàng" href="/customers" />
-        <SidebarItem icon={BriefcaseBusiness} label="Doanh nghiệp" href="/owners" />
+        <SidebarItem
+          icon={BriefcaseBusiness}
+          label="Doanh nghiệp"
+          href="/owners"
+        />
         <SidebarItem icon={Sofa} label="Không gian" href="/workspaces" />
-        <SidebarItem icon={CircleUserRound} label="Nhân viên" href="/employees" />
-        <SidebarItem icon={KeyRound} label="Xác thực doanh nghiệp" href="/verify-owner" />
-        <SidebarItem icon={Banknote} label="Yêu cầu rút tiền" href="/withdrawal-request" />
+        <SidebarItem
+          icon={CircleUserRound}
+          label="Nhân viên"
+          href="/employees"
+        />
+        <SidebarItem
+          icon={KeyRound}
+          label="Xác thực doanh nghiệp"
+          href="/verify-owner"
+        />
+        <SidebarItem
+          icon={Banknote}
+          label="Yêu cầu rút tiền"
+          href="/withdrawal-request"
+        />
       </nav>
     </aside>
   );

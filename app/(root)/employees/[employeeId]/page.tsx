@@ -1,6 +1,6 @@
 "use client";
 
-import EmployeeForm from "@/components/admin-form/employee-form";
+import EmployeeForm from "@/components/form/employee-form";
 import { employeeList } from "@/constants/constant";
 import { EmployeeProps } from "@/types";
 import { useParams } from "next/navigation";

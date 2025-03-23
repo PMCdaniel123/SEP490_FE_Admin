@@ -7,47 +7,59 @@ import { X } from "lucide-react";
 
 interface ImagePreview {
   id: string;
-  file: File;
+  file?: File;
+  url?: string;
 }
 
 interface ImageUploadProps {
-  value: string[] | undefined;
-  handleChange: (value: string) => void;
-  handleRemove: (value: string) => void;
+  existingImages: string[];
+  onExistingImagesChange: (urls: string[]) => void;
+  onNewImagesChange: (files: File[]) => void;
 }
 
 const MultiImageUpload = ({
-  value = [],
-  handleChange,
-  handleRemove,
+  existingImages,
+  onExistingImagesChange,
+  onNewImagesChange,
 }: ImageUploadProps) => {
   const [images, setImages] = useState<ImagePreview[]>([]);
+  const [newImages, setNewImages] = useState<File[]>([]);
 
   useEffect(() => {
-    const existingImages = value.map((url) => ({
-      id: url,
-      file: new File([], url),
-    }));
-    setImages(existingImages);
-  }, [value]);
+    const allImages = [...existingImages.map((url) => ({ id: url, url }))];
+    setImages(allImages);
+  }, [existingImages]);
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     const validImages = files.filter((file) => file.type.startsWith("image/"));
 
-    const imagePreviews = validImages.map((file) => {
-      const url = URL.createObjectURL(file);
-      handleChange(url);
-      return { id: url, file };
-    });
+    const newImages = validImages.map((file) => ({
+      id: URL.createObjectURL(file),
+      file,
+    }));
 
-    setImages((prevImages) => [...prevImages, ...imagePreviews]);
+    setImages((prevImages) => [...prevImages, ...newImages]);
+    setNewImages((prev) => [...prev, ...validImages]);
   };
 
+  useEffect(() => {
+    onNewImagesChange(newImages);
+  }, [newImages, onNewImagesChange]);
+
   const removeImage = (id: string) => {
-    setImages((prevImages) => prevImages.filter((img) => img.id !== id));
-    handleRemove(id);
-    URL.revokeObjectURL(id);
+    const isUrl = existingImages.includes(id);
+
+    if (isUrl) {
+      onExistingImagesChange(existingImages.filter((url) => url !== id));
+    } else {
+      setImages((prevImages) => prevImages.filter((img) => img.id !== id));
+      setNewImages((prev) =>
+        prev.filter((file) => URL.createObjectURL(file) !== id)
+      );
+
+      URL.revokeObjectURL(id);
+    }
   };
 
   return (
@@ -59,6 +71,7 @@ const MultiImageUpload = ({
         accept="image/*"
         multiple
         onChange={handleImageChange}
+        disabled
       />
       <div className="flex flex-wrap gap-4">
         {images.map((img) => (
@@ -67,7 +80,7 @@ const MultiImageUpload = ({
             className="relative w-36 h-36 border rounded-md overflow-hidden"
           >
             <img
-              src={img.id}
+              src={img.url || img.id}
               alt="Preview"
               className="w-full h-full object-cover"
             />
@@ -75,6 +88,7 @@ const MultiImageUpload = ({
               onClick={() => removeImage(img.id)}
               className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
               type="button"
+              hidden
             >
               <X size={16} />
             </button>
