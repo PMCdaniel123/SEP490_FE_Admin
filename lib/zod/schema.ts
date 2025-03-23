@@ -90,3 +90,50 @@ export const licenseSchema = z.object({
     }),
   file: z.string().url("Vui lòng tải lên một file hợp lệ"),
 });
+
+export const workspaceSchema = z.object({
+  name: z.string().min(3, "Tên không gian phải có ít nhất 3 ký tự"),
+  openTime: z.string().nonempty("Vui lòng chọn thời gian mở cửa"),
+  closeTime: z.string().nonempty("Vui lòng chọn thời gian đóng cửa"),
+  is24h: z.number().min(0).max(1),
+  category: z.string({
+    required_error: "Vui lòng loại không gian hợp lệ",
+  }),
+  area: z.string().refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
+    message: "Diện tích phải lớn hơn 0 m²",
+  }),
+  capacity: z
+    .string()
+    .refine((val) => !isNaN(Number(val)) && Number(val) >= 1, {
+      message: "Sức chứa tối đa phải >= 1 người",
+    }),
+  cleanTime: z
+    .string()
+    .refine((val) => !isNaN(Number(val)) && Number(val) >= 1, {
+      message: "Thời gian dọn dẹp phải >= 1 phút",
+    }),
+  description: z.string().min(3, "Mô tả không gian phải có ít nhất 3 ký tự"),
+  shortTermPrice: z
+    .string()
+    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
+      message: "Giá theo giờ phải lớn hơn 0",
+    }),
+  longTermPrice: z
+    .string()
+    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
+      message: "Giá theo ngày phải lớn hơn 0",
+    }),
+  facilitiesStr: z.array(z.string(), {
+    required_error: "Vui lòng nhập ít nhất một tiện ích",
+  }),
+  policiesStr: z.array(z.string(), {
+    required_error: "Vui lòng nhập ít nhất một chính sách",
+  }),
+  imagesStr: z.array(z.string(), {
+    required_error: "Vui lòng tải lên ít nhất một hình ảnh",
+  }),
+  newImages: z.array(z.instanceof(File)).optional(),
+  status: z.string({
+    required_error: "Vui lòng chọn trạng thái hợp lệ",
+  }),
+});

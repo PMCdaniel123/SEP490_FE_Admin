@@ -89,6 +89,7 @@ export interface OwnerProps {
   googleMapUrl: string;
   charterCapital: string;
   licenseFile: string;
+  status: string;
 }
 
 export interface EmployeeProps {

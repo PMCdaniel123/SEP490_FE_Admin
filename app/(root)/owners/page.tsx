@@ -20,7 +20,9 @@ function OwnerManagement() {
           throw new Error("Có lỗi xảy ra khi tải danh sách doanh nghiệp.");
         }
         const data = await response.json();
-        const formatted = data.owners;
+        const formatted = Array.isArray(data.owners)
+          ? data.owners.filter((owner: OwnerProps) => owner.status === "Success")
+          : [];
         setOwnerList(formatted);
         setLoading(false);
       } catch (error) {

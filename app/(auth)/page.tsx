@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import EmailSignInForm from "@/components/admin-form/EmailSignInForm";
-import PhoneSignInForm from "@/components/admin-form/PhoneSignInForm";
+import EmailSignInForm from "@/components/form/email-signin-form";
+import PhoneSignInForm from "@/components/form/phone-signin-form";
 
 function LoginPage() {
   return (
