@@ -24,7 +24,7 @@ function OwnerDetail() {
         );
 
         if (!response.ok) {
-          throw new Error("Có lỗi xảy ra khi tải thông tin xác thực.");
+          throw new Error("Có lỗi xảy ra khi tải thông tin doanh nghiệp.");
         }
 
         const data = await response.json();
@@ -62,7 +62,7 @@ function OwnerDetail() {
         </h1>
         <Separator className="my-4 dark:border-gray-700" />
         <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
-          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-white px-4">
+          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
             <User className="h-5 w-5 text-primary dark:text-primary-dark" />
             Thông tin cá nhân
           </h2>
@@ -73,11 +73,21 @@ function OwnerDetail() {
             <p>
               <strong>Số điện thoại:</strong> {ownerDetail?.phone}
             </p>
+            <p>
+              <strong>Trạng thái:</strong>{" "}
+              {ownerDetail?.status === "Success" && (
+                <span className="text-green-500">Xác thực thành công</span>
+              )}
+            </p>
+            <p>
+              <strong>Ngày tạo:</strong>{" "}
+              {dayjs(ownerDetail?.updatedAt).format("HH:mm DD/MM/YYYY")}
+            </p>
           </div>
         </div>
         <Separator className="my-4 dark:border-gray-700" />
         <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
-          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-white px-4">
+          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
             <IdCard className="h-5 w-5 text-primary dark:text-primary-dark" />
             Căn cước công dân
           </h2>
@@ -127,7 +137,7 @@ function OwnerDetail() {
         </div>
         <Separator className="my-4 dark:border-gray-700" />
         <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
-          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-white px-4">
+          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
             <Globe className="h-5 w-5 text-primary dark:text-primary-dark" />
             Tài khoản mạng xã hội
           </h2>
@@ -154,7 +164,7 @@ function OwnerDetail() {
         </div>
         <Separator className="my-4 dark:border-gray-700" />
         <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
-          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-white px-4">
+          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
             <FileText className="h-5 w-5 text-primary dark:text-primary-dark" />
             Giấy phép kinh doanh
           </h2>

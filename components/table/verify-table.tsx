@@ -76,10 +76,10 @@ export default function VerifyTable<TData, TValue>({
       <Separator className="mb-4 dark:border-gray-700" />
       <div className="flex items-center">
         <Input
-          placeholder="Tên cần xác minh..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          placeholder="Số điện thoại cần xác minh..."
+          value={(table.getColumn("phone")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
+            table.getColumn("phone")?.setFilterValue(event.target.value)
           }
           className="max-w-sm dark:bg-gray-800 dark:text-white dark:border-gray-700"
         />
@@ -123,7 +123,10 @@ export default function VerifyTable<TData, TValue>({
               <TableRow key={headerGroup.id} className="dark:border-gray-700">
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="py-4 dark:text-gray-300">
+                    <TableHead
+                      key={header.id}
+                      className="py-4 dark:text-gray-300"
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
