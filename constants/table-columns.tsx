@@ -6,7 +6,6 @@ import {
   formatCurrency,
   OwnerProps,
   TopWorkspace,
-  VerifyProps,
   WithdrawalProps,
   Workspace,
 } from "@/types";
@@ -359,7 +358,7 @@ export const OwnerTableColumns: ColumnDef<OwnerProps>[] = [
               className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer"
               href={`owners/${owner.id}`}
             >
-              <Eye size={16} /> <span>Xem thông tin</span>
+              <Eye size={16} /> <span>Xem thông tin chi tiết</span>
             </Link>
             <li className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer">
               <Ban size={16} /> <span>Chặn</span>
@@ -516,7 +515,7 @@ export const EmployeeTableColumns: ColumnDef<EmployeeProps>[] = [
               className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer"
               href={`employees/${employee.id}`}
             >
-              <Eye size={16} /> <span>Xem thông tin</span>
+              <Eye size={16} /> <span>Xem thông tin chi tiết</span>
             </Link>
             <li className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer">
               <Ban size={16} /> <span>Chặn</span>
@@ -710,30 +709,7 @@ export const WorkspaceTableColumns: ColumnDef<Workspace>[] = [
   },
 ];
 
-export const VerifyTableColumns: ColumnDef<VerifyProps>[] = [
-  {
-    accessorKey: "name",
-    header: ({ column }) => {
-      return (
-        <div
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
-        >
-          <p>Họ và tên</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </div>
-      );
-    },
-    cell: ({ row }) => {
-      return (
-        <div className="flex items-center justify-center gap-2">
-          <div>
-            <p className="font-medium text-base">{row.original.name}</p>
-          </div>
-        </div>
-      );
-    },
-  },
+export const VerifyTableColumns: ColumnDef<OwnerProps>[] = [
   {
     accessorKey: "phone",
     header: ({ column }) => {
@@ -769,21 +745,23 @@ export const VerifyTableColumns: ColumnDef<VerifyProps>[] = [
     },
   },
   {
-    accessorKey: "location",
+    accessorKey: "updatedAt",
     header: ({ column }) => {
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
-          <p>Địa chỉ</p>
+          <p>Ngày tạo yêu cầu</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </div>
       );
     },
     cell: ({ row }) => {
       return (
-        <p className="text-center font-medium">{row.getValue("location")}</p>
+        <p className="text-center font-medium">
+          {dayjs(row.getValue("updatedAt")).format("HH:mm DD/MM/YYYY")}
+        </p>
       );
     },
   },
@@ -802,35 +780,14 @@ export const VerifyTableColumns: ColumnDef<VerifyProps>[] = [
     },
     cell: ({ row }) => {
       const status = row.getValue("status");
-      const statusColor =
-        status === "Đang chờ"
-          ? "text-yellow-500"
-          : status === "Đã xác minh"
-          ? "text-green-500"
-          : "text-red-500";
-      return (
-        <p className={`text-center font-medium ${statusColor}`}>
-          {status as string}
+      return status === "Handling" ? (
+        <p className={`text-center font-medium text-yellow-500`}>
+          Chờ xác thực
         </p>
-      );
-    },
-  },
-  {
-    accessorKey: "createdAt",
-    header: ({ column }) => {
-      return (
-        <div
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
-        >
-          <p>Ngày tạo</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </div>
-      );
-    },
-    cell: ({ row }) => {
-      return (
-        <p className="text-center font-medium">{row.getValue("createdAt")}</p>
+      ) : (
+        <p className={`text-center font-medium text-red-500`}>
+          Xác thực thất bại
+        </p>
       );
     },
   },
@@ -853,9 +810,6 @@ export const VerifyTableColumns: ColumnDef<VerifyProps>[] = [
             >
               <Eye size={16} /> <span>Xem thông tin chi tiết</span>
             </Link>
-            <li className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer">
-              <Ban size={16} /> <span>Chặn</span>
-            </li>
           </DropdownMenuContent>
         </DropdownMenu>
       );
