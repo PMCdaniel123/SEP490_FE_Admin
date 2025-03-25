@@ -4,6 +4,8 @@ interface Admin {
   id: string | null;
   email: string | null;
   phone: string | null;
+  name: string | null;
+  avatar: string | null;
 }
 
 interface AuthState {

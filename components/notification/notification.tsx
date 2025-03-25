@@ -65,10 +65,13 @@ const AdminNotification = () => {
   return (
     <div className="relative" ref={dropdownRef}>
       <div
-        className="relative cursor-pointer p-2 bg-card rounded-full hover:bg-primary hover:text-white dark:hover:bg-primary-dark transition-colors duration-200"
+        className="group relative cursor-pointer p-2 bg-card rounded-full hover:bg-primary hover:text-white dark:hover:bg-primary-dark transition-colors duration-200"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <Bell size={24} className="text-black dark:text-white" />
+        <Bell
+          size={24}
+          className="text-black dark:text-white group-hover:text-white"
+        />
         {unreadCount > 0 && (
           <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
             {unreadCount}
