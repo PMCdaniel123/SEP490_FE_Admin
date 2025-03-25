@@ -2,6 +2,7 @@
 
 import Loader from "@/components/loader/Loader";
 import WorkspaceTable from "@/components/table/workspace-table";
+import { BASE_URL } from "@/constants/environments";
 import { WorkspaceTableColumns } from "@/constants/table-columns";
 import { Workspace } from "@/types";
 import { useEffect, useState } from "react";
@@ -14,7 +15,7 @@ function WorkspaceManagement() {
   useEffect(() => {
     const fetchWorkspaceList = async () => {
       try {
-        const response = await fetch("https://localhost:5050/workspaces");
+        const response = await fetch(`${BASE_URL}/workspaces`);
 
         if (!response.ok) {
           throw new Error("Có lỗi xảy ra khi tải danh sách không gian.");

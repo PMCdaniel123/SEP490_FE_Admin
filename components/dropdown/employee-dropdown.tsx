@@ -7,10 +7,10 @@ import {
 } from "../ui/dropdown-menu";
 import { useState } from "react";
 import { Modal } from "antd";
-import { CustomerProps } from "@/types";
-import CustomerModal from "../modal/customer-modal";
+import { EmployeeProps } from "@/types";
+import EmployeeModal from "../modal/employee-modal";
 
-function CustomerDropdown({ customer }: { customer: CustomerProps }) {
+function EmployeeDropdown({ employee }: { employee: EmployeeProps }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -42,10 +42,10 @@ function CustomerDropdown({ customer }: { customer: CustomerProps }) {
         onCancel={() => setIsOpen(!isOpen)}
         footer={null}
       >
-        <CustomerModal customer={customer} />
+        <EmployeeModal employee={employee} />
       </Modal>
     </>
   );
 }
 
-export default CustomerDropdown;
+export default EmployeeDropdown;

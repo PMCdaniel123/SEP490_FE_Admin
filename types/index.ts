@@ -101,8 +101,8 @@ export interface EmployeeProps {
   email: string;
   password: string;
   location: string;
-  gender: string;
-  role: string;
+  sex: string;
+  roleName: string;
   dateOfBirth: string;
   status: string;
 }

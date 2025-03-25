@@ -1,5 +1,4 @@
 import {
-  EmployeeProps,
   MenuItemProps,
   NewCustomerItemProps,
   TopWorkspace,
@@ -123,35 +122,6 @@ export const newCustomers: NewCustomerItemProps[] = [
     avatar: "/logo.png",
     name: "Nguyễn Văn C",
     location: "Hà Nội, Việt Nam",
-  },
-];
-
-export const employeeList: EmployeeProps[] = [
-  {
-    id: "1",
-    avatar: "/logo.png",
-    name: "Nguyễn Văn A",
-    phone: "0123456789",
-    email: "RyYKd@example.com",
-    password: "abcdef",
-    location: "Hà Nội, Việt Nam",
-    gender: "1",
-    role: "1",
-    dateOfBirth: "14/02/2005",
-    status: "1",
-  },
-  {
-    id: "2",
-    avatar: "/logo.png",
-    name: "Nguyễn Văn B",
-    phone: "0123456789",
-    email: "RyYKd@example.com",
-    password: "abcdef",
-    location: "Hà Nội, Việt Nam",
-    gender: "2",
-    role: "2",
-    dateOfBirth: "14/02/2005",
-    status: "2",
   },
 ];
 

@@ -22,6 +22,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/stores";
 import { login } from "@/stores/slices/authSlice";
 import { LoadingOutlined } from "@ant-design/icons";
+import { BASE_URL } from "@/constants/environments";
 
 interface PhoneSignInFormProps {
   initialData?: AdminPhoneSignInProps | null;
@@ -50,7 +51,7 @@ function PhoneSignInForm({ initialData }: PhoneSignInFormProps) {
   const onSignIn = async (values: z.infer<typeof adminPhoneSchema>) => {
     setIsLoading(true);
     try {
-      const response = await fetch("https://localhost:5050/owners/login", {
+      const response = await fetch(`${BASE_URL}/users/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,24 +75,21 @@ function PhoneSignInForm({ initialData }: PhoneSignInFormProps) {
       const result = await response.json();
       const token = result.token;
 
-      localStorage.setItem("token", token);
+      localStorage.setItem("admin_token", token);
       router.push("/dashboard");
 
       try {
-        const decodeResponse = await fetch(
-          "https://localhost:5050/users/decodejwttoken",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              token: token,
-            }),
-          }
-        );
+        const decodeResponse = await fetch(`${BASE_URL}/users/decodejwttoken`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            token: token,
+          }),
+        });
         const decoded = await decodeResponse.json();
-        const ownerData = {
+        const adminData = {
           id: decoded.claims.sub,
           email: decoded.claims.email,
           phone: decoded.claims.Phone,
@@ -103,7 +101,7 @@ function PhoneSignInForm({ initialData }: PhoneSignInFormProps) {
           theme: "dark",
         });
 
-        dispatch(login(ownerData));
+        dispatch(login(adminData));
       } catch {
         toast.error("Có lỗi xảy ra khi giải mã token.", {
           position: "bottom-right",

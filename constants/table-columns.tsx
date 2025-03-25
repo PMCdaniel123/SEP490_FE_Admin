@@ -25,6 +25,7 @@ import Image from "next/image";
 import Link from "next/link";
 import dayjs from "dayjs";
 import CustomerDropdown from "@/components/dropdown/customer-dropdown";
+import EmployeeDropdown from "@/components/dropdown/employee-dropdown";
 
 export const topWorkspaceTableColumns: ColumnDef<TopWorkspace>[] = [
   {
@@ -385,20 +386,7 @@ export const EmployeeTableColumns: ColumnDef<EmployeeProps>[] = [
       );
     },
     cell: ({ row }) => {
-      return (
-        <div className="flex items-center justify-center gap-2">
-          <Image
-            src={row.original.avatar}
-            alt=""
-            width={46}
-            height={46}
-            className="border rounded-full"
-          />
-          <div>
-            <p className="font-medium text-base">{row.original.name}</p>
-          </div>
-        </div>
-      );
+      return <p className="text-center font-medium">{row.getValue("name")}</p>;
     },
   },
   {
@@ -436,26 +424,7 @@ export const EmployeeTableColumns: ColumnDef<EmployeeProps>[] = [
     },
   },
   {
-    accessorKey: "dateOfBirth",
-    header: ({ column }) => {
-      return (
-        <div
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
-        >
-          <p>Ngày sinh</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </div>
-      );
-    },
-    cell: ({ row }) => {
-      return (
-        <p className="text-center font-medium">{row.getValue("dateOfBirth")}</p>
-      );
-    },
-  },
-  {
-    accessorKey: "gender",
+    accessorKey: "sex",
     header: ({ column }) => {
       return (
         <div
@@ -468,13 +437,11 @@ export const EmployeeTableColumns: ColumnDef<EmployeeProps>[] = [
       );
     },
     cell: ({ row }) => {
-      return (
-        <p className="text-center font-medium">{row.getValue("gender")}</p>
-      );
+      return <p className="text-center font-medium">{row.getValue("sex")}</p>;
     },
   },
   {
-    accessorKey: "role",
+    accessorKey: "roleName",
     header: ({ column }) => {
       return (
         <div
@@ -487,7 +454,7 @@ export const EmployeeTableColumns: ColumnDef<EmployeeProps>[] = [
       );
     },
     cell: ({ row }) => {
-      return row.getValue("role") === "1" ? (
+      return row.getValue("roleName") === "Manager" ? (
         <p className="text-center font-medium flex items-center justify-center text-blue-500">
           <span>Quản lý</span>
         </p>
@@ -503,26 +470,7 @@ export const EmployeeTableColumns: ColumnDef<EmployeeProps>[] = [
     cell: ({ row }) => {
       const employee = row.original;
 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="py-2">
-            <Link
-              className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer"
-              href={`employees/${employee.id}`}
-            >
-              <Eye size={16} /> <span>Xem thông tin chi tiết</span>
-            </Link>
-            <li className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer">
-              <Ban size={16} /> <span>Chặn</span>
-            </li>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+      return <EmployeeDropdown employee={employee} />;
     },
   },
 ];

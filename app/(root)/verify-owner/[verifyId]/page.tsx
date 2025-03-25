@@ -2,6 +2,7 @@
 
 import Loader from "@/components/loader/Loader";
 import { Separator } from "@/components/ui/separator";
+import { BASE_URL } from "@/constants/environments";
 import { OwnerProps } from "@/types";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
@@ -27,7 +28,7 @@ function VerifyOwnerDetail() {
     const fetchOwnerData = async () => {
       try {
         const response = await fetch(
-          `https://localhost:5050/workspace-owners/${verifyId}`
+          `${BASE_URL}/workspace-owners/${verifyId}`
         );
 
         if (!response.ok) {
@@ -65,7 +66,7 @@ function VerifyOwnerDetail() {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `https://localhost:5050/owners/${verifyId}/status`,
+        `${BASE_URL}/owners/${verifyId}/status`,
         {
           method: "PUT",
           headers: {

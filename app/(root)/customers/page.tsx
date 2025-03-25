@@ -2,6 +2,7 @@
 
 import Loader from "@/components/loader/Loader";
 import CustomerTable from "@/components/table/customer-table";
+import { BASE_URL } from "@/constants/environments";
 import { CustomerTableColumns } from "@/constants/table-columns";
 import { CustomerProps } from "@/types";
 import { useEffect, useState } from "react";
@@ -14,7 +15,7 @@ function CustomerManagement() {
   useEffect(() => {
     const fetchCustomerList = async () => {
       try {
-        const response = await fetch("https://localhost:5050/users/customers");
+        const response = await fetch(`${BASE_URL}/users/customers`);
 
         if (!response.ok) {
           throw new Error("Có lỗi xảy ra khi tải danh sách khách hàng.");
