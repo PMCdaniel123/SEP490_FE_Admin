@@ -68,26 +68,37 @@ export default function OwnerTable<TData, TValue>({
     },
   });
 
+
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="font-bold mt-4 text-primary text-xl">Danh sách doanh nghiệp</h1>
-      <Separator className="mb-4" />
+      <div className="flex justify-between items-center">
+        <h1 className="font-bold mt-4 text-primary dark:text-primary-dark text-xl">
+          Danh sách doanh nghiệp
+        </h1>
+      </div>
+      <Separator className="mb-4 dark:border-gray-700" />
       <div className="flex items-center">
         <Input
-          placeholder="Tên doanh nghiệp..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          placeholder="Số điện thoại doanh nghiệp..."
+          value={(table.getColumn("phone")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
+            table.getColumn("phone")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-sm dark:bg-gray-800 dark:text-white dark:border-gray-700"
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
+            <Button
+              variant="outline"
+              className="ml-auto dark:bg-gray-800 dark:text-white dark:border-gray-700"
+            >
               <Info />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent
+            align="end"
+            className="dark:bg-gray-800 dark:text-white dark:border-gray-700"
+          >
             {table
               .getAllColumns()
               .filter((column) => column.getCanHide())
@@ -95,7 +106,7 @@ export default function OwnerTable<TData, TValue>({
                 return (
                   <DropdownMenuCheckboxItem
                     key={column.id}
-                    className="capitalize"
+                    className="capitalize dark:hover:bg-gray-700"
                     checked={column.getIsVisible()}
                     onCheckedChange={(value) =>
                       column.toggleVisibility(!!value)
@@ -108,14 +119,14 @@ export default function OwnerTable<TData, TValue>({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md border dark:border-gray-700">
         <Table>
-          <TableHeader>
+          <TableHeader className="dark:bg-gray-800">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="dark:border-gray-700">
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="py-4">
+                    <TableHead key={header.id} className="py-4 dark:text-gray-300">
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -128,15 +139,16 @@ export default function OwnerTable<TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody>
+          <TableBody className="dark:bg-gray-900">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  className="dark:border-gray-700 dark:hover:bg-gray-800"
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell key={cell.id} className="dark:text-gray-300">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -146,10 +158,10 @@ export default function OwnerTable<TData, TValue>({
                 </TableRow>
               ))
             ) : (
-              <TableRow>
+              <TableRow className="dark:border-gray-700">
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className="h-24 text-center dark:text-gray-300"
                 >
                   Không tìm thấy kết quả.
                 </TableCell>
@@ -164,6 +176,7 @@ export default function OwnerTable<TData, TValue>({
           size="sm"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
+          className="dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700"
         >
           Trước
         </Button>
@@ -172,6 +185,7 @@ export default function OwnerTable<TData, TValue>({
           size="sm"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
+          className="dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700"
         >
           Kế tiếp
         </Button>

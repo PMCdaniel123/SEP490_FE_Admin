@@ -37,50 +37,15 @@ export interface TopWorkspace {
   roomType: string;
 }
 
-export interface Workspace {
-  title: string;
-  address: string;
-  price: string;
-  image: string;
-  roomCapacity: number;
-  roomType: string;
-  roomSize: number;
-  rating: number;
-}
-
-export interface WorkspaceNotRating {
-  title: string;
-  address: string;
-  price: string;
-  image: string;
-  roomCapacity: number;
-  roomType: string;
-  roomSize: number;
-}
-
 export interface NewCustomerItemProps {
   avatar: string;
   name: string;
   location: string;
 }
 
-export interface ReviewItemProps {
-  avatar: string;
-  name: string;
-  date: string;
-  rating: number;
-  review: string;
-}
-
 export interface LabelIconProps {
   icon: LucideIcon;
   label: string;
-}
-
-export interface DetailsListProps {
-  roomCapacity: number;
-  roomSize: number;
-  roomType: string;
 }
 
 export interface PaginationProps {
@@ -90,27 +55,42 @@ export interface PaginationProps {
 }
 
 export interface CustomerProps {
-  id: string;
-  avatar: string;
+  id: number;
   name: string;
   phone: string;
   email: string;
-  location: string;
-  gender: string;
-  dateOfBirth: string;
   status: string;
+  avatar: string;
+  location: string;
+  dateOfBirth: string;
+  sex: string;
 }
 
 export interface OwnerProps {
-  id: string;
-  avatar: string;
-  name: string;
+  id: number;
   phone: string;
   email: string;
-  location: string;
-  gender: string;
+  identityName: string;
+  identityNumber: string;
   dateOfBirth: string;
+  sex: string;
+  nationality: string;
+  placeOfOrigin: string;
+  placeOfResidence: string;
+  identityExpiredDate: string;
+  identityCreatedDate: string;
+  identityFile: string;
+  facebook: string;
+  instagram: string;
+  tiktok: string;
+  licenseName: string;
+  licenseNumber: string;
+  licenseAddress: string;
+  googleMapUrl: string;
+  charterCapital: string;
+  licenseFile: string;
   status: string;
+  updatedAt: string;
 }
 
 export interface EmployeeProps {
@@ -121,76 +101,56 @@ export interface EmployeeProps {
   email: string;
   password: string;
   location: string;
-  gender: string;
-  role: string;
+  sex: string;
+  roleName: string;
   dateOfBirth: string;
   status: string;
 }
 
-export interface WorkspaceProps {
+export interface Image {
+  id: string;
+  imgUrl: string;
+}
+
+export interface Price {
+  id: string;
+  category: string;
+  price: number;
+}
+
+export interface Facilities {
+  id: string;
+  facilityName: string;
+}
+
+export interface Policies {
+  id: string;
+  policyName: string;
+}
+
+export interface Workspace {
   id: string;
   name: string;
-  address: string;
-  googleMapUrl: string;
+  description: string;
   capacity: string;
   category: string;
-  area: string;
+  status: string;
   cleanTime: string;
-  description: string;
+  area: string;
+  ownerId: string;
+  openTime: string;
+  closeTime: string;
+  is24h: number;
   shortTermPrice: string;
   longTermPrice: string;
-  facilities: string[];
-  policies: string[];
-  images: string[];
-  rating: number;
-  status: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface AmenityProps {
-  id: string;
-  name: string;
-  description: string;
-  price: string;
-  image: string;
-  quantity: string;
-  category: string;
-  status: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface BeverageProps {
-  id: string;
-  name: string;
-  description: string;
-  price: string;
-  image: string;
-  category: string;
-  status: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface PromotionProps {
-  id: string;
-  code: string;
-  description: string;
-  discount: string;
-  status: string;
-  startDate: string;
-  endDate: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface WithdrawalProps {
-  id: string;
-  number: string;
-  bank: string;
-  money: string;
-  status: string;
+  prices: Price[];
+  facilities: Facilities[];
+  policies: Policies[];
+  images: Image[];
+  pricesStr: string[];
+  facilitiesStr: string[];
+  policiesStr: string[];
+  imagesStr: string[];
   createdAt: string;
   updatedAt: string;
 }
@@ -232,13 +192,6 @@ export interface PhoneProps {
   phone: string;
 }
 
-export interface TimeItemProps {
-  id: string;
-  startDate: string;
-  endDate: string;
-  status: string;
-}
-
 export interface VerifyProps {
   id: string;
   name: string;
@@ -268,4 +221,51 @@ export interface WithdrawalRequestProps {
   createdAt: string;
   updatedAt: string;
   user: UserProps;
+}
+
+export interface AdminEmailSignInProps {
+  email: string;
+  password: string;
+}
+
+export interface AdminPhoneSignInProps {
+  phone: string;
+  password: string;
+}
+
+export interface BookingProps {
+  bookingId: string;
+  start_Date: string;
+  end_Date: string;
+  price: string;
+  status: string;
+  created_At: string;
+  payment_Method: string;
+  userId: string;
+  workspaceId: string;
+  promotionId: string;
+  amenities: {
+    amenityId: string;
+    quantity: string;
+    amenityName: string;
+    image: string;
+    unitPrice: string;
+  }[];
+  beverages: {
+    beverageId: string;
+    quantity: string;
+    beverageName: string;
+    image: string;
+    unitPrice: string;
+  }[];
+}
+
+export interface WithdrawalProps {
+  id: string;
+  number: string;
+  bank: string;
+  money: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
 }

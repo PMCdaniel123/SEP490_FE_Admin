@@ -38,6 +38,7 @@ const MultiText: React.FC<MultiTextProps> = ({
             addValue();
           }
         }}
+        disabled
         className="py-6 px-4 rounded-md file:bg-seventh"
       />
       <div className="flex flex-col gap-2 mt-2">
@@ -52,7 +53,7 @@ const MultiText: React.FC<MultiTextProps> = ({
               className="outline-none"
               onClick={() => handleRemove(item)}
             >
-              <X size={20} className="hover:text-red-600" />
+              <X size={20} className="hover:text-red-600 hidden" />
             </button>
           </p>
         ))}

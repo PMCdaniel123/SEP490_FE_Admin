@@ -3,6 +3,7 @@
     "adminFunction",
     "verify-Owner",
     "withdrawal-request",
-    "update admin"
+    "update admin",
+    "implement DarkMode for UI"
   ]
 }

@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { z } from "zod";
 
 export const signupSchema = z.object({
@@ -15,22 +16,26 @@ export const emailSchema = z.object({
   email: z.string().email("Địa chỉ email không hợp lệ"),
 });
 
+export const adminPhoneSchema = z.object({
+  phone: z.string().min(10, "Số điện thoại phải có ít nhất 10 ký tự"),
+  password: z.string().min(6, "Mật khẩu phải có ít nhất 6 ký tự"),
+});
+
+export const adminEmailSchema = z.object({
+  email: z.string().email("Địa chỉ email không hợp lệ"),
+  password: z.string().min(6, "Mật khẩu phải có ít nhất 6 ký tự"),
+});
+
 export const passwordSchema = z.object({
   password: z.string().min(6, "Mật khẩu phải có ít nhất 6 ký tự"),
 });
 
 export const employeeSchema = z.object({
   name: z.string().min(3, "Tên không gian phải có ít nhất 3 ký tự"),
-  dateOfBirth: z.string().nonempty("Vui lòng chọn ngày sinh"),
-  avatar: z.string().nonempty("Vui lòng chọn avatar"),
-  gender: z.string({
+  sex: z.string({
     required_error: "Vui lòng chọn giới tính hợp lệ",
   }),
-  location: z.string().min(3, "Địa chỉ không gian phải có ít nhất 3 ký tự"),
-  status: z.string({
-    required_error: "Vui lòng chọn trạng thái hợp lệ",
-  }),
-  role: z.string({
+  roleId: z.string({
     required_error: "Vui lòng chọn chức vụ hợp lệ",
   }),
   email: z.string().email("Địa chỉ email không hợp lệ"),
@@ -80,3 +85,84 @@ export const licenseSchema = z.object({
     }),
   file: z.string().url("Vui lòng tải lên một file hợp lệ"),
 });
+
+export const workspaceSchema = z.object({
+  name: z.string().min(3, "Tên không gian phải có ít nhất 3 ký tự"),
+  openTime: z.string().nonempty("Vui lòng chọn thời gian mở cửa"),
+  closeTime: z.string().nonempty("Vui lòng chọn thời gian đóng cửa"),
+  is24h: z.number().min(0).max(1),
+  category: z.string({
+    required_error: "Vui lòng loại không gian hợp lệ",
+  }),
+  area: z.string().refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
+    message: "Diện tích phải lớn hơn 0 m²",
+  }),
+  capacity: z
+    .string()
+    .refine((val) => !isNaN(Number(val)) && Number(val) >= 1, {
+      message: "Sức chứa tối đa phải >= 1 người",
+    }),
+  cleanTime: z
+    .string()
+    .refine((val) => !isNaN(Number(val)) && Number(val) >= 1, {
+      message: "Thời gian dọn dẹp phải >= 1 phút",
+    }),
+  description: z.string().min(3, "Mô tả không gian phải có ít nhất 3 ký tự"),
+  shortTermPrice: z
+    .string()
+    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
+      message: "Giá theo giờ phải lớn hơn 0",
+    }),
+  longTermPrice: z
+    .string()
+    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
+      message: "Giá theo ngày phải lớn hơn 0",
+    }),
+  facilitiesStr: z.array(z.string(), {
+    required_error: "Vui lòng nhập ít nhất một tiện ích",
+  }),
+  policiesStr: z.array(z.string(), {
+    required_error: "Vui lòng nhập ít nhất một chính sách",
+  }),
+  imagesStr: z.array(z.string(), {
+    required_error: "Vui lòng tải lên ít nhất một hình ảnh",
+  }),
+  newImages: z.array(z.instanceof(File)).optional(),
+  status: z.string({
+    required_error: "Vui lòng chọn trạng thái hợp lệ",
+  }),
+});
+
+const MIN_DATE = dayjs(new Date(1900, 0, 1));
+
+export const employeeFormSchema = z.object({
+  name: z.string().min(3, "Tên không gian phải có ít nhất 3 ký tự"),
+  sex: z.string({
+    required_error: "Vui lòng chọn giới tính hợp lệ",
+  }),
+  email: z.string().email("Địa chỉ email không hợp lệ"),
+  phone: z.string().min(10, "Số điện thoại phải có ít nhất 10 ký tự"),
+  avatar: z.union([z.string(), z.instanceof(File)]),
+  location: z.string().min(3, "Địa chỉ phải có ít nhất 3 ký tự"),
+  dateOfBirth: z
+    .string()
+    .refine((date) => dayjs(date, "DD/MM/YYYY", true).isValid(), {
+      message: "Ngày sinh không hợp lệ, định dạng phải là DD/MM/YYYY",
+    })
+    .refine((date) => dayjs(date, "DD/MM/YYYY").isAfter(MIN_DATE), {
+      message: "Sinh nhật phải lớn hơn 01/01/1900",
+    }),
+});
+
+export const changePasswordSchema = z
+  .object({
+    currentPassword: z.string().min(6, "Mật khẩu hiện tại là bắt buộc."),
+    newPassword: z.string().min(6, "Mật khẩu mới phải có ít nhất 6 ký tự."),
+    confirmPassword: z
+      .string()
+      .min(6, "Mật khẩu xác nhận phải có ít nhất 6 ký tự."),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Mật khẩu xác nhận không khớp.",
+    path: ["confirmPassword"],
+  });
