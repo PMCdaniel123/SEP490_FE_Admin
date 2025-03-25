@@ -13,43 +13,15 @@ import {
   TrendingUp,
   UsersRound,
   UtensilsCrossed,
-  Moon,
-  Sun,
 } from "lucide-react";
 import CustomerAnalysisChart from "@/components/charts/customer-analysis-chart";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 
 export default function OwnerPage() {
-  const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
-
   const date = new Date();
   const dateString = `T${date.getMonth() + 1}/${date.getFullYear()}`;
 
   return (
     <div className="flex flex-1 flex-col gap-4">
-      <div className="flex justify-end mb-2">
-        {mounted && (
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={toggleTheme}
-            className="rounded-full dark:bg-gray-800 dark:text-white dark:border-gray-700"
-          >
-            {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-          </Button>
-        )}
-      </div>
       <div className="grid gap-4 md:grid-cols-4">
         <div className="col-span-2 rounded-xl bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-4 p-4">
           <div className="col-span-1 flex items-center justify-center bg-[#27D095] rounded-xl text-white">

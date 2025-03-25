@@ -51,6 +51,8 @@ function TopNav() {
             id: decoded.claims.sub,
             email: decoded.claims.email,
             phone: decoded.claims.Phone,
+            name: decoded.claims.name,
+            avatar: decoded.avatarUrl,
           };
           dispatch(login(adminData));
         } catch (error) {
@@ -106,26 +108,26 @@ function TopNav() {
               onClick={() => setOpen(!open)}
             >
               <Image
-                src="/logo.png"
+                src={admin?.avatar || "/logo.png"}
                 alt="Logo"
                 width={40}
                 height={40}
                 className="rounded-full border dark:border-gray-700 group-hover:bg-white dark:group-hover:bg-gray-900"
               />
               <div className="flex flex-col justify-center items-start">
-                <p className="text-sm font-semibold">SĐT: {admin?.phone}</p>
+                <p className="text-sm font-semibold">{admin?.name}</p>
                 <p className="text-sm">{admin?.email}</p>
               </div>
               <ChevronsUpDown
                 size={20}
-                className="text-black dark:text-white"
+                className="text-black dark:text-white group-hover:text-white"
               />
             </div>
             {open && (
               <ul className="absolute top-full right-0 z-10 mt-2 w-auto gap-3 rounded-xl bg-card dark:bg-gray-900 shadow-xl pb-4 border dark:border-gray-700">
                 <div className="flex items-center justify-center py-2 px-4 gap-4 bg-primary rounded-t-xl">
                   <Image
-                    src="/logo.png"
+                    src={admin?.avatar || "/logo.png"}
                     alt="Logo"
                     width={40}
                     height={40}
@@ -133,7 +135,7 @@ function TopNav() {
                   />
                   <div className="flex flex-col justify-center items-start">
                     <p className="text-sm font-semibold text-white">
-                      SĐT: {admin?.phone}
+                      {admin?.name}
                     </p>
                     <p className="text-sm font-medium text-white">
                       {admin?.email}
@@ -173,7 +175,10 @@ function TopNav() {
         onCancel={() => setChangePassword(!changePassword)}
         footer={null}
       >
-        <ChangePasswordModal setChangePassword={setChangePassword} changePassword={changePassword} />
+        <ChangePasswordModal
+          setChangePassword={setChangePassword}
+          changePassword={changePassword}
+        />
       </Modal>
     </>
   );
