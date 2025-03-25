@@ -1,11 +1,10 @@
 "use client";
 
-import { EmployeeProps } from "@/types";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { employeeSchema } from "@/lib/zod/schema";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Save, SquarePen } from "lucide-react";
 import { Separator } from "../ui/separator";
 import {
@@ -17,7 +16,6 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import ImageUpload from "../custom-ui/image-upload";
 import {
   Select,
   SelectContent,
@@ -25,56 +23,83 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { useRouter } from "next/navigation";
+import { LoadingOutlined } from "@ant-design/icons";
+import { toast } from "react-toastify";
+import { BASE_URL } from "@/constants/environments";
 
-interface EmployeeFormProps {
-  initialData?: EmployeeProps | null;
-}
-
-function EmployeeForm({ initialData }: EmployeeFormProps) {
+function EmployeeForm() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const form = useForm<z.infer<typeof employeeSchema>>({
     resolver: zodResolver(employeeSchema),
-    defaultValues: initialData
-      ? { ...initialData }
-      : {
-          name: "",
-          avatar: "",
-          location: "",
-          email: "",
-          phone: "",
-          password: "",
-          dateOfBirth: "",
-          role: "1",
-          gender: "1",
-          status: "1",
-        },
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      password: "",
+      roleId: "3",
+      sex: "Nam",
+    },
   });
 
   useEffect(() => {
-    if (initialData) {
-      form.reset(initialData);
-    }
-  }, [initialData, form]);
+    form.reset();
+  }, [form]);
 
-  const onCreate = (values: z.infer<typeof employeeSchema>) => {
-    alert(JSON.stringify(values));
+  const onCreate = async (values: z.infer<typeof employeeSchema>) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${BASE_URL}/users/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error("Có lỗi xảy ra khi tạo nhân viên.");
+      }
+
+      toast.success("Tạo nhân viên thành công!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        theme: "light",
+      });
+
+      const data = await response.json();
+      console.log(data);
+      setLoading(false);
+
+      router.push("/employees");
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Đã xảy ra lỗi!";
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        theme: "light",
+      });
+      setLoading(false);
+    }
   };
+
   return (
     <div className="flex flex-col bg-card">
       <h1 className="text-xl font-bold text-primary flex items-center gap-4 mt-4">
         <SquarePen />
-        {initialData ? (
-          <span>Chỉnh sửa nhân viên</span>
-        ) : (
-          <span>Tạo mới nhân viên</span>
-        )}
+        <span>Tạo mới nhân viên</span>
       </h1>
       <Separator className="mt-4 mb-8 bg-primary" />
       <Form {...form}>
         <form
-          className="grid sm:grid-cols-3 gap-6 "
+          className="grid sm:grid-cols-2 gap-6 "
           onSubmit={form.handleSubmit(onCreate)}
         >
-          <div className="sm:col-span-3 flex flex-col gap-2 w-full">
+          <div className="sm:col-span-2 flex flex-col gap-2 w-full">
             <FormField
               control={form.control}
               name="name"
@@ -94,52 +119,6 @@ function EmployeeForm({ initialData }: EmployeeFormProps) {
                 </FormItem>
               )}
             />
-          </div>
-
-          <div className="sm:col-span-3 flex flex-col gap-2 w-full">
-            <FormField
-              control={form.control}
-              name="location"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-fourth dark:text-gray-300 font-bold text-base ml-6">
-                    Địa chỉ
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      className="py-6 px-4 rounded-md file:bg-seventh dark:bg-gray-800 dark:text-white dark:border-gray-700"
-                      placeholder="Nhập địa chỉ..."
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-500 text-xs" />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="sm:col-span-3 items-start justify-between gap-6 grid sm:grid-cols-3">
-            <div className="sm:col-span-1 flex flex-col gap-2 w-full">
-              <FormField
-                control={form.control}
-                name="dateOfBirth"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-fourth dark:text-gray-300 font-bold text-base ml-6">
-                      Ngày bắt đầu
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        className="py-6 px-4 rounded-md file:bg-seventh dark:bg-gray-800 dark:text-white dark:border-gray-700"
-                        placeholder="Nhập ngày bắt đầu..."
-                        type="date"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage className="text-red-500 text-xs" />
-                  </FormItem>
-                )}
-              />
-            </div>
           </div>
           <div className="sm:col-span-1 flex flex-col gap-2 w-full">
             <FormField
@@ -197,28 +176,8 @@ function EmployeeForm({ initialData }: EmployeeFormProps) {
                     <Input
                       className="py-6 px-4 rounded-md file:bg-seventh dark:bg-gray-800 dark:text-white dark:border-gray-700"
                       placeholder="Nhập mật khẩu..."
+                      type="password"
                       {...field}
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-500 text-xs" />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="sm:col-span-3 flex flex-col gap-2 w-full">
-            <FormField
-              control={form.control}
-              name="avatar"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-fourth dark:text-gray-300 font-bold text-base ml-6">
-                    Hình ảnh
-                  </FormLabel>
-                  <FormControl>
-                    <ImageUpload
-                      value={field.value}
-                      handleChange={(image) => field.onChange(image)}
-                      handleRemove={() => field.onChange("")}
                     />
                   </FormControl>
                   <FormMessage className="text-red-500 text-xs" />
@@ -229,7 +188,7 @@ function EmployeeForm({ initialData }: EmployeeFormProps) {
           <div className="sm:col-span-1 flex flex-col gap-2 w-full">
             <FormField
               control={form.control}
-              name="gender"
+              name="sex"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-fourth dark:text-gray-300 font-bold text-base ml-6">
@@ -237,7 +196,7 @@ function EmployeeForm({ initialData }: EmployeeFormProps) {
                   </FormLabel>
                   <FormControl>
                     <Select
-                      value={field.value || "2"}
+                      value={field.value || "Nữ"}
                       onValueChange={(value) => field.onChange(value)}
                     >
                       <SelectTrigger className="py-6 px-4 rounded-md w-full dark:bg-gray-800 dark:text-white dark:border-gray-700">
@@ -246,19 +205,19 @@ function EmployeeForm({ initialData }: EmployeeFormProps) {
                       <SelectContent>
                         <SelectItem
                           className="rounded-sm flex items-center gap-2 focus:bg-primary focus:text-white p-2 transition-colors duration-200"
-                          value="1"
+                          value="Nam"
                         >
                           Nam
                         </SelectItem>
                         <SelectItem
                           className="rounded-sm flex items-center gap-2 focus:bg-primary focus:text-white p-2 transition-colors duration-200"
-                          value="2"
+                          value="Nữ"
                         >
                           Nữ
                         </SelectItem>
                         <SelectItem
                           className="rounded-sm flex items-center gap-2 focus:bg-primary focus:text-white p-2 transition-colors duration-200"
-                          value="3"
+                          value="Khác"
                         >
                           Khác
                         </SelectItem>
@@ -273,16 +232,15 @@ function EmployeeForm({ initialData }: EmployeeFormProps) {
           <div className="sm:col-span-1 flex flex-col gap-2 w-full">
             <FormField
               control={form.control}
-              name="role"
+              name="roleId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth dark:text-gray-300
- font-bold text-base ml-6">
+                  <FormLabel className="text-fourth dark:text-gray-300 font-bold text-base ml-6">
                     Chức vụ
                   </FormLabel>
                   <FormControl>
                     <Select
-                      value={field.value || "2"}
+                      value={field.value || "3"}
                       onValueChange={(value) => field.onChange(value)}
                     >
                       <SelectTrigger className="py-6 px-4 rounded-md w-full dark:bg-gray-800 dark:text-white dark:border-gray-700">
@@ -291,13 +249,13 @@ function EmployeeForm({ initialData }: EmployeeFormProps) {
                       <SelectContent>
                         <SelectItem
                           className="rounded-sm flex items-center gap-2 focus:bg-primary focus:text-white p-2 transition-colors duration-200"
-                          value="1"
+                          value="2"
                         >
                           Quản lý
                         </SelectItem>
                         <SelectItem
                           className="rounded-sm flex items-center gap-2 focus:bg-primary focus:text-white p-2 transition-colors duration-200"
-                          value="2"
+                          value="3"
                         >
                           Nhân viên
                         </SelectItem>
@@ -309,50 +267,18 @@ function EmployeeForm({ initialData }: EmployeeFormProps) {
               )}
             />
           </div>
-          <div className="sm:col-span-1 flex flex-col gap-2 w-full">
-            <FormField
-              control={form.control}
-              name="status"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-fourth dark:text-gray-300 font-bold text-base ml-6">
-                    Trạng thái
-                  </FormLabel>
-                  <FormControl>
-                    <Select
-                      value={field.value || "2"}
-                      onValueChange={(value) => field.onChange(value)}
-                    >
-                      <SelectTrigger className="py-6 px-4 rounded-md w-full dark:bg-gray-800 dark:text-white dark:border-gray-700 ">
-                        <SelectValue placeholder="Chọn trạng thái" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem
-                          className="rounded-sm flex items-center gap-2 focus:bg-primary focus:text-white p-2 transition-colors duration-200"
-                          value="1"
-                        >
-                          Hoạt động
-                        </SelectItem>
-                        <SelectItem
-                          className="rounded-sm flex items-center gap-2 focus:bg-primary focus:text-white p-2 transition-colors duration-200"
-                          value="2"
-                        >
-                          Ngừng hoạt động
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage className="text-red-500 text-xs" />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="sm:col-span-3 flex flex-col gap-2 w-full">
+          <div className="sm:col-span-2 flex flex-col gap-2 w-full">
             <button
               className="z-10 flex gap-2 items-center justify-center bg-primary text-white py-3 rounded-md hover:bg-secondary"
               type="submit"
             >
-              <Save size={18} /> <span className="font-bold">Xác nhận</span>
+              {loading ? (
+                <LoadingOutlined style={{ color: "white" }} />
+              ) : (
+                <span className="font-bold flex items-center gap-2">
+                  <Save size={18} /> Xác nhận
+                </span>
+              )}
             </button>
           </div>
         </form>

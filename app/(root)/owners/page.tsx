@@ -2,6 +2,7 @@
 
 import Loader from "@/components/loader/Loader";
 import OwnerTable from "@/components/table/owner-table";
+import { BASE_URL } from "@/constants/environments";
 import { OwnerTableColumns } from "@/constants/table-columns";
 import { OwnerProps } from "@/types";
 import { useEffect, useState } from "react";
@@ -14,7 +15,7 @@ function OwnerManagement() {
   useEffect(() => {
     const fetchOwnerList = async () => {
       try {
-        const response = await fetch("https://localhost:5050/workspace-owners");
+        const response = await fetch(`${BASE_URL}/workspace-owners`);
 
         if (!response.ok) {
           throw new Error("Có lỗi xảy ra khi tải danh sách doanh nghiệp.");

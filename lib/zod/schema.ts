@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { z } from "zod";
 
 export const signupSchema = z.object({
@@ -31,16 +32,10 @@ export const passwordSchema = z.object({
 
 export const employeeSchema = z.object({
   name: z.string().min(3, "Tên không gian phải có ít nhất 3 ký tự"),
-  dateOfBirth: z.string().nonempty("Vui lòng chọn ngày sinh"),
-  avatar: z.string().nonempty("Vui lòng chọn avatar"),
-  gender: z.string({
+  sex: z.string({
     required_error: "Vui lòng chọn giới tính hợp lệ",
   }),
-  location: z.string().min(3, "Địa chỉ không gian phải có ít nhất 3 ký tự"),
-  status: z.string({
-    required_error: "Vui lòng chọn trạng thái hợp lệ",
-  }),
-  role: z.string({
+  roleId: z.string({
     required_error: "Vui lòng chọn chức vụ hợp lệ",
   }),
   email: z.string().email("Địa chỉ email không hợp lệ"),
@@ -137,3 +132,37 @@ export const workspaceSchema = z.object({
     required_error: "Vui lòng chọn trạng thái hợp lệ",
   }),
 });
+
+const MIN_DATE = dayjs(new Date(1900, 0, 1));
+
+export const employeeFormSchema = z.object({
+  name: z.string().min(3, "Tên không gian phải có ít nhất 3 ký tự"),
+  sex: z.string({
+    required_error: "Vui lòng chọn giới tính hợp lệ",
+  }),
+  email: z.string().email("Địa chỉ email không hợp lệ"),
+  phone: z.string().min(10, "Số điện thoại phải có ít nhất 10 ký tự"),
+  avatar: z.union([z.string(), z.instanceof(File)]),
+  location: z.string().min(3, "Địa chỉ phải có ít nhất 3 ký tự"),
+  dateOfBirth: z
+    .string()
+    .refine((date) => dayjs(date, "DD/MM/YYYY", true).isValid(), {
+      message: "Ngày sinh không hợp lệ, định dạng phải là DD/MM/YYYY",
+    })
+    .refine((date) => dayjs(date, "DD/MM/YYYY").isAfter(MIN_DATE), {
+      message: "Sinh nhật phải lớn hơn 01/01/1900",
+    }),
+});
+
+export const changePasswordSchema = z
+  .object({
+    currentPassword: z.string().min(6, "Mật khẩu hiện tại là bắt buộc."),
+    newPassword: z.string().min(6, "Mật khẩu mới phải có ít nhất 6 ký tự."),
+    confirmPassword: z
+      .string()
+      .min(6, "Mật khẩu xác nhận phải có ít nhất 6 ký tự."),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Mật khẩu xác nhận không khớp.",
+    path: ["confirmPassword"],
+  });

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface Owner {
+interface Admin {
   id: string | null;
   email: string | null;
   phone: string | null;
@@ -8,26 +8,26 @@ interface Owner {
 
 interface AuthState {
   isAuthenticated: boolean;
-  owner: Owner | null;
+  admin: Admin | null;
 }
 
 const initialState: AuthState = {
   isAuthenticated: false,
-  owner: null,
+  admin: null,
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    login(state, action: PayloadAction<Owner>) {
+    login(state, action: PayloadAction<Admin>) {
       state.isAuthenticated = true;
-      state.owner = action.payload;
+      state.admin = action.payload;
     },
     logout(state) {
       state.isAuthenticated = false;
-      state.owner = null;
-      localStorage.removeItem("token");
+      state.admin = null;
+      localStorage.removeItem("admin_token");
     },
   },
 });

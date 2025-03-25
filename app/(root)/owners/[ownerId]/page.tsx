@@ -2,6 +2,7 @@
 
 import Loader from "@/components/loader/Loader";
 import { Separator } from "@/components/ui/separator";
+import { BASE_URL } from "@/constants/environments";
 import { OwnerProps } from "@/types";
 import dayjs from "dayjs";
 import { FileText, Globe, IdCard, User } from "lucide-react";
@@ -20,7 +21,7 @@ function OwnerDetail() {
     const fetchOwnerData = async () => {
       try {
         const response = await fetch(
-          `https://localhost:5050/workspace-owners/${ownerId}`
+          `${BASE_URL}/workspace-owners/${ownerId}`
         );
 
         if (!response.ok) {
