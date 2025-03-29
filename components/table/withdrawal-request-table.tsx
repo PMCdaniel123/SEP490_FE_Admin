@@ -79,9 +79,11 @@ export default function WithdrawalRequestTable<TData, TValue>({
       <div className="flex items-center">
         <Input
           placeholder="Số tài khoản ngân hàng..."
-          value={(table.getColumn("number")?.getFilterValue() as string) ?? ""}
+          value={
+            (table.getColumn("bankNumber")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
-            table.getColumn("number")?.setFilterValue(event.target.value)
+            table.getColumn("bankNumber")?.setFilterValue(event.target.value)
           }
           className="max-w-sm dark:bg-gray-800 dark:text-white dark:border-gray-700"
         />
@@ -125,7 +127,10 @@ export default function WithdrawalRequestTable<TData, TValue>({
               <TableRow key={headerGroup.id} className="dark:border-gray-700">
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="py-4 dark:text-gray-300">
+                    <TableHead
+                      key={header.id}
+                      className="py-4 dark:text-gray-300"
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(

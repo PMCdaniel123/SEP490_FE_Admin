@@ -6,7 +6,7 @@ import {
   formatCurrency,
   OwnerProps,
   TopWorkspace,
-  WithdrawalProps,
+  WithdrawalRequestProps,
   Workspace,
 } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
@@ -17,7 +17,6 @@ import { Ban, Eye, MoreHorizontal } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ArrowUpDown } from "lucide-react";
@@ -765,52 +764,50 @@ export const VerifyTableColumns: ColumnDef<OwnerProps>[] = [
   },
 ];
 
-export const WithdrawalRequestTableColumns: ColumnDef<WithdrawalProps>[] = [
+export const WithdrawalTableColumns: ColumnDef<WithdrawalRequestProps>[] = [
   {
-    accessorKey: "number",
+    accessorKey: "bankNumber",
+    header: () => {
+      return (
+        <div className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer">
+          <p>Số tài khoản ngân hàng</p>
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <p className="text-center font-medium">{row.getValue("bankNumber")}</p>
+      );
+    },
+  },
+  {
+    accessorKey: "bankName",
     header: ({ column }) => {
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
-          Số tài khoản
+          <p>Tên ngân hàng</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </div>
       );
     },
     cell: ({ row }) => {
       return (
-        <p className="text-center font-medium">{row.getValue("number")}</p>
+        <p className="text-center font-medium">{row.getValue("bankName")}</p>
       );
     },
   },
   {
-    accessorKey: "bank",
+    accessorKey: "balance",
     header: ({ column }) => {
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
-          Ngân hàng
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </div>
-      );
-    },
-    cell: ({ row }) => {
-      return <p className="text-center font-medium">{row.getValue("bank")}</p>;
-    },
-  },
-  {
-    accessorKey: "money",
-    header: ({ column }) => {
-      return (
-        <div
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
-        >
-          Số tiền
+          <p>Số tiền</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </div>
       );
@@ -818,7 +815,7 @@ export const WithdrawalRequestTableColumns: ColumnDef<WithdrawalProps>[] = [
     cell: ({ row }) => {
       return (
         <p className="text-center font-medium">
-          {formatCurrency(Number(row.getValue("money")))}
+          {formatCurrency(Number(row.getValue("balance")))}
         </p>
       );
     },
@@ -829,16 +826,18 @@ export const WithdrawalRequestTableColumns: ColumnDef<WithdrawalProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
-          Ngày tạo
+          <p>Ngày tạo</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </div>
       );
     },
     cell: ({ row }) => {
       return (
-        <p className="text-center font-medium">{row.getValue("createdAt")}</p>
+        <p className="text-center font-medium">
+          {dayjs(row.getValue("createdAt")).format("HH:mm:ss DD/MM/YYYY")}
+        </p>
       );
     },
   },
@@ -848,36 +847,33 @@ export const WithdrawalRequestTableColumns: ColumnDef<WithdrawalProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
-          Trạng thái
+          <p>Trạng thái</p>
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </div>
       );
     },
     cell: ({ row }) => {
-      const status = row.getValue("status");
-      const statusColor =
-        status === "1"
-          ? "text-yellow-500"
-          : status === "2"
-          ? "text-green-500"
-          : "text-red-500";
-      const statusText =
-        status === "1"
-          ? "Đang chờ"
-          : status === "2"
-          ? "Đã duyệt"
-          : "Đã từ chối";
-      return (
-        <p className={`text-center font-medium ${statusColor}`}>{statusText}</p>
+      return row.getValue("status") === "Handling" ? (
+        <p className="text-center font-medium flex items-center justify-center text-yellow-500">
+          <span>Chờ xử lý</span>
+        </p>
+      ) : row.getValue("status") === "Success" ? (
+        <p className="text-center font-medium flex items-center justify-center text-green-500">
+          <span>Thành công</span>
+        </p>
+      ) : (
+        <p className="text-center font-medium flex items-center justify-center text-red-500">
+          <span>Thất bại</span>
+        </p>
       );
     },
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      const withdrawal = row.original;
+      const request = row.original;
 
       return (
         <DropdownMenu>
@@ -887,13 +883,12 @@ export const WithdrawalRequestTableColumns: ColumnDef<WithdrawalProps>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="py-2">
-            <DropdownMenuItem
-              onClick={() =>
-                (window.location.href = `/withdrawal-request/${withdrawal.id}`)
-              }
+            <Link
+              className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer"
+              href={`/withdrawal-request/${request.id}`}
             >
-              Xem chi tiết
-            </DropdownMenuItem>
+              <Eye size={16} /> <span>Xem thông tin chi tiết</span>
+            </Link>
           </DropdownMenuContent>
         </DropdownMenu>
       );

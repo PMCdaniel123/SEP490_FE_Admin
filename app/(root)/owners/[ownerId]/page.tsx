@@ -3,7 +3,7 @@
 import Loader from "@/components/loader/Loader";
 import { Separator } from "@/components/ui/separator";
 import { BASE_URL } from "@/constants/environments";
-import { OwnerProps } from "@/types";
+import { EmployeeProps, OwnerProps } from "@/types";
 import dayjs from "dayjs";
 import { FileText, Globe, IdCard, User } from "lucide-react";
 import Link from "next/link";
@@ -15,14 +15,13 @@ function OwnerDetail() {
   const { ownerId } = useParams() as { ownerId: string };
   const [ownerDetail, setOwnerDetail] = useState<OwnerProps | null>(null);
   const [loading, setLoading] = useState(true);
+  const [employee, setEmployee] = useState<EmployeeProps | null>(null);
 
   useEffect(() => {
     if (!ownerId) return;
     const fetchOwnerData = async () => {
       try {
-        const response = await fetch(
-          `${BASE_URL}/workspace-owners/${ownerId}`
-        );
+        const response = await fetch(`${BASE_URL}/workspace-owners/${ownerId}`);
 
         if (!response.ok) {
           throw new Error("Có lỗi xảy ra khi tải thông tin doanh nghiệp.");
@@ -46,6 +45,44 @@ function OwnerDetail() {
 
     fetchOwnerData();
   }, [ownerId]);
+
+  useEffect(() => {
+    if (!ownerDetail) {
+      return;
+    }
+
+    if (!ownerDetail.userId) {
+      return;
+    }
+
+    setLoading(true);
+    const fetchEmployee = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}/users/${ownerDetail.userId}`);
+
+        if (!response.ok) {
+          throw new Error("Có lỗi xảy ra khi tải thông tin nhân viên.");
+        }
+
+        const data = await response.json();
+        setEmployee(data.user);
+        setLoading(false);
+      } catch (error) {
+        const errorMessage =
+          error instanceof Error ? error.message : "Đã xảy ra lỗi!";
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          theme: "light",
+        });
+        setEmployee(null);
+        setLoading(false);
+      }
+    };
+
+    fetchEmployee();
+  }, [ownerDetail]);
 
   if (loading) {
     return (
@@ -84,6 +121,18 @@ function OwnerDetail() {
               <strong>Ngày tạo:</strong>{" "}
               {dayjs(ownerDetail?.updatedAt).format("HH:mm DD/MM/YYYY")}
             </p>
+            {ownerDetail?.userId && (
+              <p>
+                <span className="font-semibold">ID nhân viên xử lý: </span>
+                {ownerDetail?.userId}
+              </p>
+            )}
+            {ownerDetail?.userId && (
+              <p>
+                <span className="font-semibold">Nhân viên xử lý: </span>
+                {employee?.name}
+              </p>
+            )}
           </div>
         </div>
         <Separator className="my-4 dark:border-gray-700" />
