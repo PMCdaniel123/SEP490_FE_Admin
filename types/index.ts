@@ -91,6 +91,8 @@ export interface OwnerProps {
   licenseFile: string;
   status: string;
   updatedAt: string;
+  userId: string;
+  message: string;
 }
 
 export interface EmployeeProps {
@@ -213,14 +215,19 @@ export interface UserProps {
 }
 
 export interface WithdrawalRequestProps {
-  id: string;
-  number: string;
-  bank: string;
-  money: string;
+  id: number;
+  title: string;
+  description: string;
   status: string;
   createdAt: string;
-  updatedAt: string;
-  user: UserProps;
+  workspaceOwnerId: number;
+  userId: number;
+  walletId: number;
+  bankName: string;
+  bankNumber: string;
+  bankAccountName: string;
+  balance: string;
+  managerResponse: string | null;
 }
 
 export interface AdminEmailSignInProps {

@@ -5,7 +5,7 @@ import TopNav from "@/components/layout/top-nav";
 import Sidebar from "@/components/layout/sidebar";
 import { ToastContainer } from "react-toastify";
 import { Providers } from "@/stores/Providers";
-import { ThemeProvider } from "next-themes"; 
+import { ThemeProvider } from "next-themes";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -23,10 +23,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={montserrat.className}>
-        <ThemeProvider attribute="class" defaultTheme="light"> 
+        <ThemeProvider attribute="class" defaultTheme="light">
           <Providers>
             <div className="flex bg-third p-4 gap-4 min-h-screen w-full">
-              <Sidebar />
+              <div className="h-fit sticky top-4">
+                <Sidebar />
+              </div>
               <main className="flex-1">
                 <TopNav />
                 {children}

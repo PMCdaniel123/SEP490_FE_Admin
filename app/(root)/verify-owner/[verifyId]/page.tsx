@@ -1,9 +1,11 @@
 "use client";
 
 import Loader from "@/components/loader/Loader";
+import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { BASE_URL } from "@/constants/environments";
-import { OwnerProps } from "@/types";
+import { RootState } from "@/stores";
+import { EmployeeProps, OwnerProps } from "@/types";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
 import dayjs from "dayjs";
@@ -12,6 +14,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 function VerifyOwnerDetail() {
@@ -21,10 +24,15 @@ function VerifyOwnerDetail() {
   const [isAccepted, setIsAccepted] = useState(false);
   const [isRejected, setIsRejected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("");
   const router = useRouter();
+  const { admin } = useSelector((state: RootState) => state.auth);
+  const [employee, setEmployee] = useState<EmployeeProps | null>(null);
 
   useEffect(() => {
     if (!verifyId) return;
+
+    setLoading(true);
     const fetchOwnerData = async () => {
       try {
         const response = await fetch(
@@ -54,6 +62,46 @@ function VerifyOwnerDetail() {
     fetchOwnerData();
   }, [verifyId]);
 
+  useEffect(() => {
+    if (!verifyDetail) {
+      return;
+    }
+
+    if (!verifyDetail.userId) {
+      return;
+    }
+
+    setLoading(true);
+    const fetchEmployee = async () => {
+      try {
+        const response = await fetch(
+          `${BASE_URL}/users/${verifyDetail.userId}`
+        );
+
+        if (!response.ok) {
+          throw new Error("Có lỗi xảy ra khi tải thông tin nhân viên.");
+        }
+
+        const data = await response.json();
+        setEmployee(data.user);
+        setLoading(false);
+      } catch (error) {
+        const errorMessage =
+          error instanceof Error ? error.message : "Đã xảy ra lỗi!";
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          theme: "light",
+        });
+        setEmployee(null);
+        setLoading(false);
+      }
+    };
+
+    fetchEmployee();
+  }, [verifyDetail]);
+
   if (loading) {
     return (
       <div className="text-center">
@@ -65,16 +113,17 @@ function VerifyOwnerDetail() {
   const handleChangeStatus = async (status: string) => {
     try {
       setIsLoading(true);
-      const response = await fetch(
-        `${BASE_URL}/owners/${verifyId}/status`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ status }),
-        }
-      );
+      const response = await fetch(`${BASE_URL}/owners/${verifyId}/status`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          status,
+          message: status === "Success" ? "Ok" : message,
+          userId: admin?.id,
+        }),
+      });
 
       if (!response.ok) {
         throw new Error("Có lỗi xảy ra khi tải thông tin xác thực.");
@@ -154,6 +203,24 @@ function VerifyOwnerDetail() {
                 <strong>Ngày tạo:</strong>{" "}
                 {dayjs(verifyDetail?.updatedAt).format("HH:mm DD/MM/YYYY")}
               </p>
+              {verifyDetail?.userId && (
+                <p>
+                  <span className="font-semibold">ID nhân viên xử lý: </span>
+                  {verifyDetail?.userId}
+                </p>
+              )}
+              {verifyDetail?.userId && (
+                <p>
+                  <span className="font-semibold">Nhân viên xử lý: </span>
+                  {employee?.name}
+                </p>
+              )}
+              {verifyDetail?.userId && (
+                <p>
+                  <span className="font-semibold">Tin nhắn: </span>
+                  {verifyDetail?.message}
+                </p>
+              )}
             </div>
           </div>
           <Separator className="my-4 dark:border-gray-700" />
@@ -313,9 +380,13 @@ function VerifyOwnerDetail() {
         footer={[
           <button
             key="reject"
-            disabled={isLoading}
+            disabled={isLoading || message === ""}
             onClick={() => handleChangeStatus("Fail")}
-            className="px-4 py-2 rounded-lg border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-colors duration-300"
+            className={`px-4 py-2 rounded-lg border border-red-500 text-red-500 ${
+              message === ""
+                ? "cursor-not-allowed"
+                : "hover:bg-red-500 hover:text-white transition-colors duration-300"
+            } `}
           >
             {isLoading ? (
               <LoadingOutlined style={{ color: "white" }} />
@@ -328,6 +399,11 @@ function VerifyOwnerDetail() {
         <p className="text-gray-700 dark:text-gray-300 py-4">
           Bạn có muốn từ chối yêu cầu xác thực tài khoản doanh nghiệp này không?
         </p>
+        <Input
+          placeholder="Lý do"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        />
       </Modal>
     </>
   );

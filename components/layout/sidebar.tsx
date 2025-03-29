@@ -74,7 +74,7 @@ function Sidebar() {
         </button>
       </div>
       <nav className="flex flex-col gap-2 mt-10 ">
-        <SidebarItem icon={Home} label="Trang chủ" href="/" />
+        <SidebarItem icon={Home} label="Trang chủ" href="/dashboard" />
         <SidebarItem icon={UsersRound} label="Khách hàng" href="/customers" />
         <SidebarItem
           icon={BriefcaseBusiness}
