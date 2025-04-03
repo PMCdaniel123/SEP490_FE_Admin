@@ -48,8 +48,6 @@ function EmailSignInForm({ initialData }: EmailSignInFormProps) {
     }
   }, [initialData, form]);
 
-  console.log(BASE_URL);
-
   const onSignIn = async (values: z.infer<typeof adminEmailSchema>) => {
     setIsLoading(true);
     try {
@@ -65,20 +63,11 @@ function EmailSignInForm({ initialData }: EmailSignInFormProps) {
       });
 
       if (!response.ok) {
-        toast.error("Đăng nhập thất bại! Vui lòng kiểm tra lại.", {
-          position: "bottom-right",
-          autoClose: 2000,
-          hideProgressBar: true,
-          theme: "dark",
-        });
-        return;
+        throw new Error("Đăng nhập thất bại! Vui lòng kiểm tra lại.");
       }
 
       const result = await response.json();
       const token = result.token;
-
-      localStorage.setItem("admin_token", token);
-      router.push("/dashboard");
 
       try {
         const decodeResponse = await fetch(`${BASE_URL}/users/decodejwttoken`, {
@@ -90,6 +79,9 @@ function EmailSignInForm({ initialData }: EmailSignInFormProps) {
             token: token,
           }),
         });
+        if (!decodeResponse.ok) {
+          throw new Error("Đăng nhập thất bại! Vui lòng kiểm tra lại.");
+        }
         const decoded = await decodeResponse.json();
         const adminData = {
           id: decoded.claims.sub,
@@ -99,30 +91,38 @@ function EmailSignInForm({ initialData }: EmailSignInFormProps) {
           avatar: decoded.avatarUrl,
         };
         toast.success("Đăng nhập thành công!", {
-          position: "bottom-right",
+          position: "top-right",
           autoClose: 2000,
           hideProgressBar: true,
-          theme: "dark",
+          theme: "light",
         });
 
         dispatch(login(adminData));
-      } catch {
-        toast.error("Có lỗi xảy ra khi giải mã token.", {
-          position: "bottom-right",
+        localStorage.setItem("admin_token", token);
+        setIsLoading(false);
+        router.push("/dashboard");
+      } catch (error) {
+        const errorMessage =
+          error instanceof Error ? error.message : "Đã xảy ra lỗi!";
+        toast.error(errorMessage, {
+          position: "top-right",
           autoClose: 2000,
           hideProgressBar: true,
-          theme: "dark",
+          theme: "light",
         });
+        setIsLoading(false);
         return;
       }
-    } catch {
-      toast.error("Có lỗi xảy ra. Vui lòng thử lại sau.", {
-        position: "bottom-right",
+    } catch (error) {
+      console.log(error);
+      const errorMessage =
+        error instanceof Error ? error.message : "Đã xảy ra lỗi!";
+      toast.error(errorMessage, {
+        position: "top-right",
         autoClose: 2000,
         hideProgressBar: true,
-        theme: "dark",
+        theme: "light",
       });
-    } finally {
       setIsLoading(false);
     }
   };
@@ -188,9 +188,17 @@ function EmailSignInForm({ initialData }: EmailSignInFormProps) {
               {isLoading ? (
                 <LoadingOutlined style={{ color: "white" }} />
               ) : (
-                <span className="font-bold">Đăng nhập</span>
+                <span className="font-semibold">Đăng nhập</span>
               )}
             </button>
+            <div className="flex items-center justify-end mt-2">
+              <p
+                className="text-fifth font-medium text-sm cursor-pointer hover:text-fourth"
+                onClick={() => router.push("/forgot_password")}
+              >
+                Quên mật khẩu?
+              </p>
+            </div>
           </div>
           <div className="flex items-center my-2 w-full sm:col-span-3">
             <hr className="w-[10%] border-sixth h-1" />

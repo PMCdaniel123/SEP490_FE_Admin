@@ -11,12 +11,15 @@ import {
   UsersRound,
   Moon,
   Sun,
+  LayoutList,
 } from "lucide-react";
 import SidebarItem from "./sidebar-item";
+import { motion } from "framer-motion";
 
 function Sidebar() {
   const [theme, setTheme] = useState("light");
   const [mounted, setMounted] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") || "light";
@@ -35,11 +38,30 @@ function Sidebar() {
   if (!mounted) return null;
 
   return (
-    <aside className="w-72 bg-card p-4 rounded-xl">
+    <motion.aside
+      initial={{ width: "288px" }}
+      animate={{ width: isCollapsed ? "84px" : "288px" }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+      className="bg-white p-4 rounded-xl min-h-screen flex flex-col"
+    >
+      <motion.button
+        whileTap={{ scale: 0.9 }}
+        onClick={() => setIsCollapsed(!isCollapsed)}
+        className="mb-2 flex justify-center items-center w-full p-4 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
+      >
+        <LayoutList className="w-5 h-5" />
+      </motion.button>
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-extrabold my-4 text-primary dark:text-white text-center">
+        <motion.h1
+          initial={{ opacity: 1 }}
+          animate={{ opacity: isCollapsed ? 0 : 1 }}
+          transition={{ duration: 0.3 }}
+          className={`text-2xl font-extrabold mt-4 mb-8 text-primary dark:text-white text-center ${
+            isCollapsed ? "hidden" : "block"
+          }`}
+        >
           WorkHive
-        </h1>
+        </motion.h1>
         <button
           onClick={toggleTheme}
           className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300"
@@ -74,31 +96,50 @@ function Sidebar() {
         </button>
       </div>
       <nav className="flex flex-col gap-2 mt-10 ">
-        <SidebarItem icon={Home} label="Trang chủ" href="/dashboard" />
-        <SidebarItem icon={UsersRound} label="Khách hàng" href="/customers" />
+        <SidebarItem
+          icon={Home}
+          label="Trang chủ"
+          href="/dashboard"
+          collapsed={isCollapsed}
+        />
+        <SidebarItem
+          icon={UsersRound}
+          label="Khách hàng"
+          href="/customers"
+          collapsed={isCollapsed}
+        />
         <SidebarItem
           icon={BriefcaseBusiness}
           label="Doanh nghiệp"
           href="/owners"
+          collapsed={isCollapsed}
         />
-        <SidebarItem icon={Sofa} label="Không gian" href="/workspaces" />
+        <SidebarItem
+          icon={Sofa}
+          label="Không gian"
+          href="/workspaces"
+          collapsed={isCollapsed}
+        />
         <SidebarItem
           icon={CircleUserRound}
           label="Nhân viên"
           href="/employees"
+          collapsed={isCollapsed}
         />
         <SidebarItem
           icon={KeyRound}
           label="Xác thực doanh nghiệp"
           href="/verify-owner"
+          collapsed={isCollapsed}
         />
         <SidebarItem
           icon={Banknote}
           label="Yêu cầu rút tiền"
           href="/withdrawal-request"
+          collapsed={isCollapsed}
         />
       </nav>
-    </aside>
+    </motion.aside>
   );
 }
 
