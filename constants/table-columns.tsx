@@ -30,7 +30,7 @@ export const topWorkspaceTableColumns: ColumnDef<TopWorkspace>[] = [
   {
     accessorKey: "name",
     header: () => (
-      <div className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer">
+      <div className="text-white dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer">
         Tên không gian
       </div>
     ),
@@ -62,10 +62,10 @@ export const topWorkspaceTableColumns: ColumnDef<TopWorkspace>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
+          className="text-white dark:text-white font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
         >
           <p>Tổng lượt đặt</p>
-          <ArrowUpDown className="ml-2 h-4 w-4 dark:text-gray-300" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4 dark:text-gray-300" />
         </div>
       );
     },
@@ -83,10 +83,10 @@ export const topWorkspaceTableColumns: ColumnDef<TopWorkspace>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
+          className="text-white dark:text-white font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
         >
           <p>Đơn giá</p>
-          <ArrowUpDown className="ml-2 h-4 w-4 dark:text-gray-300" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4 dark:text-gray-300" />
         </div>
       );
     },
@@ -104,10 +104,10 @@ export const topWorkspaceTableColumns: ColumnDef<TopWorkspace>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
+          className="text-white dark:text-white font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
         >
           <p>Doanh thu</p>
-          <ArrowUpDown className="ml-2 h-4 w-4 dark:text-gray-300" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4 dark:text-gray-300" />
         </div>
       );
     },
@@ -122,15 +122,36 @@ export const topWorkspaceTableColumns: ColumnDef<TopWorkspace>[] = [
 ];
 export const CustomerTableColumns: ColumnDef<CustomerProps>[] = [
   {
+    accessorKey: "id",
+    header: ({ column }) => {
+      return (
+        <div
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+        >
+          <p>Mã khách hàng</p>
+          <ArrowUpDown size={16} className="ml-2" />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <p className="text-center font-medium">
+          KH{Number(row.getValue("id")).toString().padStart(4, "0")}
+        </p>
+      );
+    },
+  },
+  {
     accessorKey: "name",
     header: ({ column }) => {
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-white dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Họ và tên</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },
@@ -144,10 +165,10 @@ export const CustomerTableColumns: ColumnDef<CustomerProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-white dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Số điện thoại</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },
@@ -161,10 +182,10 @@ export const CustomerTableColumns: ColumnDef<CustomerProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-white dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Email</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },
@@ -173,53 +194,15 @@ export const CustomerTableColumns: ColumnDef<CustomerProps>[] = [
     },
   },
   {
-    accessorKey: "dateOfBirth",
-    header: ({ column }) => {
-      return (
-        <div
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
-        >
-          <p>Ngày sinh</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </div>
-      );
-    },
-    cell: ({ row }) => {
-      return (
-        <p className="text-center font-medium">
-          {dayjs(row.getValue("dateOfBirth")).format("DD/MM/YYYY")}
-        </p>
-      );
-    },
-  },
-  {
-    accessorKey: "sex",
-    header: ({ column }) => {
-      return (
-        <div
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
-        >
-          <p>Giới tính</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </div>
-      );
-    },
-    cell: ({ row }) => {
-      return <p className="text-center font-medium">{row.getValue("sex")}</p>;
-    },
-  },
-  {
     accessorKey: "status",
     header: ({ column }) => {
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-white dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Trạng thái</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },
@@ -247,15 +230,36 @@ export const CustomerTableColumns: ColumnDef<CustomerProps>[] = [
 
 export const OwnerTableColumns: ColumnDef<OwnerProps>[] = [
   {
+    accessorKey: "id",
+    header: ({ column }) => {
+      return (
+        <div
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+        >
+          <p>Mã doanh nghiệp</p>
+          <ArrowUpDown size={16} className="ml-2" />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <p className="text-center font-medium">
+          DN{Number(row.getValue("id")).toString().padStart(4, "0")}
+        </p>
+      );
+    },
+  },
+  {
     accessorKey: "email",
     header: ({ column }) => {
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-white dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Email</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },
@@ -269,10 +273,10 @@ export const OwnerTableColumns: ColumnDef<OwnerProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-white dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Số điện thoại</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },
@@ -286,10 +290,10 @@ export const OwnerTableColumns: ColumnDef<OwnerProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-white dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Chủ sở hữu</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },
@@ -307,37 +311,16 @@ export const OwnerTableColumns: ColumnDef<OwnerProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-white dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Tên doanh nghiệp</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },
     cell: ({ row }) => {
       return (
         <p className="text-center font-medium">{row.getValue("licenseName")}</p>
-      );
-    },
-  },
-  {
-    accessorKey: "licenseAddress",
-    header: ({ column }) => {
-      return (
-        <div
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
-        >
-          <p>Địa chỉ</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </div>
-      );
-    },
-    cell: ({ row }) => {
-      return (
-        <p className="text-center font-medium w-52 truncate">
-          {row.getValue("licenseAddress")}
-        </p>
       );
     },
   },
@@ -372,15 +355,36 @@ export const OwnerTableColumns: ColumnDef<OwnerProps>[] = [
 
 export const EmployeeTableColumns: ColumnDef<EmployeeProps>[] = [
   {
+    accessorKey: "id",
+    header: ({ column }) => {
+      return (
+        <div
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+        >
+          <p>Mã nhân viên</p>
+          <ArrowUpDown size={16} className="ml-2" />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <p className="text-center font-medium">
+          NV{Number(row.getValue("id")).toString().padStart(4, "0")}
+        </p>
+      );
+    },
+  },
+  {
     accessorKey: "name",
     header: ({ column }) => {
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-white dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Họ và tên</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },
@@ -394,10 +398,10 @@ export const EmployeeTableColumns: ColumnDef<EmployeeProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-white dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Số điện thoại</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },
@@ -411,10 +415,10 @@ export const EmployeeTableColumns: ColumnDef<EmployeeProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-white dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Email</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },
@@ -428,10 +432,10 @@ export const EmployeeTableColumns: ColumnDef<EmployeeProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
+          className="text-white dark:text-white font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
         >
           <p>Giới tính</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },
@@ -445,10 +449,10 @@ export const EmployeeTableColumns: ColumnDef<EmployeeProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
+          className="text-white dark:text-white font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
         >
           <p>Chức vụ</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },
@@ -483,15 +487,36 @@ const workspaceCategory: Record<string, string> = {
 
 export const WorkspaceTableColumns: ColumnDef<Workspace>[] = [
   {
+    accessorKey: "id",
+    header: ({ column }) => {
+      return (
+        <div
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+        >
+          <p>Mã không gian</p>
+          <ArrowUpDown size={16} className="ml-2" />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <p className="text-center font-medium">
+          KH{Number(row.getValue("id")).toString().padStart(4, "0")}
+        </p>
+      );
+    },
+  },
+  {
     accessorKey: "name",
     header: ({ column }) => {
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-white dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Tên không gian</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },
@@ -502,7 +527,7 @@ export const WorkspaceTableColumns: ColumnDef<Workspace>[] = [
   {
     accessorKey: "image",
     header: () => (
-      <div className="text-black dark:text-white  font-semibold text-base text-center">
+      <div className="text-white dark:text-white  font-semibold text-base text-center">
         Hình ảnh
       </div>
     ),
@@ -512,32 +537,51 @@ export const WorkspaceTableColumns: ColumnDef<Workspace>[] = [
           <Image
             src={row.original.images[0].imgUrl}
             alt={row.original.name}
-            width={100}
-            height={100}
+            width={80}
+            height={80}
             className="object-cover rounded-md"
           />
         </div>
       );
     },
   },
-  { accessorKey: "longTermPrice", header: () => <p></p>, cell: () => <p></p> },
   {
     accessorKey: "shortTermPrice",
     header: ({ column }) => {
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
-          <p>Đơn giá</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <p>Giá giờ</p>
+          <ArrowUpDown size={16} className="ml-2" />
         </div>
       );
     },
     cell: ({ row }) => {
       return (
         <p className="text-center font-medium">
-          {formatCurrency(Number(row.getValue("shortTermPrice")))} -{" "}
+          {formatCurrency(Number(row.getValue("shortTermPrice")))}
+        </p>
+      );
+    },
+  },
+  {
+    accessorKey: "longTermPrice",
+    header: ({ column }) => {
+      return (
+        <div
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+        >
+          <p>Giá ngày</p>
+          <ArrowUpDown size={16} className="ml-2" />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <p className="text-center font-medium">
           {formatCurrency(Number(row.getValue("longTermPrice")))}
         </p>
       );
@@ -549,10 +593,10 @@ export const WorkspaceTableColumns: ColumnDef<Workspace>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-white dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
-          <p>Loại không gian</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <p>Phân loại</p>
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },
@@ -566,55 +610,15 @@ export const WorkspaceTableColumns: ColumnDef<Workspace>[] = [
     },
   },
   {
-    accessorKey: "capacity",
-    header: ({ column }) => {
-      return (
-        <div
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
-        >
-          <p>Sức chứa</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </div>
-      );
-    },
-    cell: ({ row }) => {
-      return (
-        <p className="text-center font-medium">
-          {row.getValue("capacity")} người
-        </p>
-      );
-    },
-  },
-  {
-    accessorKey: "area",
-    header: ({ column }) => {
-      return (
-        <div
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
-        >
-          <p>Diện tích</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </div>
-      );
-    },
-    cell: ({ row }) => {
-      return (
-        <p className="text-center font-medium">{row.getValue("area")} m²</p>
-      );
-    },
-  },
-  {
     accessorKey: "status",
     header: ({ column }) => {
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-white dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Trạng thái</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },
@@ -663,10 +667,10 @@ export const VerifyTableColumns: ColumnDef<OwnerProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-white dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Số điện thoại</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },
@@ -680,10 +684,10 @@ export const VerifyTableColumns: ColumnDef<OwnerProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-white dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Email</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },
@@ -697,10 +701,10 @@ export const VerifyTableColumns: ColumnDef<OwnerProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-white dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Ngày tạo yêu cầu</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },
@@ -718,10 +722,10 @@ export const VerifyTableColumns: ColumnDef<OwnerProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black dark:text-white font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
+          className="text-white dark:text-white font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
         >
           <p>Trạng thái</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },
@@ -769,7 +773,7 @@ export const WithdrawalTableColumns: ColumnDef<WithdrawalRequestProps>[] = [
     accessorKey: "bankNumber",
     header: () => {
       return (
-        <div className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer">
+        <div className="text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer">
           <p>Số tài khoản ngân hàng</p>
         </div>
       );
@@ -786,10 +790,10 @@ export const WithdrawalTableColumns: ColumnDef<WithdrawalRequestProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Tên ngân hàng</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },
@@ -805,10 +809,10 @@ export const WithdrawalTableColumns: ColumnDef<WithdrawalRequestProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Số tiền</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },
@@ -826,10 +830,10 @@ export const WithdrawalTableColumns: ColumnDef<WithdrawalRequestProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Ngày tạo</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },
@@ -847,10 +851,10 @@ export const WithdrawalTableColumns: ColumnDef<WithdrawalRequestProps>[] = [
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-black font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+          className="text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
         >
           <p>Trạng thái</p>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
         </div>
       );
     },

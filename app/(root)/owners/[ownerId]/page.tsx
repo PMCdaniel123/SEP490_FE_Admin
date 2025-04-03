@@ -4,10 +4,11 @@ import Loader from "@/components/loader/Loader";
 import { Separator } from "@/components/ui/separator";
 import { BASE_URL } from "@/constants/environments";
 import { EmployeeProps, OwnerProps } from "@/types";
+import { LoadingOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
-import { FileText, Globe, IdCard, User } from "lucide-react";
+import { Ban, FileText, Globe, IdCard, User } from "lucide-react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -16,6 +17,7 @@ function OwnerDetail() {
   const [ownerDetail, setOwnerDetail] = useState<OwnerProps | null>(null);
   const [loading, setLoading] = useState(true);
   const [employee, setEmployee] = useState<EmployeeProps | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (!ownerId) return;
@@ -84,6 +86,37 @@ function OwnerDetail() {
     fetchEmployee();
   }, [ownerDetail]);
 
+  const handleBan = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `${BASE_URL}/users/banowner/${ownerDetail?.id}`,
+        {
+          method: "PATCH",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Có lỗi xảy ra khi chặn doanh nghiệp.");
+      }
+
+      const data = await response.json();
+      console.log(data);
+      setLoading(false);
+      router.push("/owners");
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Đã xảy ra lỗi!";
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        theme: "light",
+      });
+      setLoading(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="text-center">
@@ -98,7 +131,21 @@ function OwnerDetail() {
         <h1 className="text-xl font-bold text-center text-primary">
           Thông tin chi tiết doanh nghiệp
         </h1>
-        <Separator className="my-4 dark:border-gray-700" />
+        <div className="mt-4 flex justify-end">
+          <button
+            className="border rounded-md font-semibold border-red-500 text-red-500 px-6 py-2 hover:bg-red-500 hover:text-white transition-colors duration-300"
+            onClick={handleBan}
+          >
+            {loading ? (
+              <LoadingOutlined style={{ color: "red" }} />
+            ) : (
+              <span className="flex items-center gap-2">
+                <Ban size={16} /> Chặn
+              </span>
+            )}
+          </button>
+        </div>
+        <Separator className="mb-4 dark:border-gray-700" />
         <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
           <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
             <User className="h-5 w-5 text-primary dark:text-primary-dark" />

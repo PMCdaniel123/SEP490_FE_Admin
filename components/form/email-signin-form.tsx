@@ -93,7 +93,7 @@ function EmailSignInForm({ initialData }: EmailSignInFormProps) {
         toast.success("Đăng nhập thành công!", {
           position: "top-right",
           autoClose: 2000,
-          hideProgressBar: true,
+          hideProgressBar: false,
           theme: "light",
         });
 
@@ -107,7 +107,7 @@ function EmailSignInForm({ initialData }: EmailSignInFormProps) {
         toast.error(errorMessage, {
           position: "top-right",
           autoClose: 2000,
-          hideProgressBar: true,
+          hideProgressBar: false,
           theme: "light",
         });
         setIsLoading(false);
@@ -120,7 +120,7 @@ function EmailSignInForm({ initialData }: EmailSignInFormProps) {
       toast.error(errorMessage, {
         position: "top-right",
         autoClose: 2000,
-        hideProgressBar: true,
+        hideProgressBar: false,
         theme: "light",
       });
       setIsLoading(false);

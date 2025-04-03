@@ -5,6 +5,7 @@ import OwnerTable from "@/components/table/owner-table";
 import { BASE_URL } from "@/constants/environments";
 import { OwnerTableColumns } from "@/constants/table-columns";
 import { OwnerProps } from "@/types";
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -22,7 +23,12 @@ function OwnerManagement() {
         }
         const data = await response.json();
         const formatted = Array.isArray(data.owners)
-          ? data.owners.filter((owner: OwnerProps) => owner.status === "Success")
+          ? data.owners
+              .filter((owner: OwnerProps) => owner.status === "Success")
+              .sort(
+                (a: OwnerProps, b: OwnerProps) =>
+                  dayjs(b.updatedAt).unix() - dayjs(a.updatedAt).unix()
+              )
           : [];
         setOwnerList(formatted);
         setLoading(false);

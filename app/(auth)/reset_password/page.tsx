@@ -78,7 +78,7 @@ function ResetPassword() {
         toast.error("Token không chính xác.", {
           position: "top-right",
           autoClose: 2000,
-          hideProgressBar: true,
+          hideProgressBar: false,
           theme: "light",
         });
         return;
@@ -86,7 +86,7 @@ function ResetPassword() {
       toast.success("Đặt lại mật khẩu thành công!", {
         position: "top-right",
         autoClose: 2000,
-        hideProgressBar: true,
+        hideProgressBar: false,
         theme: "light",
       });
       localStorage.removeItem("admin_email_ls");

@@ -4,7 +4,6 @@ import { ChevronsUpDown, LockKeyhole, LogOut, Settings } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Separator } from "../ui/separator";
-import AdminNotification from "../notification/notification";
 import { RootState } from "@/stores";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
@@ -101,7 +100,6 @@ function TopNav() {
     <>
       <div className="flex items-center justify-between">
         <div className="flex items-center justify-end w-full mb-4 gap-4">
-          <AdminNotification />
           <div ref={dropdownRef} className="relative">
             <div
               className="group flex items-center justify-center bg-card rounded-xl py-2 px-4 gap-4 hover:bg-primary hover:text-white dark:hover:bg-primary-dark dark:hover:text-white cursor-pointer transition-colors duration-200"
@@ -145,18 +143,18 @@ function TopNav() {
                 <Separator className="mb-2 dark:border-gray-700" />
                 <Link
                   href="/profile"
-                  className="px-4 flex items-center gap-2 hover:bg-primary hover:text-white dark:hover:bg-primary-dark dark:hover:text-white py-1 transition-colors duration-200 cursor-pointer"
+                  className="px-4 flex items-center gap-2 hover:bg-primary hover:text-white dark:hover:bg-primary-dark dark:hover:text-white py-2 transition-colors duration-200 cursor-pointer"
                 >
                   <Settings size={16} /> <span>Sửa thông tin</span>
                 </Link>
                 <li
-                  className="px-4 flex items-center gap-2 hover:bg-primary hover:text-white dark:hover:bg-primary-dark dark:hover:text-white py-1 transition-colors duration-200 cursor-pointer"
+                  className="px-4 flex items-center gap-2 hover:bg-primary hover:text-white dark:hover:bg-primary-dark dark:hover:text-white py-2 transition-colors duration-200 cursor-pointer"
                   onClick={() => setChangePassword(true)}
                 >
                   <LockKeyhole size={16} /> <span>Đổi mật khẩu</span>
                 </li>
                 <li
-                  className="px-4 flex items-center gap-2 hover:bg-primary hover:text-white dark:hover:bg-primary-dark dark:hover:text-white py-1 transition-colors duration-200 cursor-pointer"
+                  className="px-4 flex items-center gap-2 hover:bg-primary hover:text-white dark:hover:bg-primary-dark dark:hover:text-white py-2 transition-colors duration-200 cursor-pointer"
                   onClick={handleLogOut}
                 >
                   <LogOut size={16} /> <span>Đăng xuất</span>

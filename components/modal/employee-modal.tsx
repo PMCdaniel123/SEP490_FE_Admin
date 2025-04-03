@@ -1,15 +1,55 @@
+"use client";
+
+import { BASE_URL } from "@/constants/environments";
 import { EmployeeProps } from "@/types";
+import { LoadingOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { Ban } from "lucide-react";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 function EmployeeModal({ employee }: { employee: EmployeeProps }) {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
   useEffect(() => {
     if (!employee) {
       return;
     }
   }, [employee]);
+
+  const handleBan = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `${BASE_URL}/users/banstaff/${employee.id}`,
+        {
+          method: "PATCH",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Có lỗi xảy ra khi chặn nhân viên.");
+      }
+
+      const data = await response.json();
+      console.log(data);
+      setLoading(false);
+      router.push("/employees");
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Đã xảy ra lỗi!";
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        theme: "light",
+      });
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="mt-8">
@@ -38,7 +78,9 @@ function EmployeeModal({ employee }: { employee: EmployeeProps }) {
         </p>
         <p>
           <span className="font-semibold">Ngày sinh: </span>
-          {dayjs(employee?.dateOfBirth).format("DD/MM/YYYY")}
+          {employee.dateOfBirth !== null
+            ? dayjs(employee.dateOfBirth).format("DD/MM/YYYY")
+            : "Chưa cập nhật"}
         </p>
         <p>
           <span className="font-semibold">Giới tính: </span>
@@ -66,8 +108,17 @@ function EmployeeModal({ employee }: { employee: EmployeeProps }) {
         </p>
       </div>
       <div className="mt-4 flex justify-end">
-        <button className="border flex items-center gap-2 rounded-md font-semibold border-red-500 text-red-500 px-6 py-2 hover:bg-red-500 hover:text-white transition-colors duration-300">
-          <Ban size={16} /> Chặn
+        <button
+          className="border rounded-md font-semibold border-red-500 text-red-500 px-6 py-2 hover:bg-red-500 hover:text-white transition-colors duration-300"
+          onClick={handleBan}
+        >
+          {loading ? (
+            <LoadingOutlined style={{ color: "red" }} />
+          ) : (
+            <span className="flex items-center gap-2">
+              <Ban size={16} /> Chặn
+            </span>
+          )}
         </button>
       </div>
     </div>

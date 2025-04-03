@@ -90,7 +90,7 @@ function PhoneSignInForm({ initialData }: PhoneSignInFormProps) {
         toast.success("Đăng nhập thành công!", {
           position: "top-right",
           autoClose: 2000,
-          hideProgressBar: true,
+          hideProgressBar: false,
           theme: "light",
         });
 
@@ -104,7 +104,7 @@ function PhoneSignInForm({ initialData }: PhoneSignInFormProps) {
         toast.error(errorMessage, {
           position: "top-right",
           autoClose: 2000,
-          hideProgressBar: true,
+          hideProgressBar: false,
           theme: "light",
         });
         setIsLoading(false);
@@ -117,7 +117,7 @@ function PhoneSignInForm({ initialData }: PhoneSignInFormProps) {
       toast.error(errorMessage, {
         position: "top-right",
         autoClose: 2000,
-        hideProgressBar: true,
+        hideProgressBar: false,
         theme: "light",
       });
       setIsLoading(false);

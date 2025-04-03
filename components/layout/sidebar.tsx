@@ -51,12 +51,16 @@ function Sidebar() {
       >
         <LayoutList className="w-5 h-5" />
       </motion.button>
-      <div className="flex justify-between items-center">
+      <div
+        className={`flex justify-between items-center ${
+          isCollapsed ? "mb-2" : "mt-4 mb-8"
+        }`}
+      >
         <motion.h1
           initial={{ opacity: 1 }}
           animate={{ opacity: isCollapsed ? 0 : 1 }}
           transition={{ duration: 0.3 }}
-          className={`text-2xl font-extrabold mt-4 mb-8 text-primary dark:text-white text-center ${
+          className={`text-2xl font-extrabold text-primary dark:text-white text-center ${
             isCollapsed ? "hidden" : "block"
           }`}
         >
@@ -64,7 +68,7 @@ function Sidebar() {
         </motion.h1>
         <button
           onClick={toggleTheme}
-          className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300"
+          className="p-4 rounded-lg bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-all duration-300"
           aria-label={
             theme === "light"
               ? "Chuyển sang chế độ tối"
@@ -77,7 +81,7 @@ function Sidebar() {
           }
           aria-live="polite"
         >
-          <div className="relative w-6 h-6 flex items-center justify-center overflow-hidden">
+          <div className="relative w-5 h-5 flex items-center justify-center overflow-hidden">
             <Sun
               className={`absolute text-amber-500 transition-all duration-300 ${
                 theme === "light"
@@ -95,7 +99,7 @@ function Sidebar() {
           </div>
         </button>
       </div>
-      <nav className="flex flex-col gap-2 mt-10 ">
+      <nav className="flex flex-col gap-2">
         <SidebarItem
           icon={Home}
           label="Trang chủ"
