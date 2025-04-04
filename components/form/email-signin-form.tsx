@@ -69,6 +69,10 @@ function EmailSignInForm({ initialData }: EmailSignInFormProps) {
       const result = await response.json();
       const token = result.token;
 
+      if (token === "") {
+        throw new Error(result.notification);
+      }
+
       try {
         const decodeResponse = await fetch(`${BASE_URL}/users/decodejwttoken`, {
           method: "POST",
@@ -79,16 +83,28 @@ function EmailSignInForm({ initialData }: EmailSignInFormProps) {
             token: token,
           }),
         });
+
         if (!decodeResponse.ok) {
           throw new Error("Đăng nhập thất bại! Vui lòng kiểm tra lại.");
         }
+
         const decoded = await decodeResponse.json();
+
+        if (
+          decoded.claims.RoleId !== 1 ||
+          decoded.claims.RoleId !== 2 ||
+          decoded.claims.RoleId !== 3
+        ) {
+          throw new Error("Không có quyền truy cập!");
+        }
+
         const adminData = {
           id: decoded.claims.sub,
           email: decoded.claims.email,
           phone: decoded.claims.Phone,
           name: decoded.claims.name,
           avatar: decoded.avatarUrl,
+          role: decoded.claims.RoleId,
         };
         toast.success("Đăng nhập thành công!", {
           position: "top-right",

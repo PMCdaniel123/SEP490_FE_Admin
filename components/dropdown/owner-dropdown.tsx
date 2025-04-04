@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Eye,
   LockKeyhole,
@@ -13,38 +11,33 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { useEffect, useState } from "react";
-import { Modal } from "antd";
-import { EmployeeProps } from "@/types";
-import EmployeeModal from "../modal/employee-modal";
+import { OwnerProps } from "@/types";
 import { BASE_URL } from "@/constants/environments";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
-function EmployeeDropdown({
-  employee,
+function OwnerDropdown({
+  owner,
   onStatusChange,
 }: {
-  employee: EmployeeProps;
+  owner: OwnerProps;
   onStatusChange: () => void;
 }) {
-  const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!employee) return;
-  }, [employee]);
+    if (!owner) return;
+  }, [owner]);
 
   const handleBan = async () => {
     setLoading(true);
     try {
-      const response = await fetch(
-        `${BASE_URL}/users/banstaff/${employee.id}`,
-        {
-          method: "PATCH",
-        }
-      );
+      const response = await fetch(`${BASE_URL}/owners/banowner/${owner.id}`, {
+        method: "PATCH",
+      });
 
       if (!response.ok) {
-        throw new Error("Có lỗi xảy ra khi chặn nhân viên.");
+        throw new Error("Có lỗi xảy ra khi chặn doanh nghiệp.");
       }
 
       const data = await response.json();
@@ -74,14 +67,14 @@ function EmployeeDropdown({
     setLoading(true);
     try {
       const response = await fetch(
-        `${BASE_URL}/users/unbanstaff/${employee.id}`,
+        `${BASE_URL}/owners/unbanowner/${owner.id}`,
         {
           method: "PATCH",
         }
       );
 
       if (!response.ok) {
-        throw new Error("Có lỗi xảy ra khi mở chặn nhân viên.");
+        throw new Error("Có lỗi xảy ra khi mở chặn doanh nghiệp.");
       }
 
       const data = await response.json();
@@ -118,21 +111,22 @@ function EmployeeDropdown({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="py-2">
-          <li
+          <Link
             className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer"
-            onClick={() => setIsOpen(!isOpen)}
+            href={`owners/${owner.id}`}
           >
             <Eye size={16} /> <span>Xem thông tin chi tiết</span>
-          </li>
-          {employee.isBan === 0 && (
-            <li
-              className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer"
-              onClick={handleBan}
-            >
-              <LockKeyhole size={16} /> <span>Chặn</span>
-            </li>
-          )}
-          {employee.isBan === 1 && (
+          </Link>
+          {owner.status === "Success" ||
+            (owner.status === "Active" && (
+              <li
+                className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer"
+                onClick={handleBan}
+              >
+                <LockKeyhole size={16} /> <span>Chặn</span>
+              </li>
+            ))}
+          {owner.status === "InActive" && (
             <li
               className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer"
               onClick={handleUnban}
@@ -142,19 +136,8 @@ function EmployeeDropdown({
           )}
         </DropdownMenuContent>
       </DropdownMenu>
-
-      <Modal
-        title={
-          <p className="text-xl font-bold text-primary">Thông tin nhân viên</p>
-        }
-        open={isOpen}
-        onCancel={() => setIsOpen(!isOpen)}
-        footer={null}
-      >
-        <EmployeeModal employee={employee} onStatusChange={onStatusChange} />
-      </Modal>
     </>
   );
 }
 
-export default EmployeeDropdown;
+export default OwnerDropdown;

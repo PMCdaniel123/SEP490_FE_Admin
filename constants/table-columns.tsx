@@ -12,7 +12,7 @@ import {
 import { ColumnDef } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
-import { Ban, Eye, MoreHorizontal } from "lucide-react";
+import { Eye, MoreHorizontal } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -25,6 +25,13 @@ import Link from "next/link";
 import dayjs from "dayjs";
 import CustomerDropdown from "@/components/dropdown/customer-dropdown";
 import EmployeeDropdown from "@/components/dropdown/employee-dropdown";
+import OwnerDropdown from "@/components/dropdown/owner-dropdown";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export const topWorkspaceTableColumns: ColumnDef<TopWorkspace>[] = [
   {
@@ -120,7 +127,9 @@ export const topWorkspaceTableColumns: ColumnDef<TopWorkspace>[] = [
     },
   },
 ];
-export const CustomerTableColumns: ColumnDef<CustomerProps>[] = [
+export const CustomerTableColumns = (
+  onStatusChange: () => void
+): ColumnDef<CustomerProps>[] => [
   {
     accessorKey: "id",
     header: ({ column }) => {
@@ -207,7 +216,13 @@ export const CustomerTableColumns: ColumnDef<CustomerProps>[] = [
       );
     },
     cell: ({ row }) => {
-      return row.getValue("status") === "Active" ? (
+      const customer = row.original;
+
+      return customer.isBan === 1 ? (
+        <p className="text-center font-medium flex items-center justify-center text-red-500">
+          <span>Bị chặn</span>
+        </p>
+      ) : row.getValue("status") === "Active" ? (
         <p className="text-center font-medium flex items-center justify-center text-green-500">
           <span>Hoạt động</span>
         </p>
@@ -223,12 +238,16 @@ export const CustomerTableColumns: ColumnDef<CustomerProps>[] = [
     cell: ({ row }) => {
       const customer = row.original;
 
-      return <CustomerDropdown customer={customer} />;
+      return (
+        <CustomerDropdown customer={customer} onStatusChange={onStatusChange} />
+      );
     },
   },
 ];
 
-export const OwnerTableColumns: ColumnDef<OwnerProps>[] = [
+export const OwnerTableColumns = (
+  onStatusChange: () => void
+): ColumnDef<OwnerProps>[] => [
   {
     accessorKey: "id",
     header: ({ column }) => {
@@ -325,35 +344,48 @@ export const OwnerTableColumns: ColumnDef<OwnerProps>[] = [
     },
   },
   {
+    accessorKey: "status",
+    header: ({ column }) => {
+      return (
+        <div
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-white dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+        >
+          <p>Trạng thái</p>
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return row.getValue("status") === "InActive" ? (
+        <p className="text-center font-medium flex items-center justify-center text-red-500">
+          <span>Bị chặn</span>
+        </p>
+      ) : row.getValue("status") === "Success" ||
+        row.getValue("status") === "Active" ? (
+        <p className="text-center font-medium flex items-center justify-center text-green-500">
+          <span>Hoạt động</span>
+        </p>
+      ) : (
+        <p className="text-center font-medium flex items-center justify-center text-red-500">
+          <span>Ngừng hoạt động</span>
+        </p>
+      );
+    },
+  },
+  {
     id: "actions",
     cell: ({ row }) => {
       const owner = row.original;
 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="py-2">
-            <Link
-              className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer"
-              href={`owners/${owner.id}`}
-            >
-              <Eye size={16} /> <span>Xem thông tin chi tiết</span>
-            </Link>
-            <li className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer">
-              <Ban size={16} /> <span>Chặn</span>
-            </li>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+      return <OwnerDropdown owner={owner} onStatusChange={onStatusChange} />;
     },
   },
 ];
 
-export const EmployeeTableColumns: ColumnDef<EmployeeProps>[] = [
+export const EmployeeTableColumns = (
+  onStatusChange: () => void
+): ColumnDef<EmployeeProps>[] => [
   {
     accessorKey: "id",
     header: ({ column }) => {
@@ -427,23 +459,6 @@ export const EmployeeTableColumns: ColumnDef<EmployeeProps>[] = [
     },
   },
   {
-    accessorKey: "sex",
-    header: ({ column }) => {
-      return (
-        <div
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-white dark:text-white font-semibold text-base text-center items-center flex justify-center gap-2 cursor-pointer"
-        >
-          <p>Giới tính</p>
-          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
-        </div>
-      );
-    },
-    cell: ({ row }) => {
-      return <p className="text-center font-medium">{row.getValue("sex")}</p>;
-    },
-  },
-  {
     accessorKey: "roleName",
     header: ({ column }) => {
       return (
@@ -469,11 +484,44 @@ export const EmployeeTableColumns: ColumnDef<EmployeeProps>[] = [
     },
   },
   {
+    accessorKey: "status",
+    header: ({ column }) => {
+      return (
+        <div
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-white dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+        >
+          <p>Trạng thái</p>
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      const employee = row.original;
+
+      return employee.isBan === 1 ? (
+        <p className="text-center font-medium flex items-center justify-center text-red-500">
+          <span>Bị chặn</span>
+        </p>
+      ) : row.getValue("status") === "Active" ? (
+        <p className="text-center font-medium flex items-center justify-center text-green-500">
+          <span>Hoạt động</span>
+        </p>
+      ) : (
+        <p className="text-center font-medium flex items-center justify-center text-red-500">
+          <span>Ngừng hoạt động</span>
+        </p>
+      );
+    },
+  },
+  {
     id: "actions",
     cell: ({ row }) => {
       const employee = row.original;
 
-      return <EmployeeDropdown employee={employee} />;
+      return (
+        <EmployeeDropdown employee={employee} onStatusChange={onStatusChange} />
+      );
     },
   },
 ];
@@ -662,6 +710,27 @@ export const WorkspaceTableColumns: ColumnDef<Workspace>[] = [
 
 export const VerifyTableColumns: ColumnDef<OwnerProps>[] = [
   {
+    accessorKey: "id",
+    header: ({ column }) => {
+      return (
+        <div
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+        >
+          <p>Mã yêu cầu</p>
+          <ArrowUpDown size={16} className="ml-2" />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <p className="text-center font-medium">
+          YCXT{Number(row.getValue("id")).toString().padStart(4, "0")}
+        </p>
+      );
+    },
+  },
+  {
     accessorKey: "phone",
     header: ({ column }) => {
       return (
@@ -770,6 +839,27 @@ export const VerifyTableColumns: ColumnDef<OwnerProps>[] = [
 
 export const WithdrawalTableColumns: ColumnDef<WithdrawalRequestProps>[] = [
   {
+    accessorKey: "id",
+    header: ({ column }) => {
+      return (
+        <div
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+        >
+          <p>Mã yêu cầu</p>
+          <ArrowUpDown size={16} className="ml-2" />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <p className="text-center font-medium">
+          YCRT{Number(row.getValue("id")).toString().padStart(4, "0")}
+        </p>
+      );
+    },
+  },
+  {
     accessorKey: "bankNumber",
     header: () => {
       return (
@@ -780,7 +870,9 @@ export const WithdrawalTableColumns: ColumnDef<WithdrawalRequestProps>[] = [
     },
     cell: ({ row }) => {
       return (
-        <p className="text-center font-medium">{row.getValue("bankNumber")}</p>
+        <p className="text-center font-medium w-[200px] truncate">
+          {row.getValue("bankNumber")}
+        </p>
       );
     },
   },
@@ -799,7 +891,20 @@ export const WithdrawalTableColumns: ColumnDef<WithdrawalRequestProps>[] = [
     },
     cell: ({ row }) => {
       return (
-        <p className="text-center font-medium">{row.getValue("bankName")}</p>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <p className="text-center font-medium w-[200px] truncate">
+                {row.getValue("bankName")}
+              </p>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p className="text-white font-medium text-lg">
+                {row.getValue("bankName")}
+              </p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       );
     },
   },

@@ -6,7 +6,14 @@ import { BASE_URL } from "@/constants/environments";
 import { EmployeeProps, OwnerProps } from "@/types";
 import { LoadingOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
-import { Ban, FileText, Globe, IdCard, User } from "lucide-react";
+import {
+  LockKeyholeOpen,
+  FileText,
+  Globe,
+  IdCard,
+  User,
+  LockKeyhole,
+} from "lucide-react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -90,7 +97,7 @@ function OwnerDetail() {
     setLoading(true);
     try {
       const response = await fetch(
-        `${BASE_URL}/users/banowner/${ownerDetail?.id}`,
+        `${BASE_URL}/owners/banowner/${ownerDetail?.id}`,
         {
           method: "PATCH",
         }
@@ -103,6 +110,49 @@ function OwnerDetail() {
       const data = await response.json();
       console.log(data);
       setLoading(false);
+      toast.success("Chặn thành công", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        theme: "light",
+      });
+      router.push("/owners");
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Đã xảy ra lỗi!";
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        theme: "light",
+      });
+      setLoading(false);
+    }
+  };
+
+  const handleUnban = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `${BASE_URL}/owners/unbanowner/${ownerDetail?.id}`,
+        {
+          method: "PATCH",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Có lỗi xảy ra khi mở chặn doanh nghiệp.");
+      }
+
+      const data = await response.json();
+      console.log(data);
+      setLoading(false);
+      toast.success("Mở chặn thành công", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        theme: "light",
+      });
       router.push("/owners");
     } catch (error) {
       const errorMessage =
@@ -132,18 +182,33 @@ function OwnerDetail() {
           Thông tin chi tiết doanh nghiệp
         </h1>
         <div className="mt-4 flex justify-end">
-          <button
-            className="border rounded-md font-semibold border-red-500 text-red-500 px-6 py-2 hover:bg-red-500 hover:text-white transition-colors duration-300"
-            onClick={handleBan}
-          >
-            {loading ? (
-              <LoadingOutlined style={{ color: "red" }} />
-            ) : (
-              <span className="flex items-center gap-2">
-                <Ban size={16} /> Chặn
-              </span>
-            )}
-          </button>
+          {ownerDetail?.status !== "InActive" ? (
+            <button
+              className="border rounded-md font-semibold border-red-500 text-red-500 px-6 py-2 hover:bg-red-500 hover:text-white transition-colors duration-300"
+              onClick={handleBan}
+            >
+              {loading ? (
+                <LoadingOutlined style={{ color: "red" }} />
+              ) : (
+                <span className="flex items-center gap-2">
+                  <LockKeyhole size={16} /> Chặn
+                </span>
+              )}
+            </button>
+          ) : (
+            <button
+              className="border rounded-md font-semibold border-yellow-500 text-yellow-500 px-6 py-2 hover:bg-yellow-500 hover:text-white transition-colors duration-300"
+              onClick={handleUnban}
+            >
+              {loading ? (
+                <LoadingOutlined style={{ color: "yellow" }} />
+              ) : (
+                <span className="flex items-center gap-2">
+                  <LockKeyholeOpen size={16} /> Mở chặn
+                </span>
+              )}
+            </button>
+          )}
         </div>
         <Separator className="mb-4 dark:border-gray-700" />
         <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
@@ -160,8 +225,12 @@ function OwnerDetail() {
             </p>
             <p>
               <strong>Trạng thái:</strong>{" "}
-              {ownerDetail?.status === "Success" && (
-                <span className="text-green-500">Xác thực thành công</span>
+              {ownerDetail?.status === "Success" ||
+                (ownerDetail?.status === "Active" && (
+                  <span className="text-green-500">Hoạt động</span>
+                ))}
+              {ownerDetail?.status === "InActive" && (
+                <span className="text-red-500">Bị chặn</span>
               )}
             </p>
             <p>
@@ -170,13 +239,15 @@ function OwnerDetail() {
             </p>
             {ownerDetail?.userId && (
               <p>
-                <span className="font-semibold">ID nhân viên xử lý: </span>
-                {ownerDetail?.userId}
+                <span className="font-semibold">
+                  Mã nhân viên xử lý yêu cầu:{" "}
+                </span>
+                NV{Number(ownerDetail?.userId).toString().padStart(4, "0")}
               </p>
             )}
             {ownerDetail?.userId && (
               <p>
-                <span className="font-semibold">Nhân viên xử lý: </span>
+                <span className="font-semibold">Nhân viên xử lý yêu cầu: </span>
                 {employee?.name}
               </p>
             )}

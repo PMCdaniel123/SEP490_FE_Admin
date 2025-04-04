@@ -1,17 +1,111 @@
-import { Ban, Eye, MoreHorizontal } from "lucide-react";
+import {
+  Eye,
+  LockKeyhole,
+  LockKeyholeOpen,
+  MoreHorizontal,
+} from "lucide-react";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "antd";
 import { CustomerProps } from "@/types";
 import CustomerModal from "../modal/customer-modal";
+import { BASE_URL } from "@/constants/environments";
+import { toast } from "react-toastify";
 
-function CustomerDropdown({ customer }: { customer: CustomerProps }) {
+function CustomerDropdown({
+  customer,
+  onStatusChange,
+}: {
+  customer: CustomerProps;
+  onStatusChange: () => void;
+}) {
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!customer) return;
+  }, [customer]);
+
+  const handleBan = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `${BASE_URL}/users/bancustomer/${customer.id}`,
+        {
+          method: "PATCH",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Có lỗi xảy ra khi chặn khách hàng.");
+      }
+
+      const data = await response.json();
+      console.log(data);
+      setLoading(false);
+      onStatusChange();
+      toast.success("Chặn thành công", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        theme: "light",
+      });
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Đã xảy ra lỗi!";
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        theme: "light",
+      });
+      setLoading(false);
+    }
+  };
+
+  const handleUnban = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `${BASE_URL}/users/unbancustomer/${customer.id}`,
+        {
+          method: "PATCH",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Có lỗi xảy ra khi mở chặn khách hàng.");
+      }
+
+      const data = await response.json();
+      console.log(data);
+      setLoading(false);
+      onStatusChange();
+      toast.success("Mở chặn thành công", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        theme: "light",
+      });
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Đã xảy ra lỗi!";
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        theme: "light",
+      });
+      setLoading(false);
+    }
+  };
+
+  if (loading) return;
 
   return (
     <>
@@ -28,9 +122,22 @@ function CustomerDropdown({ customer }: { customer: CustomerProps }) {
           >
             <Eye size={16} /> <span>Xem thông tin chi tiết</span>
           </li>
-          <li className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer">
-            <Ban size={16} /> <span>Chặn</span>
-          </li>
+          {customer.isBan === 0 && (
+            <li
+              className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer"
+              onClick={handleBan}
+            >
+              <LockKeyhole size={16} /> <span>Chặn</span>
+            </li>
+          )}
+          {customer.isBan === 1 && (
+            <li
+              className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer"
+              onClick={handleUnban}
+            >
+              <LockKeyholeOpen size={16} /> <span>Mở chặn</span>
+            </li>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
 
@@ -42,7 +149,7 @@ function CustomerDropdown({ customer }: { customer: CustomerProps }) {
         onCancel={() => setIsOpen(!isOpen)}
         footer={null}
       >
-        <CustomerModal customer={customer} />
+        <CustomerModal customer={customer} onStatusChange={onStatusChange} />
       </Modal>
     </>
   );
