@@ -5,6 +5,7 @@ import WithdrawalRequestTable from "@/components/table/withdrawal-request-table"
 import { BASE_URL } from "@/constants/environments";
 import { WithdrawalTableColumns } from "@/constants/table-columns";
 import { WithdrawalRequestProps } from "@/types";
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -25,7 +26,10 @@ function WithdrawalRequestManagement() {
         const formatted =
           data.requests === null || data.requests === undefined
             ? []
-            : data.requests;
+            : data.requests.sort(
+                (a: WithdrawalRequestProps, b: WithdrawalRequestProps) =>
+                  dayjs(b.createdAt).unix() - dayjs(a.createdAt).unix()
+              );
         setWithdrawal(formatted);
         setLoading(false);
       } catch (error) {

@@ -65,7 +65,7 @@ const MultiImageUpload = ({
   return (
     <div className="flex flex-col gap-2">
       <Input
-        className="py-3 px-4 rounded-md file:bg-seventh border h-[50px]"
+        className="py-3 px-4 rounded-md file:bg-seventh border h-[50px] hidden"
         id="images"
         type="file"
         accept="image/*"

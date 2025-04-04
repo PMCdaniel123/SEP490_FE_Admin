@@ -4,10 +4,18 @@ import Loader from "@/components/loader/Loader";
 import { Separator } from "@/components/ui/separator";
 import { BASE_URL } from "@/constants/environments";
 import { EmployeeProps, OwnerProps } from "@/types";
+import { LoadingOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
-import { FileText, Globe, IdCard, User } from "lucide-react";
+import {
+  LockKeyholeOpen,
+  FileText,
+  Globe,
+  IdCard,
+  User,
+  LockKeyhole,
+} from "lucide-react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -16,6 +24,7 @@ function OwnerDetail() {
   const [ownerDetail, setOwnerDetail] = useState<OwnerProps | null>(null);
   const [loading, setLoading] = useState(true);
   const [employee, setEmployee] = useState<EmployeeProps | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (!ownerId) return;
@@ -84,6 +93,80 @@ function OwnerDetail() {
     fetchEmployee();
   }, [ownerDetail]);
 
+  const handleBan = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `${BASE_URL}/owners/banowner/${ownerDetail?.id}`,
+        {
+          method: "PATCH",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Có lỗi xảy ra khi chặn doanh nghiệp.");
+      }
+
+      const data = await response.json();
+      console.log(data);
+      setLoading(false);
+      toast.success("Chặn thành công", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        theme: "light",
+      });
+      router.push("/owners");
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Đã xảy ra lỗi!";
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        theme: "light",
+      });
+      setLoading(false);
+    }
+  };
+
+  const handleUnban = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `${BASE_URL}/owners/unbanowner/${ownerDetail?.id}`,
+        {
+          method: "PATCH",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Có lỗi xảy ra khi mở chặn doanh nghiệp.");
+      }
+
+      const data = await response.json();
+      console.log(data);
+      setLoading(false);
+      toast.success("Mở chặn thành công", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        theme: "light",
+      });
+      router.push("/owners");
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Đã xảy ra lỗi!";
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        theme: "light",
+      });
+      setLoading(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="text-center">
@@ -98,7 +181,36 @@ function OwnerDetail() {
         <h1 className="text-xl font-bold text-center text-primary">
           Thông tin chi tiết doanh nghiệp
         </h1>
-        <Separator className="my-4 dark:border-gray-700" />
+        <div className="mt-4 flex justify-end">
+          {ownerDetail?.status !== "InActive" ? (
+            <button
+              className="border rounded-md font-semibold border-red-500 text-red-500 px-6 py-2 hover:bg-red-500 hover:text-white transition-colors duration-300"
+              onClick={handleBan}
+            >
+              {loading ? (
+                <LoadingOutlined style={{ color: "red" }} />
+              ) : (
+                <span className="flex items-center gap-2">
+                  <LockKeyhole size={16} /> Chặn
+                </span>
+              )}
+            </button>
+          ) : (
+            <button
+              className="border rounded-md font-semibold border-yellow-500 text-yellow-500 px-6 py-2 hover:bg-yellow-500 hover:text-white transition-colors duration-300"
+              onClick={handleUnban}
+            >
+              {loading ? (
+                <LoadingOutlined style={{ color: "yellow" }} />
+              ) : (
+                <span className="flex items-center gap-2">
+                  <LockKeyholeOpen size={16} /> Mở chặn
+                </span>
+              )}
+            </button>
+          )}
+        </div>
+        <Separator className="mb-4 dark:border-gray-700" />
         <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
           <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
             <User className="h-5 w-5 text-primary dark:text-primary-dark" />
@@ -113,8 +225,12 @@ function OwnerDetail() {
             </p>
             <p>
               <strong>Trạng thái:</strong>{" "}
-              {ownerDetail?.status === "Success" && (
-                <span className="text-green-500">Xác thực thành công</span>
+              {ownerDetail?.status === "Success" ||
+                (ownerDetail?.status === "Active" && (
+                  <span className="text-green-500">Hoạt động</span>
+                ))}
+              {ownerDetail?.status === "InActive" && (
+                <span className="text-red-500">Bị chặn</span>
               )}
             </p>
             <p>
@@ -123,13 +239,15 @@ function OwnerDetail() {
             </p>
             {ownerDetail?.userId && (
               <p>
-                <span className="font-semibold">ID nhân viên xử lý: </span>
-                {ownerDetail?.userId}
+                <span className="font-semibold">
+                  Mã nhân viên xử lý yêu cầu:{" "}
+                </span>
+                NV{Number(ownerDetail?.userId).toString().padStart(4, "0")}
               </p>
             )}
             {ownerDetail?.userId && (
               <p>
-                <span className="font-semibold">Nhân viên xử lý: </span>
+                <span className="font-semibold">Nhân viên xử lý yêu cầu: </span>
                 {employee?.name}
               </p>
             )}

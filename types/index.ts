@@ -25,6 +25,7 @@ export interface SidebarItemProps {
   icon: LucideIcon;
   label: string;
   href: string;
+  collapsed: boolean;
 }
 
 export interface TopWorkspace {
@@ -64,6 +65,7 @@ export interface CustomerProps {
   location: string;
   dateOfBirth: string;
   sex: string;
+  isBan: number;
 }
 
 export interface OwnerProps {
@@ -107,6 +109,7 @@ export interface EmployeeProps {
   roleName: string;
   dateOfBirth: string;
   status: string;
+  isBan: number;
 }
 
 export interface Image {

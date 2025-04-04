@@ -205,13 +205,17 @@ function VerifyOwnerDetail() {
               </p>
               {verifyDetail?.userId && (
                 <p>
-                  <span className="font-semibold">ID nhân viên xử lý: </span>
-                  {verifyDetail?.userId}
+                  <span className="font-semibold">
+                    ID nhân viên xử lý yêu cầu:{" "}
+                  </span>
+                  NV{Number(verifyDetail?.userId).toString().padStart(4, "0")}
                 </p>
               )}
               {verifyDetail?.userId && (
                 <p>
-                  <span className="font-semibold">Nhân viên xử lý: </span>
+                  <span className="font-semibold">
+                    Nhân viên xử lý yêu cầu:{" "}
+                  </span>
                   {employee?.name}
                 </p>
               )}

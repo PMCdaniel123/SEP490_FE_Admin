@@ -5,6 +5,7 @@ import VerifyTable from "@/components/table/verify-table";
 import { BASE_URL } from "@/constants/environments";
 import { VerifyTableColumns } from "@/constants/table-columns";
 import { OwnerProps } from "@/types";
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -22,10 +23,15 @@ function VerifyOwnerManagement() {
         }
         const data = await response.json();
         const formatted = Array.isArray(data.owners)
-          ? data.owners.filter(
-              (owner: OwnerProps) =>
-                owner.status === "Handling" || owner.status === "Fail"
-            )
+          ? data.owners
+              .filter(
+                (owner: OwnerProps) =>
+                  owner.status === "Handling" || owner.status === "Fail"
+              )
+              .sort(
+                (a: OwnerProps, b: OwnerProps) =>
+                  dayjs(b.updatedAt).unix() - dayjs(a.updatedAt).unix()
+              )
           : [];
         setVerifyList(formatted);
         setLoading(false);

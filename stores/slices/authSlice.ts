@@ -6,6 +6,7 @@ interface Admin {
   phone: string | null;
   name: string | null;
   avatar: string | null;
+  role: number | null;
 }
 
 interface AuthState {
