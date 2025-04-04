@@ -91,8 +91,8 @@ function PhoneSignInForm({ initialData }: PhoneSignInFormProps) {
         const decoded = await decodeResponse.json();
 
         if (
-          decoded.claims.RoleId !== 1 ||
-          decoded.claims.RoleId !== 2 ||
+          decoded.claims.RoleId !== 1 &&
+          decoded.claims.RoleId !== 2 &&
           decoded.claims.RoleId !== 3
         ) {
           throw new Error("Không có quyền truy cập!");
