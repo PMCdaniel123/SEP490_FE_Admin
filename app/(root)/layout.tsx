@@ -29,7 +29,7 @@ export default function RootLayout({
               <div className="h-fit sticky top-4">
                 <Sidebar />
               </div>
-              <main className="flex-1">
+              <main className="flex-1 sticky top-4 h-fit">
                 <TopNav />
                 {children}
               </main>

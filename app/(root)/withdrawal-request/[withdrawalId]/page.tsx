@@ -193,7 +193,7 @@ function WithdrawalDetail() {
               {withdrawal?.userId && (
                 <p>
                   <span className="font-semibold">ID nhân viên xử lý: </span>
-                  {withdrawal?.userId}
+                  NV{Number(withdrawal?.userId).toString().padStart(4, "0")}
                 </p>
               )}
               {withdrawal?.userId && (
