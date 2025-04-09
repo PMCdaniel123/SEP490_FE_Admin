@@ -163,7 +163,7 @@ function EmailSignInForm({ initialData }: EmailSignInFormProps) {
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="py-6 px-4 rounded-md file:bg-seventh"
+                      className="dark:text-black py-6 px-4 rounded-md file:bg-seventh"
                       placeholder="Nhập email..."
                       type="email"
                       {...field}
@@ -181,12 +181,12 @@ function EmailSignInForm({ initialData }: EmailSignInFormProps) {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fifth font-medium text-sm ml-6">
+                  <FormLabel className=" text-fifth font-medium text-sm ml-6">
                     Mật khẩu
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="py-6 px-4 rounded-md file:bg-seventh"
+                      className="dark:text-black py-6 px-4 rounded-md file:bg-seventh"
                       placeholder="Nhập mật khẩu..."
                       type="password"
                       {...field}

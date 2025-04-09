@@ -116,12 +116,12 @@ function Sidebar() {
       initial={{ width: "288px" }}
       animate={{ width: isCollapsed ? "84px" : "288px" }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="bg-white p-4 rounded-xl min-h-screen flex flex-col"
+      className="bg-card p-4 rounded-xl min-h-screen flex flex-col"
     >
       <motion.button
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="mb-2 flex justify-center items-center w-full p-4 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
+        className="mb-2 flex justify-center items-center w-full p-4 bg-card rounded-lg hover:bg-gray-300 hover:text-black transition"
       >
         <LayoutList className="w-5 h-5" />
       </motion.button>
