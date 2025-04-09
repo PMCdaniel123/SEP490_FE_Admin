@@ -116,7 +116,7 @@ function Sidebar() {
       initial={{ width: "288px" }}
       animate={{ width: isCollapsed ? "84px" : "288px" }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="bg-white dark:bg-black p-4 rounded-xl min-h-screen flex flex-col"
+      className="bg-white dark:bg-black p-4 rounded-xl h-fit flex flex-col"
     >
       <motion.button
         whileTap={{ scale: 0.9 }}
