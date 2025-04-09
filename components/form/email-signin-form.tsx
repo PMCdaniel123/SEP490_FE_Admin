@@ -23,6 +23,7 @@ import { AppDispatch } from "@/stores";
 import { login } from "@/stores/slices/authSlice";
 import { LoadingOutlined } from "@ant-design/icons";
 import { BASE_URL } from "@/constants/environments";
+import Cookies from "js-cookie";
 
 interface EmailSignInFormProps {
   initialData?: AdminEmailSignInProps | null;
@@ -78,6 +79,7 @@ function EmailSignInForm({ initialData }: EmailSignInFormProps) {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             token: token,
@@ -91,9 +93,9 @@ function EmailSignInForm({ initialData }: EmailSignInFormProps) {
         const decoded = await decodeResponse.json();
 
         if (
-          decoded.claims.RoleId !== 1 &&
-          decoded.claims.RoleId !== 2 &&
-          decoded.claims.RoleId !== 3
+          decoded.claims.RoleId !== "1" &&
+          decoded.claims.RoleId !== "2" &&
+          decoded.claims.RoleId !== "3"
         ) {
           throw new Error("Không có quyền truy cập!");
         }
@@ -114,7 +116,7 @@ function EmailSignInForm({ initialData }: EmailSignInFormProps) {
         });
 
         dispatch(login(adminData));
-        localStorage.setItem("admin_token", token);
+        Cookies.set("admin_token", token);
         setIsLoading(false);
         router.push("/dashboard");
       } catch (error) {
