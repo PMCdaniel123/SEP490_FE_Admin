@@ -27,7 +27,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Save, Upload } from "lucide-react";
 import { toast } from "react-toastify";
 import { BASE_URL } from "@/constants/environments";
-import { Button, Upload as AntUpload } from "antd";
+import { Button, Upload as AntUpload, ConfigProvider } from "antd";
 import ImgCrop from "antd-img-crop";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores";
@@ -212,9 +212,28 @@ function ProfileForm({ employee, isEdit }: ProfileFormProps) {
                               return false;
                             }}
                           >
-                            <Button icon={<Upload className="mr-2" />}>
-                              Chọn ảnh
-                            </Button>
+                            <ConfigProvider
+                              theme={{
+                                components: {
+                                  Button: {
+                                    colorBgContainer: "#835101",
+                                    colorText: "#fff",
+                                    defaultHoverBg: "#B49057",
+                                    defaultHoverColor: "#fff",
+                                    defaultHoverBorderColor: "#B49057",
+                                    paddingBlockLG: 12,
+                                    defaultActiveColor: "#fff",
+                                  },
+                                },
+                              }}
+                            >
+                              <Button
+                                size="large"
+                                icon={<Upload className="mr-2" size={20} />}
+                              >
+                                Chọn ảnh
+                              </Button>
+                            </ConfigProvider>
                           </AntUpload>
                         </ImgCrop>
                       )}

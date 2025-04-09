@@ -23,7 +23,6 @@ import {
 } from "@/components/ui/table";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -33,8 +32,7 @@ import {
 
 import { useState } from "react";
 import { Separator } from "../ui/separator";
-import { CirclePlus, Info } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { Info } from "lucide-react";
 import getHeaderText from "@/constants/format-header";
 
 interface DataTableProps<TData, TValue> {
@@ -42,7 +40,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
-export default function EmployeeTable<TData, TValue>({
+export default function HighRateWorkspaceTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -50,7 +48,6 @@ export default function EmployeeTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
-  const router = useRouter();
 
   const table = useReactTable({
     data,
@@ -74,27 +71,10 @@ export default function EmployeeTable<TData, TValue>({
   return (
     <div className="flex flex-col gap-4">
       <div className="mt-4 flex items-center justify-between">
-        <h1 className="font-bold text-primary dark:text-primary-dark text-xl">
-          Danh sách nhân viên
-        </h1>
-        <Button
-          className="flex items-center gap-2 cursor-pointer text-white dark:bg-gray-800 dark:text-white dark:border-gray-700 font-semibold"
-          onClick={() => router.push("employees/new")}
-        >
-          <CirclePlus />
-          <span>Tạo nhân viên mới</span>
-        </Button>
+        <h1 className="font-bold">Top 5 không gian được đánh giá cao nhất</h1>
       </div>
       <Separator className="mb-4 dark:border-gray-700" />
       <div className="flex items-center">
-        <Input
-          placeholder="Tên nhân viên..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm dark:bg-gray-800 dark:text-white dark:border-gray-700"
-        />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
@@ -181,26 +161,6 @@ export default function EmployeeTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
-      </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-          className="dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700"
-        >
-          Trước
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-          className="dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700"
-        >
-          Kế tiếp
-        </Button>
       </div>
     </div>
   );
