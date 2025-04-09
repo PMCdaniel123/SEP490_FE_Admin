@@ -12,11 +12,11 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { CustomerProps } from "@/types";
+import { OwnerProps } from "@/types";
 
 const chartConfig = {
   visitors: {
-    label: "Phân tích người dùng",
+    label: "Phân tích doanh nghiệp",
   },
   male: {
     label: "Nam",
@@ -32,42 +32,36 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function CustomerAnalysisChart({
-  customerList,
+export default function OwnerAnalysisChart({
+  ownerList,
 }: {
-  customerList?: CustomerProps[];
+  ownerList?: OwnerProps[];
 }) {
-  const safeCustomerList = customerList ?? [];
+  const safeOwnerList = ownerList ?? [];
 
-  const maleCustomer = safeCustomerList.filter(
-    (customer) => customer.sex === "Nam"
-  );
-  const femaleCustomer = safeCustomerList.filter(
-    (customer) => customer.sex === "Nữ"
-  );
-  const otherCustomer = safeCustomerList.filter(
-    (customer) => customer.sex === "Khác"
-  );
+  const maleOwner = safeOwnerList.filter((owner) => owner.sex === "Nam");
+  const femaleOwner = safeOwnerList.filter((owner) => owner.sex === "Nữ");
+  const otherOwner = safeOwnerList.filter((owner) => owner.sex === "Khác");
 
   const chartData = React.useMemo(
     () => [
       {
         browser: "male",
-        visitors: maleCustomer.length,
+        visitors: maleOwner.length,
         fill: "var(--color-male)",
       },
       {
         browser: "female",
-        visitors: femaleCustomer.length,
+        visitors: femaleOwner.length,
         fill: "var(--color-female)",
       },
       {
         browser: "other",
-        visitors: otherCustomer.length,
+        visitors: otherOwner.length,
         fill: "var(--color-other)",
       },
     ],
-    [maleCustomer.length, femaleCustomer.length, otherCustomer.length]
+    [maleOwner.length, femaleOwner.length, otherOwner.length]
   );
 
   const totalVisitors = React.useMemo(() => {
@@ -77,10 +71,10 @@ export default function CustomerAnalysisChart({
   return (
     <Card className="flex flex-col h-full">
       <CardHeader>
-        <CardTitle className="mt-4 font-bold">Số lượng khách hàng</CardTitle>
+        <CardTitle className="mt-4 font-bold">Số lượng doanh nghiệp</CardTitle>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
-        {safeCustomerList.length === 0 ? (
+        {safeOwnerList.length === 0 ? (
           <div className="flex items-center justify-center h-full text-muted-foreground">
             Trống
           </div>
@@ -123,7 +117,7 @@ export default function CustomerAnalysisChart({
                             y={(viewBox.cy || 0) + 24}
                             className="fill-muted-foreground"
                           >
-                            Khách hàng
+                            Doanh nghiệp
                           </tspan>
                         </text>
                       );

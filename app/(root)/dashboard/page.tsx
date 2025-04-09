@@ -1,108 +1,133 @@
 "use client";
 
-import DashboardLineChart from "@/components/charts/line-chart";
-import HotItemsPieChart from "@/components/charts/hot-items-pie-chart";
-import NewCustomers from "@/components/new-customers-table/new-customers";
-import TopWorkspaceTable from "@/components/table/top-workspace-table";
-import { topWorkspace } from "@/constants/constant";
-import { topWorkspaceTableColumns } from "@/constants/table-columns";
 import {
-  Boxes,
-  PiggyBank,
+  BriefcaseBusiness,
+  CircleUserRound,
   Sofa,
-  TrendingUp,
   UsersRound,
-  UtensilsCrossed,
 } from "lucide-react";
 import CustomerAnalysisChart from "@/components/charts/customer-analysis-chart";
+import OwnerRevenueChart from "@/components/charts/owner-revenue-chart";
+import {
+  CustomerProps,
+  EmployeeProps,
+  HighRatingWorkspace,
+  OwnerProps,
+  OwnerRevenue,
+  Workspace,
+} from "@/types";
+import { useEffect, useState } from "react";
+import Loader from "@/components/loader/Loader";
+import { RootState } from "@/stores";
+import { useSelector } from "react-redux";
+import {
+  fetchCustomerList,
+  fetchEmployeeList,
+  fetchHighRatingWorkspaceList,
+  fetchOwnerList,
+  fetchOwnerRevenueList,
+  fetchWorkspaceList,
+} from "@/features";
+import OwnerAnalysisChart from "@/components/charts/owner-analysis-chart";
+import HighRateWorkspaceTable from "@/components/table/high-rate-workspace-table";
+import { HighRateWorkspaceTableColumns } from "@/constants/table-columns";
 
 export default function OwnerPage() {
-  const date = new Date();
-  const dateString = `T${date.getMonth() + 1}/${date.getFullYear()}`;
+  const [loading, setLoading] = useState(true);
+  const [customerList, setCustomerList] = useState<CustomerProps[]>([]);
+  const [workspaceList, setWorkspaceList] = useState<Workspace[]>([]);
+  const [employeeList, setEmployeeList] = useState<EmployeeProps[]>([]);
+  const [ownerList, setOwnerList] = useState<OwnerProps[]>([]);
+  const [ownerRevenueList, setOwnerRevenueList] = useState<OwnerRevenue[]>([]);
+  const [highRatingWorkspaceList, setHighRatingWorkspaceList] = useState<
+    HighRatingWorkspace[]
+  >([]);
+  const { admin } = useSelector((state: RootState) => state.auth);
+
+  useEffect(() => {
+    if (!admin) return;
+    fetchCustomerList(setCustomerList, setLoading);
+    fetchWorkspaceList(setWorkspaceList, setLoading);
+    fetchEmployeeList(setEmployeeList, setLoading);
+    fetchOwnerList(setOwnerList, setLoading);
+    fetchOwnerRevenueList(setOwnerRevenueList, setLoading);
+    fetchHighRatingWorkspaceList(setHighRatingWorkspaceList, setLoading);
+    setLoading(false);
+  }, [admin]);
+
+  if (loading) {
+    return (
+      <div className="text-center">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-1 flex-col gap-4">
       <div className="grid gap-4 md:grid-cols-4">
-        <div className="col-span-2 rounded-xl bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-4 p-4">
-          <div className="col-span-1 flex items-center justify-center bg-[#27D095] rounded-xl text-white">
-            <PiggyBank size={36} />
-          </div>
-          <div className="col-span-2 flex flex-col items-start justify-start gap-2">
-            <p className="font-bold dark:text-white">Doanh thu</p>
-            <p className="text-[#6F757E] dark:text-gray-300 text-xl">$214,00</p>
-            <div className="flex gap-1 items-center justify-start text-[#FF8E29] text-sm">
-              <TrendingUp /> <span>+55% tháng trước</span>
-            </div>
-          </div>
-          <div className="col-span-1 text-sm flex items-center justify-center text-[#6F757E] dark:text-gray-300 font-bold">
-            <p>{dateString}</p>
-          </div>
-        </div>
-
-        <div className="col-span-2 rounded-xl bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-4 p-4">
+        <div className="col-span-1 rounded-xl bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-3 p-4 md:min-h-24">
           <div className="col-span-1 flex items-center justify-center bg-[#67CADF] rounded-xl text-white">
             <UsersRound size={36} />
           </div>
-          <div className="col-span-2 flex flex-col items-start justify-start gap-2">
+          <div className="col-span-2 flex flex-col items-center justify-center gap-2">
             <p className="font-bold dark:text-white">Khách hàng</p>
-            <p className="text-[#6F757E] dark:text-gray-300 text-xl">3.200</p>
-            <div className="flex gap-1 items-center justify-start text-[#FF8E29] text-sm">
-              <TrendingUp /> <span>+12% tháng trước</span>
-            </div>
-          </div>
-          <div className="col-span-1 text-sm flex items-center justify-center text-[#6F757E] dark:text-gray-300 font-bold">
-            <p>{dateString}</p>
+            <p className="text-[#6F757E] dark:text-gray-300 text-xl">
+              {customerList.length ?? "0"}
+            </p>
           </div>
         </div>
-
-        <div className="col-span-4 grid gap-4 md:grid-cols-3">
-          <div className="col-span-1 rounded-xl bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-3 p-4 md:min-h-28">
-            <div className="col-span-1 flex items-center justify-center bg-[#F54F5F] rounded-xl text-white">
-              <Sofa size={36} />
-            </div>
-            <div className="col-span-2 flex flex-col items-center justify-center gap-2">
-              <p className="font-bold dark:text-white">Số lượng không gian</p>
-              <p className="text-[#6F757E] dark:text-gray-300 text-xl">3</p>
-            </div>
+        <div className="col-span-1 rounded-xl bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-3 p-4 md:min-h-24">
+          <div className="col-span-1 flex items-center justify-center bg-[#27D095] rounded-xl text-white">
+            <Sofa size={36} />
           </div>
-          <div className="col-span-1 rounded-xl bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-3 p-4 md:min-h-28">
-            <div className="col-span-1 flex items-center justify-center bg-[#fcba03] rounded-xl text-white">
-              <Boxes size={36} />
-            </div>
-            <div className="col-span-2 flex flex-col items-center justify-center gap-2">
-              <p className="font-bold dark:text-white">Số lượng tiện ích</p>
-              <p className="text-[#6F757E] dark:text-gray-300 text-xl">4</p>
-            </div>
+          <div className="col-span-2 flex flex-col items-center justify-center gap-2">
+            <p className="font-bold dark:text-white">Không gian</p>
+            <p className="text-[#6F757E] dark:text-gray-300 text-xl">
+              {workspaceList.length ?? "0"}
+            </p>
           </div>
-          <div className="col-span-1 rounded-xl bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-3 p-4 md:min-h-28">
-            <div className="col-span-1 flex items-center justify-center bg-[#FF8E29] rounded-xl text-white">
-              <UtensilsCrossed size={36} />
-            </div>
-            <div className="col-span-2 flex flex-col items-center justify-center gap-2">
-              <p className="font-bold dark:text-white">Số lượng món</p>
-              <p className="text-[#6F757E] dark:text-gray-300 text-xl">5</p>
-            </div>
+        </div>
+        <div className="col-span-1 rounded-xl bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-3 p-4 md:min-h-24">
+          <div className="col-span-1 flex items-center justify-center bg-[#FCBA03] rounded-xl text-white">
+            <BriefcaseBusiness size={36} />
+          </div>
+          <div className="col-span-2 flex flex-col items-center justify-center gap-2">
+            <p className="font-bold dark:text-white">Doanh nghiệp</p>
+            <p className="text-[#6F757E] dark:text-gray-300 text-xl">
+              {ownerList.length ?? "0"}
+            </p>
+          </div>
+        </div>
+        <div className="col-span-1 rounded-xl bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-3 p-4 md:min-h-24">
+          <div className="col-span-1 flex items-center justify-center bg-[#F54F5F] rounded-xl text-white">
+            <CircleUserRound size={36} />
+          </div>
+          <div className="col-span-2 flex flex-col items-center justify-center gap-2">
+            <p className="font-bold dark:text-white">Nhân viên</p>
+            <p className="text-[#6F757E] dark:text-gray-300 text-xl">
+              {employeeList.length ?? "0"}
+            </p>
           </div>
         </div>
       </div>
       <div className="grid gap-4 md:grid-cols-3">
-        <div className="col-span-2 bg-card dark:bg-gray-800 rounded-xl">
-          <DashboardLineChart />
+        <div className="col-span-2 bg-card dark:bg-gray-800 rounded-xl h-full p-4">
+          <OwnerRevenueChart data={ownerRevenueList} />
         </div>
         <div className="col-span-1 bg-card dark:bg-gray-800 rounded-xl">
-          <CustomerAnalysisChart />
+          <CustomerAnalysisChart customerList={customerList} />
         </div>
       </div>
       <div className="grid gap-4 md:grid-cols-3">
-        <div className="col-span-2 bg-card  dark:text-gray-300 p-4 rounded-xl">
-          <TopWorkspaceTable
-            columns={topWorkspaceTableColumns}
-            data={topWorkspace}
+        <div className="col-span-2 bg-card dark:bg-gray-800 rounded-xl h-full p-4">
+          <HighRateWorkspaceTable
+            columns={HighRateWorkspaceTableColumns}
+            data={highRatingWorkspaceList}
           />
         </div>
-        <div className="col-span-1 flex flex-col gap-4">
-          <NewCustomers />
-          <HotItemsPieChart />
+        <div className="col-span-1 bg-card dark:bg-gray-800 rounded-xl h-fit">
+          <OwnerAnalysisChart ownerList={ownerList} />
         </div>
       </div>
     </div>

@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { z } from "zod";
 
 export const signupSchema = z.object({
@@ -150,8 +149,6 @@ export const workspaceSchema = z.object({
   }),
 });
 
-const MIN_DATE = dayjs(new Date(1900, 0, 1));
-
 export const employeeFormSchema = z.object({
   name: z.string().min(3, "Tên không gian phải có ít nhất 3 ký tự"),
   sex: z.string({
@@ -163,12 +160,20 @@ export const employeeFormSchema = z.object({
   location: z.string().min(3, "Địa chỉ phải có ít nhất 3 ký tự"),
   dateOfBirth: z
     .string()
-    .refine((date) => dayjs(date, "DD/MM/YYYY", true).isValid(), {
-      message: "Ngày sinh không hợp lệ, định dạng phải là DD/MM/YYYY",
-    })
-    .refine((date) => dayjs(date, "DD/MM/YYYY").isAfter(MIN_DATE), {
-      message: "Sinh nhật phải lớn hơn 01/01/1900",
-    }),
+    .nonempty("Vui lòng chọn ngày sinh")
+    .refine((val) => {
+      const dob = new Date(val);
+      const today = new Date();
+      const age = today.getFullYear() - dob.getFullYear();
+      const monthDiff = today.getMonth() - dob.getMonth();
+      const dayDiff = today.getDate() - dob.getDate();
+
+      const isBirthdayPassedThisYear =
+        monthDiff > 0 || (monthDiff === 0 && dayDiff >= 0);
+      const actualAge = isBirthdayPassedThisYear ? age : age - 1;
+
+      return actualAge >= 12 && actualAge <= 100;
+    }, "Tuổi phải từ 12 đến 100"),
 });
 
 export const changePasswordSchema = z

@@ -279,3 +279,19 @@ export interface WithdrawalProps {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface OwnerRevenue {
+  ownerId: number;
+  ownerName: string;
+  totalRevenue: number;
+}
+
+export interface HighRatingWorkspace {
+  id: string;
+  name: string;
+  rate: number;
+  images: { imgUrl: string }[];
+  area: number;
+  capacity: number;
+  category: string;
+}
