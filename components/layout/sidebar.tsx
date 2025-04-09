@@ -15,11 +15,83 @@ import {
 } from "lucide-react";
 import SidebarItem from "./sidebar-item";
 import { motion } from "framer-motion";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/stores";
+import { BASE_URL } from "@/constants/environments";
+import { toast } from "react-toastify";
+import Cookies from "js-cookie";
+import { login } from "@/stores/slices/authSlice";
 
 function Sidebar() {
   const [theme, setTheme] = useState("light");
   const [mounted, setMounted] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch<AppDispatch>();
+  const token =
+    typeof window !== "undefined" ? Cookies.get("admin_token") : null;
+  const [role, setRole] = useState(0);
+
+  useEffect(() => {
+    if (!token) return;
+    const fetchAdmin = async () => {
+      setIsLoading(true);
+      try {
+        const decodeResponse = await fetch(`${BASE_URL}/users/decodejwttoken`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            token: token,
+          }),
+        });
+
+        if (!decodeResponse.ok) {
+          throw new Error("Đăng nhập thất bại! Vui lòng kiểm tra lại.");
+        }
+
+        const decoded = await decodeResponse.json();
+
+        if (
+          decoded.claims.RoleId !== "1" &&
+          decoded.claims.RoleId !== "2" &&
+          decoded.claims.RoleId !== "3"
+        ) {
+          throw new Error("Không có quyền truy cập!");
+        }
+
+        const adminData = {
+          id: decoded.claims.sub,
+          email: decoded.claims.email,
+          phone: decoded.claims.Phone,
+          name: decoded.claims.name,
+          avatar: decoded.avatarUrl,
+          role: decoded.claims.RoleId,
+        };
+
+        setRole(Number(decoded.claims.RoleId));
+
+        dispatch(login(adminData));
+        Cookies.set("admin_token", token);
+        setIsLoading(false);
+      } catch (error) {
+        const errorMessage =
+          error instanceof Error ? error.message : "Đã xảy ra lỗi!";
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          theme: "light",
+        });
+        setIsLoading(false);
+        return;
+      }
+    };
+
+    fetchAdmin();
+  }, [dispatch, token]);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") || "light";
@@ -36,6 +108,8 @@ function Sidebar() {
   };
 
   if (!mounted) return null;
+
+  if (isLoading) return null;
 
   return (
     <motion.aside
@@ -100,48 +174,62 @@ function Sidebar() {
         </button>
       </div>
       <nav className="flex flex-col gap-2">
-        <SidebarItem
-          icon={Home}
-          label="Trang chủ"
-          href="/dashboard"
-          collapsed={isCollapsed}
-        />
-        <SidebarItem
-          icon={UsersRound}
-          label="Khách hàng"
-          href="/customers"
-          collapsed={isCollapsed}
-        />
-        <SidebarItem
-          icon={BriefcaseBusiness}
-          label="Doanh nghiệp"
-          href="/owners"
-          collapsed={isCollapsed}
-        />
-        <SidebarItem
-          icon={Sofa}
-          label="Không gian"
-          href="/workspaces"
-          collapsed={isCollapsed}
-        />
-        <SidebarItem
-          icon={CircleUserRound}
-          label="Nhân viên"
-          href="/employees"
-          collapsed={isCollapsed}
-        />
-        <SidebarItem
-          icon={KeyRound}
-          label="Xác thực doanh nghiệp"
-          href="/verify-owner"
-          collapsed={isCollapsed}
-        />
-        <SidebarItem
-          icon={Banknote}
-          label="Yêu cầu rút tiền"
-          href="/withdrawal-request"
-          collapsed={isCollapsed}
-        />
+        {(role === 1 || role === 2) && (
+          <SidebarItem
+            icon={Home}
+            label="Trang chủ"
+            href="/dashboard"
+            collapsed={isCollapsed}
+          />
+        )}
+        {(role === 1 || role === 2) && (
+          <SidebarItem
+            icon={UsersRound}
+            label="Khách hàng"
+            href="/customers"
+            collapsed={isCollapsed}
+          />
+        )}
+        {(role === 1 || role === 2) && (
+          <SidebarItem
+            icon={BriefcaseBusiness}
+            label="Doanh nghiệp"
+            href="/owners"
+            collapsed={isCollapsed}
+          />
+        )}
+        {(role === 1 || role === 2) && (
+          <SidebarItem
+            icon={Sofa}
+            label="Không gian"
+            href="/workspaces"
+            collapsed={isCollapsed}
+          />
+        )}
+        {role === 1 && (
+          <SidebarItem
+            icon={CircleUserRound}
+            label="Nhân viên"
+            href="/employees"
+            collapsed={isCollapsed}
+          />
+        )}
+        {(role === 1 || role === 2) && (
+          <SidebarItem
+            icon={KeyRound}
+            label="Xác thực doanh nghiệp"
+            href="/verify-owner"
+            collapsed={isCollapsed}
+          />
+        )}
+        {(role === 1 || role === 2) && (
+          <SidebarItem
+            icon={Banknote}
+            label="Yêu cầu rút tiền"
+            href="/withdrawal-request"
+            collapsed={isCollapsed}
+          />
+        )}
       </nav>
     </motion.aside>
   );

@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 
 interface Admin {
   id: string | null;
@@ -30,7 +31,7 @@ const authSlice = createSlice({
     logout(state) {
       state.isAuthenticated = false;
       state.admin = null;
-      localStorage.removeItem("admin_token");
+      Cookies.remove("admin_token");
     },
   },
 });
