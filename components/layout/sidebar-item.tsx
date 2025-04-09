@@ -20,7 +20,7 @@ export default function SidebarItem({
       className={`flex text-base items-center gap-2 px-4 py-4 rounded-lg transition-colors duration-200 ${
         isActive
           ? "bg-gradient-to-r from-primary to-secondary text-white dark:bg-primary-dark"
-          : "text-fourth dark:text-gray-300 hover:bg-primary hover:text-white dark:hover:bg-primary-dark dark:hover:text-white"
+          : "text-fourth dark:text-white hover:bg-primary hover:text-white dark:hover:bg-primary-dark dark:hover:text-white"
       }`}
     >
       <Icon className="w-5 h-5" />

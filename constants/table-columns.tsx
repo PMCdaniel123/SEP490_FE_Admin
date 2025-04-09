@@ -4,6 +4,7 @@ import {
   CustomerProps,
   EmployeeProps,
   formatCurrency,
+  HighRatingWorkspace,
   OwnerProps,
   TopWorkspace,
   WithdrawalRequestProps,
@@ -703,6 +704,113 @@ export const WorkspaceTableColumns: ColumnDef<Workspace>[] = [
             </Link>
           </DropdownMenuContent>
         </DropdownMenu>
+      );
+    },
+  },
+];
+
+export const HighRateWorkspaceTableColumns: ColumnDef<HighRatingWorkspace>[] = [
+  {
+    accessorKey: "id",
+    header: ({ column }) => {
+      return (
+        <div
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+        >
+          <p>Mã không gian</p>
+          <ArrowUpDown size={16} className="ml-2" />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <p className="text-center font-medium">
+          KH{Number(row.getValue("id")).toString().padStart(4, "0")}
+        </p>
+      );
+    },
+  },
+  {
+    accessorKey: "rate",
+    header: ({ column }) => {
+      return (
+        <div
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-white dark:text-white  font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+        >
+          <p>Số sao</p>
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <p className="text-center font-medium">{row.getValue("rate")}✨</p>
+      );
+    },
+  },
+  {
+    accessorKey: "image",
+    header: () => (
+      <div className="text-white dark:text-white  font-semibold text-base text-center">
+        Hình ảnh
+      </div>
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex items-center justify-center">
+          <Image
+            src={row.original.images[0].imgUrl}
+            alt={row.original.name}
+            width={80}
+            height={80}
+            className="object-cover rounded-md"
+          />
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "category",
+    header: ({ column }) => {
+      return (
+        <div
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-white dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+        >
+          <p>Phân loại</p>
+          <ArrowUpDown size={16} className="ml-2 h-4 w-4" />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <p className="text-center font-medium">
+          {workspaceCategory[String(row.getValue("category"))] ||
+            "Không xác định"}
+        </p>
+      );
+    },
+  },
+  {
+    accessorKey: "area",
+    header: ({ column }) => {
+      return (
+        <div
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-white dark:text-white font-semibold text-base text-center items-center flex justify-center cursor-pointer"
+        >
+          <p>Diện tích</p>
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <p className="text-center font-medium">
+          {row.getValue("area")} m<sup>2</sup>
+        </p>
       );
     },
   },

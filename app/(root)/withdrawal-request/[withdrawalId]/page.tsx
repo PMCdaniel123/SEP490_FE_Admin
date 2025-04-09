@@ -167,14 +167,16 @@ function WithdrawalDetail() {
           <h1 className="text-xl font-bold text-center text-primary">
             Thông tin yêu cầu rút tiền
           </h1>
-          {withdrawal?.status !== "Success" && (
+          {withdrawal && withdrawal?.status !== "Success" && (
             <div className="flex items-center justify-end gap-4">
-              <button
-                onClick={() => setIsAccepted(true)}
-                className="px-4 py-2 rounded-lg border border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300"
-              >
-                Chấp nhận
-              </button>
+              {Number(withdrawal?.balance) > 0 && (
+                <button
+                  onClick={() => setIsAccepted(true)}
+                  className="px-4 py-2 rounded-lg border border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300"
+                >
+                  Chấp nhận
+                </button>
+              )}
               <button
                 onClick={() => setIsRejected(true)}
                 className="px-4 py-2 rounded-lg border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-colors duration-300"

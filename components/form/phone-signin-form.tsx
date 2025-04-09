@@ -118,7 +118,13 @@ function PhoneSignInForm({ initialData }: PhoneSignInFormProps) {
         dispatch(login(adminData));
         Cookies.set("admin_token", token);
         setIsLoading(false);
-        router.push("/dashboard");
+        const redirect_url =
+          adminData.role === "1"
+            ? "/dashboard"
+            : adminData.role === "2"
+            ? "/withdrawal-request"
+            : "/verify-owner";
+        router.push(redirect_url);
       } catch (error) {
         const errorMessage =
           error instanceof Error ? error.message : "Đã xảy ra lỗi!";
