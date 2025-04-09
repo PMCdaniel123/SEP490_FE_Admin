@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import Link from "next/link";
 import { Modal } from "antd";
 import ChangePasswordModal from "../modal/change-password-modal";
+import Cookies from "js-cookie";
 
 function TopNav() {
   const [open, setOpen] = useState(false);
@@ -21,7 +22,7 @@ function TopNav() {
   const dispatch = useDispatch();
   const { admin } = useSelector((state: RootState) => state.auth);
   const token =
-    typeof window !== "undefined" ? localStorage.getItem("admin_token") : null;
+    typeof window !== "undefined" ? Cookies.get("admin_token") : null;
   const [changePassword, setChangePassword] = useState(false);
 
   useEffect(() => {
@@ -34,6 +35,7 @@ function TopNav() {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
               },
               body: JSON.stringify({
                 token: token,
@@ -48,9 +50,9 @@ function TopNav() {
           const decoded = await decodeResponse.json();
 
           if (
-            decoded.claims.RoleId !== 1 &&
-            decoded.claims.RoleId !== 2 &&
-            decoded.claims.RoleId !== 3
+            decoded.claims.RoleId !== "1" &&
+            decoded.claims.RoleId !== "2" &&
+            decoded.claims.RoleId !== "3"
           ) {
             throw new Error("Không có quyền truy cập!");
           }
@@ -102,6 +104,7 @@ function TopNav() {
   }, [open]);
 
   const handleLogOut = () => {
+    setOpen(false);
     dispatch(logout());
     router.push("/");
   };
