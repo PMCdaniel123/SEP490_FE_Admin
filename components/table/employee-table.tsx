@@ -78,7 +78,7 @@ export default function EmployeeTable<TData, TValue>({
           Danh sách nhân viên
         </h1>
         <Button
-          className="flex items-center gap-2 text-white dark:bg-gray-800 dark:text-white dark:border-gray-700 font-semibold"
+          className="flex items-center gap-2 cursor-pointer text-white dark:bg-gray-800 dark:text-white dark:border-gray-700 font-semibold"
           onClick={() => router.push("employees/new")}
         >
           <CirclePlus />
@@ -135,7 +135,10 @@ export default function EmployeeTable<TData, TValue>({
               <TableRow key={headerGroup.id} className="dark:border-gray-700">
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="py-4 dark:text-gray-300">
+                    <TableHead
+                      key={header.id}
+                      className="py-4 dark:text-gray-300"
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(

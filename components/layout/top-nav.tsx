@@ -75,7 +75,7 @@ function TopNav() {
             hideProgressBar: false,
             theme: "light",
           });
-          localStorage.removeItem("admin_token");
+          Cookies.remove("admin_token");
           router.push("/");
           return;
         }
@@ -157,12 +157,16 @@ function TopNav() {
                 <Link
                   href="/profile"
                   className="px-4 flex items-center gap-2 hover:bg-primary hover:text-white dark:hover:bg-primary-dark dark:hover:text-white py-2 transition-colors duration-200 cursor-pointer"
+                  onClick={() => setOpen(false)}
                 >
                   <Settings size={16} /> <span>Sửa thông tin</span>
                 </Link>
                 <li
                   className="px-4 flex items-center gap-2 hover:bg-primary hover:text-white dark:hover:bg-primary-dark dark:hover:text-white py-2 transition-colors duration-200 cursor-pointer"
-                  onClick={() => setChangePassword(true)}
+                  onClick={() => {
+                    setOpen(false);
+                    setChangePassword(true);
+                  }}
                 >
                   <LockKeyhole size={16} /> <span>Đổi mật khẩu</span>
                 </li>

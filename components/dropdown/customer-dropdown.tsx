@@ -26,6 +26,7 @@ function CustomerDropdown({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     if (!customer) return;
@@ -107,9 +108,16 @@ function CustomerDropdown({
 
   if (loading) return;
 
+  const handleViewDetail = () => {
+    setDropdownOpen(false);
+    setTimeout(() => {
+      setIsOpen(true);
+    }, 100);
+  };
+
   return (
     <>
-      <DropdownMenu>
+      <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
             <MoreHorizontal className="h-4 w-4" />
@@ -118,7 +126,7 @@ function CustomerDropdown({
         <DropdownMenuContent align="end" className="py-2">
           <li
             className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer"
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={handleViewDetail}
           >
             <Eye size={16} /> <span>Xem thông tin chi tiết</span>
           </li>

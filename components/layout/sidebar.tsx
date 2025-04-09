@@ -116,12 +116,12 @@ function Sidebar() {
       initial={{ width: "288px" }}
       animate={{ width: isCollapsed ? "84px" : "288px" }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="bg-white p-4 rounded-xl min-h-screen flex flex-col"
+      className="bg-white dark:bg-black p-4 rounded-xl min-h-screen flex flex-col"
     >
       <motion.button
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="mb-2 flex justify-center items-center w-full p-4 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
+        className="mb-2 flex justify-center items-center dark:bg-gray-800 w-full p-4 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
       >
         <LayoutList className="w-5 h-5" />
       </motion.button>
@@ -134,7 +134,7 @@ function Sidebar() {
           initial={{ opacity: 1 }}
           animate={{ opacity: isCollapsed ? 0 : 1 }}
           transition={{ duration: 0.3 }}
-          className={`text-2xl font-extrabold text-primary dark:text-white text-center ${
+          className={`text-2xl font-extrabold text-primary dark:text-primary text-center ${
             isCollapsed ? "hidden" : "block"
           }`}
         >
@@ -174,7 +174,7 @@ function Sidebar() {
         </button>
       </div>
       <nav className="flex flex-col gap-2">
-        {(role === 1 || role === 2) && (
+        {role === 1 && (
           <SidebarItem
             icon={Home}
             label="Trang chủ"
@@ -190,7 +190,7 @@ function Sidebar() {
             collapsed={isCollapsed}
           />
         )}
-        {(role === 1 || role === 2) && (
+        {(role === 1 || role === 2 || role === 3) && (
           <SidebarItem
             icon={BriefcaseBusiness}
             label="Doanh nghiệp"
@@ -198,7 +198,7 @@ function Sidebar() {
             collapsed={isCollapsed}
           />
         )}
-        {(role === 1 || role === 2) && (
+        {(role === 1 || role === 2 || role === 3) && (
           <SidebarItem
             icon={Sofa}
             label="Không gian"
@@ -214,7 +214,7 @@ function Sidebar() {
             collapsed={isCollapsed}
           />
         )}
-        {(role === 1 || role === 2) && (
+        {(role === 1 || role === 2 || role === 3) && (
           <SidebarItem
             icon={KeyRound}
             label="Xác thực doanh nghiệp"
