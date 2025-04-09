@@ -291,7 +291,7 @@ function WithdrawalDetail() {
           </button>,
         ]}
       >
-        <p className="text-gray-700 dark:text-gray-300 py-4">
+        <p className="text-gray-700 dark:text-black py-4">
           Bạn có đồng ý xác nhận yêu cầu rút tiền này không?
         </p>
       </Modal>
