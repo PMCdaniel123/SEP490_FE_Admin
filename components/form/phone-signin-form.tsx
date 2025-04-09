@@ -169,7 +169,7 @@ function PhoneSignInForm({ initialData }: PhoneSignInFormProps) {
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="py-6 px-4 rounded-md file:bg-seventh"
+                      className="dark:text-black py-6 px-4 rounded-md file:bg-seventh"
                       placeholder="Nhập số điện thoại..."
                       {...field}
                     />
@@ -191,7 +191,7 @@ function PhoneSignInForm({ initialData }: PhoneSignInFormProps) {
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="py-6 px-4 rounded-md file:bg-seventh"
+                      className="dark:text-black py-6 px-4 rounded-md file:bg-seventh"
                       placeholder="Nhập mật khẩu..."
                       type="password"
                       {...field}
