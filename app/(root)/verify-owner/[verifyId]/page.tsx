@@ -9,7 +9,7 @@ import { EmployeeProps, OwnerProps } from "@/types";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
 import dayjs from "dayjs";
-import { FileText, Globe, IdCard, TriangleAlert, User } from "lucide-react";
+import { FileText, Globe, TriangleAlert, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
@@ -230,56 +230,6 @@ function VerifyOwnerDetail() {
           <Separator className="my-4 dark:border-gray-700" />
           <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
             <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
-              <IdCard className="h-5 w-5 text-primary dark:text-primary-dark" />
-              Căn cước công dân
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300 mt-4">
-              <p>
-                <strong>Họ và tên:</strong> {verifyDetail?.identityName}
-              </p>
-              <p>
-                <strong>Số CCCD:</strong> {verifyDetail?.identityNumber}
-              </p>
-              <p>
-                <strong>Ngày sinh:</strong>{" "}
-                {dayjs(verifyDetail?.dateOfBirth).format("DD/MM/YYYY")}
-              </p>
-              <p>
-                <strong>Giới tính:</strong> {verifyDetail?.sex}
-              </p>
-              <p>
-                <strong>Quốc tịch:</strong> {verifyDetail?.nationality}
-              </p>
-              <p>
-                <strong>Quê quán:</strong> {verifyDetail?.placeOfOrigin}
-              </p>
-              <p>
-                <strong>Nơi cư trú:</strong> {verifyDetail?.placeOfResidence}
-              </p>
-              <p>
-                <strong>Ngày hết hạn:</strong>{" "}
-                {dayjs(verifyDetail?.identityExpiredDate).format("DD/MM/YYYY")}
-              </p>
-              <p>
-                <strong>Ngày cấp:</strong>{" "}
-                {dayjs(verifyDetail?.identityCreatedDate).format("DD/MM/YYYY")}
-              </p>
-              <p>
-                <strong>Tệp đính kèm:</strong>{" "}
-                <a
-                  href={verifyDetail?.identityFile}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary hover:text-secondary underline"
-                >
-                  Xem tệp
-                </a>
-              </p>
-            </div>
-          </div>
-          <Separator className="my-4 dark:border-gray-700" />
-          <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
-            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
               <Globe className="h-5 w-5 text-primary dark:text-primary-dark" />
               Tài khoản mạng xã hội
             </h2>
@@ -312,12 +262,22 @@ function VerifyOwnerDetail() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300 mt-4">
               <p>
+                <strong>Họ và tên:</strong> {verifyDetail?.ownerName}
+              </p>
+              <p>
+                <strong>Giới tính:</strong> {verifyDetail?.sex}
+              </p>
+              <p>
+                <strong>Ngày đăng kí doanh nghiệp:</strong>{" "}
+                {dayjs(verifyDetail?.registrationDate).format("DD/MM/YYYY")}
+              </p>
+              <p>
                 <strong>Tên công ty:</strong> {verifyDetail?.licenseName}
               </p>
               <p>
                 <strong>Số giấy phép:</strong> {verifyDetail?.licenseNumber}
               </p>
-              <p>
+              <p className="md:col-span-2">
                 <strong>Địa chỉ:</strong> {verifyDetail?.licenseAddress}
               </p>
               <p>

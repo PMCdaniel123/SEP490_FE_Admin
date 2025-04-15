@@ -10,7 +10,6 @@ import {
   LockKeyholeOpen,
   FileText,
   Globe,
-  IdCard,
   User,
   LockKeyhole,
 } from "lucide-react";
@@ -225,10 +224,10 @@ function OwnerDetail() {
             </p>
             <p>
               <strong>Trạng thái:</strong>{" "}
-              {ownerDetail?.status === "Success" ||
-                (ownerDetail?.status === "Active" && (
-                  <span className="text-green-500">Hoạt động</span>
-                ))}
+              {(ownerDetail?.status === "Success" ||
+                ownerDetail?.status === "Active") && (
+                <span className="text-green-500">Hoạt động</span>
+              )}
               {ownerDetail?.status === "InActive" && (
                 <span className="text-red-500">Bị chặn</span>
               )}
@@ -251,56 +250,6 @@ function OwnerDetail() {
                 {employee?.name}
               </p>
             )}
-          </div>
-        </div>
-        <Separator className="my-4 dark:border-gray-700" />
-        <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
-          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
-            <IdCard className="h-5 w-5 text-primary dark:text-primary-dark" />
-            Căn cước công dân
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300 mt-4">
-            <p>
-              <strong>Họ và tên:</strong> {ownerDetail?.identityName}
-            </p>
-            <p>
-              <strong>Số CCCD:</strong> {ownerDetail?.identityNumber}
-            </p>
-            <p>
-              <strong>Ngày sinh:</strong>{" "}
-              {dayjs(ownerDetail?.dateOfBirth).format("DD/MM/YYYY")}
-            </p>
-            <p>
-              <strong>Giới tính:</strong> {ownerDetail?.sex}
-            </p>
-            <p>
-              <strong>Quốc tịch:</strong> {ownerDetail?.nationality}
-            </p>
-            <p>
-              <strong>Quê quán:</strong> {ownerDetail?.placeOfOrigin}
-            </p>
-            <p>
-              <strong>Nơi cư trú:</strong> {ownerDetail?.placeOfResidence}
-            </p>
-            <p>
-              <strong>Ngày hết hạn:</strong>{" "}
-              {dayjs(ownerDetail?.identityExpiredDate).format("DD/MM/YYYY")}
-            </p>
-            <p>
-              <strong>Ngày cấp:</strong>{" "}
-              {dayjs(ownerDetail?.identityCreatedDate).format("DD/MM/YYYY")}
-            </p>
-            <p>
-              <strong>Tệp đính kèm:</strong>{" "}
-              <a
-                href={ownerDetail?.identityFile}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:text-secondary underline"
-              >
-                Xem tệp
-              </a>
-            </p>
           </div>
         </div>
         <Separator className="my-4 dark:border-gray-700" />
@@ -338,12 +287,22 @@ function OwnerDetail() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300 mt-4">
             <p>
+              <strong>Họ và tên:</strong> {ownerDetail?.ownerName}
+            </p>
+            <p>
+              <strong>Giới tính:</strong> {ownerDetail?.sex}
+            </p>
+            <p>
+              <strong>Ngày đăng kí doanh nghiệp:</strong>{" "}
+              {dayjs(ownerDetail?.registrationDate).format("DD/MM/YYYY")}
+            </p>
+            <p>
               <strong>Tên công ty:</strong> {ownerDetail?.licenseName}
             </p>
             <p>
               <strong>Số giấy phép:</strong> {ownerDetail?.licenseNumber}
             </p>
-            <p>
+            <p className="md:col-span-2">
               <strong>Địa chỉ:</strong> {ownerDetail?.licenseAddress}
             </p>
             <p>
