@@ -305,7 +305,7 @@ export const OwnerTableColumns = (
     },
   },
   {
-    accessorKey: "identityName",
+    accessorKey: "ownerName",
     header: ({ column }) => {
       return (
         <div
@@ -319,9 +319,7 @@ export const OwnerTableColumns = (
     },
     cell: ({ row }) => {
       return (
-        <p className="text-center font-medium">
-          {row.getValue("identityName")}
-        </p>
+        <p className="text-center font-medium">{row.getValue("ownerName")}</p>
       );
     },
   },
