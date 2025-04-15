@@ -121,7 +121,7 @@ function Sidebar() {
       <motion.button
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="mb-2 flex justify-center items-center w-full p-4 bg-card rounded-lg hover:bg-gray-300 hover:text-black transition"
+        className="mb-2 flex justify-center items-center w-full p-4 rounded-lg bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 hover:bg-gray-300 dark:hover:text-white transition"
       >
         <LayoutList className="w-5 h-5" />
       </motion.button>
