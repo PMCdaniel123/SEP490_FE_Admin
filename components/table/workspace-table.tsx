@@ -71,10 +71,8 @@ export default function WorkspaceTable<TData, TValue>({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="mt-4 flex items-center justify-between">
-        <h1 className="font-bold text-primary dark:text-primary-dark text-xl">
-          Danh sách không gian
-        </h1>
+      <div className="mt-4 flex items-center justify-center bg-primary dark:bg-gray-800 dark:hover:bg-gray-700 transition-all duration-300 p-4 rounded-md">
+        <h1 className="font-bold text-white text-xl">Danh sách không gian</h1>
       </div>
       <Separator className="mb-4 dark:border-gray-700" />
       <div className="flex items-center">
@@ -126,7 +124,10 @@ export default function WorkspaceTable<TData, TValue>({
               <TableRow key={headerGroup.id} className="dark:border-gray-700">
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="py-4 dark:text-gray-300">
+                    <TableHead
+                      key={header.id}
+                      className="py-4 dark:text-gray-300"
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(

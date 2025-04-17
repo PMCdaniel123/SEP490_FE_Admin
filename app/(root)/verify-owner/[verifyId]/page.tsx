@@ -5,11 +5,11 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { BASE_URL } from "@/constants/environments";
 import { RootState } from "@/stores";
-import { EmployeeProps, OwnerProps } from "@/types";
+import { EmployeeProps, formatCurrency, VerifyOwnerProps } from "@/types";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
 import dayjs from "dayjs";
-import { FileText, Globe, TriangleAlert, User } from "lucide-react";
+import { BadgeInfo, FileText, Globe, TriangleAlert, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
@@ -19,7 +19,9 @@ import { toast } from "react-toastify";
 
 function VerifyOwnerDetail() {
   const { verifyId } = useParams() as { verifyId: string };
-  const [verifyDetail, setVerifyDetail] = useState<OwnerProps | null>(null);
+  const [verifyDetail, setVerifyDetail] = useState<VerifyOwnerProps | null>(
+    null
+  );
   const [loading, setLoading] = useState(true);
   const [isAccepted, setIsAccepted] = useState(false);
   const [isRejected, setIsRejected] = useState(false);
@@ -36,7 +38,7 @@ function VerifyOwnerDetail() {
     const fetchOwnerData = async () => {
       try {
         const response = await fetch(
-          `${BASE_URL}/workspace-owners/${verifyId}`
+          `${BASE_URL}/owner-verify-requests/${verifyId}`
         );
 
         if (!response.ok) {
@@ -44,7 +46,7 @@ function VerifyOwnerDetail() {
         }
 
         const data = await response.json();
-        setVerifyDetail(data.owner);
+        setVerifyDetail(data);
         setLoading(false);
       } catch (error) {
         const errorMessage =
@@ -113,17 +115,20 @@ function VerifyOwnerDetail() {
   const handleChangeStatus = async (status: string) => {
     try {
       setIsLoading(true);
-      const response = await fetch(`${BASE_URL}/owners/${verifyId}/status`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          status,
-          message: status === "Success" ? "Ok" : message,
-          userId: admin?.id,
-        }),
-      });
+      const response = await fetch(
+        `${BASE_URL}/owners/${verifyDetail?.ownerId}/status`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            status,
+            message: status === "Success" ? "Ok" : message,
+            userId: admin?.id,
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Có lỗi xảy ra khi tải thông tin xác thực.");
@@ -161,23 +166,27 @@ function VerifyOwnerDetail() {
     <>
       <div className="p-4 bg-card rounded-xl">
         <div className="flex flex-col gap-6 mt-10">
-          <h1 className="text-xl font-bold text-center text-primary">
-            Thông tin chi tiết doanh nghiệp
-          </h1>
-          <div className="flex items-center justify-end gap-4">
-            <button
-              onClick={() => setIsAccepted(true)}
-              className="px-4 py-2 rounded-lg border border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300"
-            >
-              Chấp nhận
-            </button>
-            <button
-              onClick={() => setIsRejected(true)}
-              className="px-4 py-2 rounded-lg border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-colors duration-300"
-            >
-              Từ chối
-            </button>
+          <div className="w-full mx-auto bg-primary border border-primary rounded-lg p-6 mb-4">
+            <h1 className="text-xl font-bold text-center text-white flex items-center justify-center gap-4">
+              <BadgeInfo /> Xác thực doanh nghiệp
+            </h1>
           </div>
+          {verifyDetail?.status === "Handling" && (
+            <div className="flex items-center justify-end gap-4">
+              <button
+                onClick={() => setIsAccepted(true)}
+                className="px-4 py-2 rounded-lg border border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300"
+              >
+                Chấp nhận
+              </button>
+              <button
+                onClick={() => setIsRejected(true)}
+                className="px-4 py-2 rounded-lg border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-colors duration-300"
+              >
+                Từ chối
+              </button>
+            </div>
+          )}
           <Separator className="mb-4 dark:border-gray-700" />
           <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
             <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
@@ -186,22 +195,20 @@ function VerifyOwnerDetail() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300 mt-4">
               <p>
-                <strong>Email:</strong> {verifyDetail?.email}
-              </p>
-              <p>
-                <strong>Số điện thoại:</strong> {verifyDetail?.phone}
-              </p>
-              <p>
-                <strong>Trạng thái:</strong>{" "}
+                <span className="font-semibold">Trạng thái:</span>{" "}
                 {verifyDetail?.status === "Handling" ? (
                   <span className="text-yellow-500">Chờ xác thực</span>
+                ) : verifyDetail?.status === "Success" ? (
+                  <span className="text-green-500">Xác thực thành công</span>
                 ) : (
                   <span className="text-red-500">Xác thực thất bại</span>
                 )}
               </p>
               <p>
-                <strong>Ngày tạo:</strong>{" "}
-                {dayjs(verifyDetail?.updatedAt).format("HH:mm DD/MM/YYYY")}
+                <span className="font-semibold">Ngày tạo:</span>{" "}
+                {verifyDetail?.createdAt
+                  ? dayjs(verifyDetail?.createdAt).format("HH:mm DD/MM/YYYY")
+                  : "Chưa cập nhật"}
               </p>
               {verifyDetail?.userId && (
                 <p>
@@ -225,6 +232,12 @@ function VerifyOwnerDetail() {
                   {verifyDetail?.message}
                 </p>
               )}
+              {verifyDetail?.userId && (
+                <p>
+                  <span className="font-semibold">Ngày xử lý: </span>
+                  {dayjs(verifyDetail?.updatedAt).format("HH:mm DD/MM/YYYY")}
+                </p>
+              )}
             </div>
           </div>
           <Separator className="my-4 dark:border-gray-700" />
@@ -235,21 +248,21 @@ function VerifyOwnerDetail() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300 mt-4">
               <Link href={verifyDetail?.facebook || ""}>
-                <strong>Facebook:</strong>{" "}
+                <span className="font-semibold">Facebook:</span>{" "}
                 <span className="text-primary hover:text-secondary underline">
-                  {verifyDetail?.facebook}
+                  {verifyDetail?.facebook || "Chưa cập nhật"}
                 </span>
               </Link>
               <Link href={verifyDetail?.instagram || ""}>
-                <strong>Instagram:</strong>{" "}
+                <span className="font-semibold">Instagram:</span>{" "}
                 <span className="text-primary hover:text-secondary underline">
-                  {verifyDetail?.instagram}
+                  {verifyDetail?.instagram || "Chưa cập nhật"}
                 </span>
               </Link>
               <Link href={verifyDetail?.tiktok || ""}>
-                <strong>Tiktok:</strong>{" "}
+                <span className="font-semibold">Tiktok:</span>{" "}
                 <span className="text-primary hover:text-secondary underline">
-                  {verifyDetail?.tiktok}
+                  {verifyDetail?.tiktok || "Chưa cập nhật"}
                 </span>
               </Link>
             </div>
@@ -262,29 +275,33 @@ function VerifyOwnerDetail() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300 mt-4">
               <p>
-                <strong>Họ và tên:</strong> {verifyDetail?.ownerName}
+                <span className="font-semibold">Họ và tên:</span>{" "}
+                {verifyDetail?.ownerName}
               </p>
               <p>
-                <strong>Giới tính:</strong> {verifyDetail?.sex}
-              </p>
-              <p>
-                <strong>Ngày đăng kí doanh nghiệp:</strong>{" "}
+                <span className="font-semibold">
+                  Ngày đăng kí doanh nghiệp:
+                </span>{" "}
                 {dayjs(verifyDetail?.registrationDate).format("DD/MM/YYYY")}
               </p>
               <p>
-                <strong>Tên công ty:</strong> {verifyDetail?.licenseName}
+                <span className="font-semibold">Tên công ty:</span>{" "}
+                {verifyDetail?.licenseName}
               </p>
               <p>
-                <strong>Số giấy phép:</strong> {verifyDetail?.licenseNumber}
+                <span className="font-semibold">Số giấy phép:</span>{" "}
+                {verifyDetail?.licenseNumber}
               </p>
               <p className="md:col-span-2">
-                <strong>Địa chỉ:</strong> {verifyDetail?.licenseAddress}
+                <span className="font-semibold">Địa chỉ:</span>{" "}
+                {verifyDetail?.licenseAddress}
               </p>
               <p>
-                <strong>Vốn điều lệ:</strong> {verifyDetail?.charterCapital}
+                <span className="font-semibold">Vốn điều lệ:</span>{" "}
+                {formatCurrency(Number(verifyDetail?.charterCapital))}
               </p>
               <p>
-                <strong>Tệp đính kèm:</strong>{" "}
+                <span className="font-semibold">Tệp đính kèm:</span>{" "}
                 <a
                   href={verifyDetail?.licenseFile}
                   target="_blank"

@@ -26,6 +26,7 @@ export interface SidebarItemProps {
   label: string;
   href: string;
   collapsed: boolean;
+  children?: React.ReactNode;
 }
 
 export interface TopWorkspace {
@@ -85,9 +86,11 @@ export interface OwnerProps {
   charterCapital: string;
   licenseFile: string;
   status: string;
+  createdAt: string;
   updatedAt: string;
   userId: string;
   message: string;
+  avatar: string;
 }
 
 export interface EmployeeProps {
@@ -190,18 +193,25 @@ export interface PhoneProps {
   phone: string;
 }
 
-export interface VerifyProps {
-  id: string;
-  name: string;
-  email: string;
-  location: string;
-  phone: string;
+export interface VerifyOwnerProps {
+  id: number;
+  ownerId: number;
+  userId: number;
+  message: string;
   status: string;
+  googleMapUrl: string;
+  licenseName: string;
+  licenseNumber: string;
+  licenseAddress: string;
+  charterCapital: number;
+  licenseFile: string;
+  ownerName: string;
+  facebook: string;
+  instagram: string;
+  tiktok: string;
   createdAt: string;
-  identify: IdentifyProps;
-  social: SocialProps;
-  license: LicenseProps;
-  verifyPhone: PhoneProps;
+  updatedAt: string;
+  registrationDate: string;
 }
 export interface UserProps {
   name: string;
@@ -210,12 +220,13 @@ export interface UserProps {
   phone: string;
 }
 
-export interface WithdrawalRequestProps {
+export interface OwnerWithdrawalProps {
   id: number;
   title: string;
   description: string;
   status: string;
   createdAt: string;
+  updatedAt: string;
   workspaceOwnerId: number;
   userId: number;
   walletId: number;
@@ -223,6 +234,22 @@ export interface WithdrawalRequestProps {
   bankNumber: string;
   bankAccountName: string;
   balance: string;
+  managerResponse: string | null;
+}
+
+export interface CustomerWithdrawalProps {
+  id: number;
+  title: string;
+  description: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  customerId: number;
+  managerId: number;
+  bankName: string;
+  bankNumber: string;
+  bankAccountName: string;
+  balance: number;
   managerResponse: string | null;
 }
 

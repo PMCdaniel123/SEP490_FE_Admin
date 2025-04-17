@@ -122,7 +122,7 @@ function EmailSignInForm({ initialData }: EmailSignInFormProps) {
           adminData.role === "1"
             ? "/dashboard"
             : adminData.role === "2"
-            ? "/withdrawal-request"
+            ? "/withdrawal-request/owners"
             : "/verify-owner";
         router.push(redirect_url);
       } catch (error) {

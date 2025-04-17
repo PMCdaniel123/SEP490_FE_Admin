@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import Loader from "@/components/loader/Loader";
@@ -213,17 +214,40 @@ function OwnerDetail() {
         <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
           <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
             <User className="h-5 w-5 text-primary dark:text-primary-dark" />
-            Thông tin cá nhân
+            Thông tin chung
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300 mt-4">
+            <div className="col-span-1 md:col-span-2 flex gap-4 items-end">
+              <span className="font-semibold">Ảnh đại diện: </span>
+              <div className="w-24 h-24 bg-gray-200 rounded-full overflow-hidden border">
+                {ownerDetail?.avatar ? (
+                  <img
+                    src={
+                      typeof ownerDetail?.avatar === "string"
+                        ? ownerDetail?.avatar
+                        : URL.createObjectURL(ownerDetail?.avatar)
+                    }
+                    alt="Avatar"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <img
+                    src="/owner_icon.png"
+                    alt="Default Avatar"
+                    className="w-full h-full object-cover"
+                  />
+                )}
+              </div>
+            </div>
             <p>
-              <strong>Email:</strong> {ownerDetail?.email}
+              <span className="font-semibold">Email:</span> {ownerDetail?.email}
             </p>
             <p>
-              <strong>Số điện thoại:</strong> {ownerDetail?.phone}
+              <span className="font-semibold">Số điện thoại:</span>{" "}
+              {ownerDetail?.phone}
             </p>
             <p>
-              <strong>Trạng thái:</strong>{" "}
+              <span className="font-semibold">Trạng thái:</span>{" "}
               {(ownerDetail?.status === "Success" ||
                 ownerDetail?.status === "Active") && (
                 <span className="text-green-500">Hoạt động</span>
@@ -233,8 +257,10 @@ function OwnerDetail() {
               )}
             </p>
             <p>
-              <strong>Ngày tạo:</strong>{" "}
-              {dayjs(ownerDetail?.updatedAt).format("HH:mm DD/MM/YYYY")}
+              <span className="font-semibold">Ngày tạo tài khoản:</span>{" "}
+              {ownerDetail?.createdAt
+                ? dayjs(ownerDetail?.createdAt).format("HH:mm DD/MM/YYYY")
+                : "Chưa cập nhật"}
             </p>
             {ownerDetail?.userId && (
               <p>
@@ -250,6 +276,12 @@ function OwnerDetail() {
                 {employee?.name}
               </p>
             )}
+            {ownerDetail?.userId && (
+              <p>
+                <span className="font-semibold">Ngày xử lý: </span>
+                {dayjs(ownerDetail?.updatedAt).format("HH:mm DD/MM/YYYY")}
+              </p>
+            )}
           </div>
         </div>
         <Separator className="my-4 dark:border-gray-700" />
@@ -260,19 +292,19 @@ function OwnerDetail() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300 mt-4">
             <Link href={ownerDetail?.facebook || ""}>
-              <strong>Facebook:</strong>{" "}
+              <span className="font-semibold">Facebook:</span>{" "}
               <span className="text-primary hover:text-secondary underline">
                 {ownerDetail?.facebook}
               </span>
             </Link>
             <Link href={ownerDetail?.instagram || ""}>
-              <strong>Instagram:</strong>{" "}
+              <span className="font-semibold">Instagram:</span>{" "}
               <span className="text-primary hover:text-secondary underline">
                 {ownerDetail?.instagram}
               </span>
             </Link>
             <Link href={ownerDetail?.tiktok || ""}>
-              <strong>Tiktok:</strong>{" "}
+              <span className="font-semibold">Tiktok:</span>{" "}
               <span className="text-primary hover:text-secondary underline">
                 {ownerDetail?.tiktok}
               </span>
@@ -287,29 +319,35 @@ function OwnerDetail() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300 mt-4">
             <p>
-              <strong>Họ và tên:</strong> {ownerDetail?.ownerName}
+              <span className="font-semibold">Họ và tên:</span>{" "}
+              {ownerDetail?.ownerName}
             </p>
             <p>
-              <strong>Giới tính:</strong> {ownerDetail?.sex}
+              <span className="font-semibold">Giới tính:</span>{" "}
+              {ownerDetail?.sex}
             </p>
             <p>
-              <strong>Ngày đăng kí doanh nghiệp:</strong>{" "}
+              <span className="font-semibold">Ngày đăng kí doanh nghiệp:</span>{" "}
               {dayjs(ownerDetail?.registrationDate).format("DD/MM/YYYY")}
             </p>
             <p>
-              <strong>Tên công ty:</strong> {ownerDetail?.licenseName}
+              <span className="font-semibold">Tên công ty:</span>{" "}
+              {ownerDetail?.licenseName}
             </p>
             <p>
-              <strong>Số giấy phép:</strong> {ownerDetail?.licenseNumber}
+              <span className="font-semibold">Số giấy phép:</span>{" "}
+              {ownerDetail?.licenseNumber}
             </p>
             <p className="md:col-span-2">
-              <strong>Địa chỉ:</strong> {ownerDetail?.licenseAddress}
+              <span className="font-semibold">Địa chỉ:</span>{" "}
+              {ownerDetail?.licenseAddress}
             </p>
             <p>
-              <strong>Vốn điều lệ:</strong> {ownerDetail?.charterCapital}
+              <span className="font-semibold">Vốn điều lệ:</span>{" "}
+              {ownerDetail?.charterCapital}
             </p>
             <p>
-              <strong>Tệp đính kèm:</strong>{" "}
+              <span className="font-semibold">Tệp đính kèm:</span>{" "}
               <a
                 href={ownerDetail?.licenseFile}
                 target="_blank"

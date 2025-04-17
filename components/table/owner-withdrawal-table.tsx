@@ -23,7 +23,6 @@ import {
 } from "@/components/ui/table";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -41,7 +40,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
-export default function WithdrawalRequestTable<TData, TValue>({
+export default function OwnerWithdrawalTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -71,14 +70,14 @@ export default function WithdrawalRequestTable<TData, TValue>({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="mt-4 flex items-center justify-between">
-        <h1 className="font-bold text-primary dark:text-primary-dark text-xl">
-          Yêu cầu rút tiền
+      <div className="mt-4 flex items-center justify-center bg-primary dark:bg-gray-800 dark:hover:bg-gray-700 transition-all duration-300 p-4 rounded-md">
+        <h1 className="font-bold text-white text-xl">
+          Danh sách yêu cầu rút tiền từ doanh nghiệp
         </h1>
       </div>
       <Separator className="mb-4 dark:border-gray-700" />
       <div className="flex items-center">
-        <Input
+        {/* <Input
           placeholder="Số tài khoản ngân hàng..."
           value={
             (table.getColumn("bankNumber")?.getFilterValue() as string) ?? ""
@@ -87,7 +86,7 @@ export default function WithdrawalRequestTable<TData, TValue>({
             table.getColumn("bankNumber")?.setFilterValue(event.target.value)
           }
           className="max-w-sm dark:bg-gray-800 dark:text-white dark:border-gray-700"
-        />
+        /> */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
