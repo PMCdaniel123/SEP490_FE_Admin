@@ -914,6 +914,10 @@ export const VerifyTableColumns: ColumnDef<VerifyOwnerProps>[] = [
         <p className={`text-center font-medium text-yellow-500`}>
           Chờ xác thực
         </p>
+      ) : status === "Success" ? (
+        <p className={`text-center font-medium text-green-500`}>
+          Xác thực thành công
+        </p>
       ) : (
         <p className={`text-center font-medium text-red-500`}>
           Xác thực thất bại
