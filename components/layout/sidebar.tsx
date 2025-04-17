@@ -21,6 +21,8 @@ import { BASE_URL } from "@/constants/environments";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 import { login } from "@/stores/slices/authSlice";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 function Sidebar() {
   const [theme, setTheme] = useState("light");
@@ -31,6 +33,7 @@ function Sidebar() {
   const token =
     typeof window !== "undefined" ? Cookies.get("admin_token") : null;
   const [role, setRole] = useState(0);
+  const pathname = usePathname();
 
   useEffect(() => {
     if (!token) return;
@@ -228,8 +231,37 @@ function Sidebar() {
             label="Yêu cầu rút tiền"
             href="/withdrawal-request"
             collapsed={isCollapsed}
-          />
+          >
+            <Link
+              href="/withdrawal-request/customers"
+              className={`text-sm px-4 py-2 rounded-md ${
+                pathname?.includes("/withdrawal-request/customers")
+                  ? "bg-primary text-white"
+                  : "hover:bg-gray-200 dark:hover:bg-gray-700"
+              }`}
+            >
+              Khách hàng
+            </Link>
+            <Link
+              href="/withdrawal-request/owners"
+              className={`text-sm px-4 py-2 rounded-md ${
+                pathname?.includes("/withdrawal-request/owners")
+                  ? "bg-primary text-white"
+                  : "hover:bg-gray-200 dark:hover:bg-gray-700"
+              }`}
+            >
+              Doanh nghiệp
+            </Link>
+          </SidebarItem>
         )}
+        {/* {(role === 1 || role === 2) && (
+          <SidebarItem
+            icon={Banknote}
+            label="Doanh nghiệp rút tiền"
+            href="/withdrawal-request/owners"
+            collapsed={isCollapsed}
+          />
+        )} */}
       </nav>
     </motion.aside>
   );

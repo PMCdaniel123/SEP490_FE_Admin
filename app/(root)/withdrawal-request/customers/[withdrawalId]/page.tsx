@@ -1,0 +1,355 @@
+"use client";
+
+import Loader from "@/components/loader/Loader";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import { BASE_URL } from "@/constants/environments";
+import { RootState } from "@/stores";
+import {
+  EmployeeProps,
+  CustomerWithdrawalProps,
+  formatCurrency,
+} from "@/types";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Modal } from "antd";
+import dayjs from "dayjs";
+import { CalendarClock, TriangleAlert, Wallet2 } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+
+function WithdrawalDetail() {
+  const { withdrawalId } = useParams() as { withdrawalId: string };
+  const [withdrawal, setWithdrawal] = useState<CustomerWithdrawalProps | null>(
+    null
+  );
+  const [employee, setEmployee] = useState<EmployeeProps | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [isAccepted, setIsAccepted] = useState(false);
+  const [isRejected, setIsRejected] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const router = useRouter();
+  const { admin } = useSelector((state: RootState) => state.auth);
+
+  useEffect(() => {
+    if (!withdrawalId) {
+      return;
+    }
+    setLoading(true);
+    const fetchWithdrawal = async () => {
+      try {
+        const response = await fetch(
+          `${BASE_URL}/getcustomerwithdrawalrequestbyid/${withdrawalId}`
+        );
+
+        if (!response.ok) {
+          throw new Error("Có lỗi xảy ra khi tải thông tin yêu cầu rút tiền.");
+        }
+
+        const data = await response.json();
+        setWithdrawal(data.customerWithdrawalRequestByIdDTOs);
+        setLoading(false);
+      } catch (error) {
+        const errorMessage =
+          error instanceof Error ? error.message : "Đã xảy ra lỗi!";
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          theme: "light",
+        });
+        setWithdrawal(null);
+        setLoading(false);
+      }
+    };
+
+    fetchWithdrawal();
+  }, [withdrawalId]);
+
+  useEffect(() => {
+    if (!withdrawal) {
+      return;
+    }
+
+    if (!withdrawal.managerId) {
+      return;
+    }
+
+    setLoading(true);
+    const fetchEmployee = async () => {
+      try {
+        const response = await fetch(
+          `${BASE_URL}/users/${withdrawal.managerId}`
+        );
+
+        if (!response.ok) {
+          throw new Error("Có lỗi xảy ra khi tải thông tin nhân viên.");
+        }
+
+        const data = await response.json();
+        setEmployee(data.user);
+        setLoading(false);
+      } catch (error) {
+        const errorMessage =
+          error instanceof Error ? error.message : "Đã xảy ra lỗi!";
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          theme: "light",
+        });
+        setEmployee(null);
+        setLoading(false);
+      }
+    };
+
+    fetchEmployee();
+  }, [withdrawal]);
+
+  if (loading) {
+    return (
+      <div className="text-center">
+        <Loader />
+      </div>
+    );
+  }
+
+  const handleChangeStatus = async (status: string) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(
+        `${BASE_URL}/managers/updatecustomerwithdrawalstatusrequest`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            status,
+            managerResponse: status === "Success" ? "Ok" : message,
+            customerWithdrawalRequestId: withdrawalId,
+            managerId: admin?.id,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Có lỗi xảy ra khi tải thông tin yêu cầu rút tiền.");
+      }
+
+      const data = await response.json();
+      console.log(data);
+      setIsLoading(false);
+      if (status === "Success") {
+        setIsAccepted(false);
+      } else {
+        setIsRejected(false);
+      }
+      router.push("/withdrawal-request/customers");
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Đã xảy ra lỗi!";
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        theme: "light",
+      });
+      setIsLoading(false);
+      if (status === "Success") {
+        setIsAccepted(false);
+      } else {
+        setIsRejected(false);
+      }
+      router.push("/withdrawal-request");
+    }
+  };
+
+  return (
+    <>
+      <div className="flex flex-col gap-4">
+        <div className="p-4 bg-card rounded-xl pt-10 gap-6 flex flex-col">
+          <h1 className="text-xl font-bold text-center text-primary">
+            Thông tin yêu cầu rút tiền
+          </h1>
+          {withdrawal && withdrawal?.status === "Handling" && (
+            <div className="flex items-center justify-end gap-4">
+              {Number(withdrawal?.balance) > 0 && (
+                <button
+                  onClick={() => setIsAccepted(true)}
+                  className="px-4 py-2 rounded-lg border border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300"
+                >
+                  Chấp nhận
+                </button>
+              )}
+              <button
+                onClick={() => setIsRejected(true)}
+                className="px-4 py-2 rounded-lg border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-colors duration-300"
+              >
+                Từ chối
+              </button>
+            </div>
+          )}
+          <Separator className="mb-4 dark:border-gray-700" />
+          <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
+            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-white px-4">
+              <CalendarClock className="h-5 w-5 text-primary dark:text-primary-dark" />
+              <span>Trạng thái yêu cầu</span>
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300 mt-2">
+              {withdrawal?.managerId && (
+                <p>
+                  <span className="font-semibold">ID nhân viên xử lý: </span>
+                  NV{Number(withdrawal?.managerId).toString().padStart(4, "0")}
+                </p>
+              )}
+              {withdrawal?.managerId && (
+                <p>
+                  <span className="font-semibold">Nhân viên xử lý: </span>
+                  {employee?.name}
+                </p>
+              )}
+              <p>
+                <span className="font-semibold">Trạng thái: </span>
+                {withdrawal?.status === "Handling" ? (
+                  <span className="text-yellow-500">Chờ xử lý</span>
+                ) : withdrawal?.status === "Success" ? (
+                  <span className="text-green-500">Thành công</span>
+                ) : (
+                  <span className="text-red-500">Thất bại</span>
+                )}
+              </p>
+              {withdrawal?.managerId && (
+                <p>
+                  <span className="font-semibold">Tin nhắn: </span>
+                  {withdrawal?.managerResponse}
+                </p>
+              )}
+              {withdrawal?.managerId && (
+                <p>
+                  <span className="font-semibold">Ngày xử lý: </span>
+                  {dayjs(withdrawal?.updatedAt).format("HH:mm:ss DD/MM/YYYY")}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="p-4 bg-card rounded-xl py-10">
+          <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
+            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-white px-4">
+              <Wallet2 className="h-5 w-5 text-primary dark:text-primary-dark" />
+              <span>Tài khoản ngân hàng</span>
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300 mt-2">
+              <p>
+                <span className="font-semibold">Tiêu đề: </span>
+                {withdrawal?.title}
+              </p>
+              <p>
+                <span className="font-semibold">Mô tả: </span>
+                {withdrawal?.description}
+              </p>
+              <p>
+                <span className="font-semibold">Ngày tạo: </span>
+                {dayjs(withdrawal?.createdAt).format("HH:mm:ss DD/MM/YYYY")}
+              </p>
+              <p>
+                <span className="font-semibold">Tên ngân hàng: </span>
+                {withdrawal?.bankName}
+              </p>
+              <p>
+                <span className="font-semibold">
+                  Tên chủ tài khoản ngân hàng:{" "}
+                </span>
+                {withdrawal?.bankAccountName}
+              </p>
+              <p>
+                <span className="font-semibold">Số tài khoản ngân hàng: </span>
+                {withdrawal?.bankNumber}
+              </p>
+              <p>
+                <span className="font-semibold">Số tiền: </span>
+                {formatCurrency(Number(withdrawal?.balance))}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <Modal
+        title={
+          <p className="text-xl font-bold text-primary flex items-center gap-2">
+            <span className="text-yellow-400">
+              <TriangleAlert />
+            </span>{" "}
+            <span>Lưu ý</span>
+          </p>
+        }
+        open={isAccepted}
+        onCancel={() => setIsAccepted(!isAccepted)}
+        footer={[
+          <button
+            key="accept"
+            disabled={isLoading}
+            onClick={() => handleChangeStatus("Success")}
+            className="px-4 py-2 rounded-lg border border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300"
+          >
+            {isLoading ? (
+              <LoadingOutlined style={{ color: "green" }} />
+            ) : (
+              <span>Xác nhận</span>
+            )}
+          </button>,
+        ]}
+      >
+        <p className="text-gray-700 dark:text-black py-4">
+          Bạn có đồng ý xác nhận yêu cầu rút tiền này không?
+        </p>
+      </Modal>
+
+      <Modal
+        title={
+          <p className="text-xl font-bold text-primary flex items-center gap-2">
+            <span className="text-yellow-400">
+              <TriangleAlert />
+            </span>{" "}
+            <span>Lưu ý</span>
+          </p>
+        }
+        open={isRejected}
+        onCancel={() => setIsRejected(!isRejected)}
+        footer={[
+          <button
+            key="reject"
+            disabled={isLoading || message === ""}
+            onClick={() => handleChangeStatus("Fail")}
+            className={`px-4 py-2 rounded-lg border border-red-500 text-red-500 ${
+              message === ""
+                ? "cursor-not-allowed"
+                : "hover:bg-red-500 hover:text-white transition-colors duration-300"
+            } `}
+          >
+            {isLoading ? (
+              <LoadingOutlined style={{ color: "red" }} />
+            ) : (
+              <span>Xác nhận</span>
+            )}
+          </button>,
+        ]}
+      >
+        <p className="text-gray-700 dark:text-gray-300 py-4">
+          Bạn có muốn từ chối yêu cầu rút tiền này không?
+        </p>
+        <Input
+          placeholder="Lý do"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        />
+      </Modal>
+    </>
+  );
+}
+
+export default WithdrawalDetail;

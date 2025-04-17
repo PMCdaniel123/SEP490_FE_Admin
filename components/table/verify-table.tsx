@@ -72,15 +72,17 @@ export default function VerifyTable<TData, TValue>({
   return (
     <div className="flex flex-col gap-4">
       <h1 className="font-bold mt-4 text-primary dark:text-primary-dark text-xl">
-        Danh sách cần xác minh
+        Danh sách doanh nghiệp cần xác thực
       </h1>
       <Separator className="mb-4 dark:border-gray-700" />
       <div className="flex items-center">
         <Input
-          placeholder="Số điện thoại cần xác minh..."
-          value={(table.getColumn("phone")?.getFilterValue() as string) ?? ""}
+          placeholder="Tên doanh nghiệp cần xác minh..."
+          value={
+            (table.getColumn("licenseName")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
-            table.getColumn("phone")?.setFilterValue(event.target.value)
+            table.getColumn("licenseName")?.setFilterValue(event.target.value)
           }
           className="max-w-sm dark:bg-gray-800 dark:text-white dark:border-gray-700"
         />

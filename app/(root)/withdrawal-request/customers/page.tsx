@@ -1,22 +1,24 @@
 "use client";
 
 import Loader from "@/components/loader/Loader";
-import WithdrawalRequestTable from "@/components/table/withdrawal-request-table";
+import CustomerWithdrawalTable from "@/components/table/customer-withdrawal-table";
 import { BASE_URL } from "@/constants/environments";
-import { WithdrawalTableColumns } from "@/constants/table-columns";
-import { WithdrawalRequestProps } from "@/types";
+import { CustomerWithdrawalTableColumns } from "@/constants/table-columns";
+import { CustomerWithdrawalProps } from "@/types";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 function WithdrawalRequestManagement() {
-  const [withdrawal, setWithdrawal] = useState<WithdrawalRequestProps[]>([]);
+  const [withdrawal, setWithdrawal] = useState<CustomerWithdrawalProps[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchWithdrawal = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/owner-withdrawal-requests`);
+        const response = await fetch(
+          `${BASE_URL}/getallcustomerwithdrawalrequests`
+        );
 
         if (!response.ok) {
           throw new Error("Có lỗi xảy ra khi tải danh sách yêu cầu rút tiền.");
@@ -24,10 +26,10 @@ function WithdrawalRequestManagement() {
 
         const data = await response.json();
         const formatted =
-          data.requests === null || data.requests === undefined
+          data.customerRequests === null || data.customerRequests === undefined
             ? []
-            : data.requests.sort(
-                (a: WithdrawalRequestProps, b: WithdrawalRequestProps) =>
+            : data.customerRequests.sort(
+                (a: CustomerWithdrawalProps, b: CustomerWithdrawalProps) =>
                   dayjs(b.createdAt).unix() - dayjs(a.createdAt).unix()
               );
         setWithdrawal(formatted);
@@ -59,8 +61,8 @@ function WithdrawalRequestManagement() {
 
   return (
     <div className="p-4 bg-card rounded-xl">
-      <WithdrawalRequestTable
-        columns={WithdrawalTableColumns}
+      <CustomerWithdrawalTable
+        columns={CustomerWithdrawalTableColumns}
         data={withdrawal}
       />
     </div>
