@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { BASE_URL } from "@/constants/environments";
 import { RootState } from "@/stores";
-import { EmployeeProps, WithdrawalRequestProps } from "@/types";
+import { EmployeeProps, formatCurrency, OwnerWithdrawalProps } from "@/types";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
 import dayjs from "dayjs";
@@ -17,7 +17,7 @@ import { toast } from "react-toastify";
 
 function WithdrawalDetail() {
   const { withdrawalId } = useParams() as { withdrawalId: string };
-  const [withdrawal, setWithdrawal] = useState<WithdrawalRequestProps | null>(
+  const [withdrawal, setWithdrawal] = useState<OwnerWithdrawalProps | null>(
     null
   );
   const [employee, setEmployee] = useState<EmployeeProps | null>(null);
@@ -140,7 +140,7 @@ function WithdrawalDetail() {
       } else {
         setIsRejected(false);
       }
-      router.push("/withdrawal-request");
+      router.push("/withdrawal-request/owners");
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Đã xảy ra lỗi!";
@@ -167,7 +167,7 @@ function WithdrawalDetail() {
           <h1 className="text-xl font-bold text-center text-primary">
             Thông tin yêu cầu rút tiền
           </h1>
-          {withdrawal && withdrawal?.status !== "Success" && (
+          {withdrawal && withdrawal?.status === "Handling" && (
             <div className="flex items-center justify-end gap-4">
               {Number(withdrawal?.balance) > 0 && (
                 <button
@@ -214,10 +214,16 @@ function WithdrawalDetail() {
                   <span className="text-red-500">Thất bại</span>
                 )}
               </p>
-              {withdrawal?.status !== "Handling" && (
+              {withdrawal?.userId && (
                 <p>
                   <span className="font-semibold">Tin nhắn: </span>
                   {withdrawal?.managerResponse}
+                </p>
+              )}
+              {withdrawal?.userId && (
+                <p>
+                  <span className="font-semibold">Ngày xử lý: </span>
+                  {dayjs(withdrawal?.updatedAt).format("HH:mm:ss DD/MM/YYYY")}
                 </p>
               )}
             </div>
@@ -258,7 +264,7 @@ function WithdrawalDetail() {
               </p>
               <p>
                 <span className="font-semibold">Số tiền: </span>
-                {withdrawal?.balance}
+                {formatCurrency(Number(withdrawal?.balance))}
               </p>
             </div>
           </div>

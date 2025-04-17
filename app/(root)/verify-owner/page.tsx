@@ -4,34 +4,29 @@ import Loader from "@/components/loader/Loader";
 import VerifyTable from "@/components/table/verify-table";
 import { BASE_URL } from "@/constants/environments";
 import { VerifyTableColumns } from "@/constants/table-columns";
-import { OwnerProps } from "@/types";
+import { VerifyOwnerProps } from "@/types";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 function VerifyOwnerManagement() {
-  const [verifyList, setVerifyList] = useState<OwnerProps[]>([]);
+  const [verifyList, setVerifyList] = useState<VerifyOwnerProps[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchVerifyList = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/workspace-owners`);
+        const response = await fetch(`${BASE_URL}/owner-verify-requests`);
 
         if (!response.ok) {
           throw new Error("Có lỗi xảy ra khi tải danh sách yêu cầu.");
         }
         const data = await response.json();
-        const formatted = Array.isArray(data.owners)
-          ? data.owners
-              .filter(
-                (owner: OwnerProps) =>
-                  owner.status === "Handling" || owner.status === "Fail"
-              )
-              .sort(
-                (a: OwnerProps, b: OwnerProps) =>
-                  dayjs(b.updatedAt).unix() - dayjs(a.updatedAt).unix()
-              )
+        const formatted = Array.isArray(data.requests)
+          ? data.requests.sort(
+              (a: VerifyOwnerProps, b: VerifyOwnerProps) =>
+                dayjs(b.createdAt).unix() - dayjs(a.createdAt).unix()
+            )
           : [];
         setVerifyList(formatted);
         setLoading(false);

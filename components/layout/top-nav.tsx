@@ -135,7 +135,7 @@ function TopNav() {
               />
             </div>
             {open && (
-              <ul className="absolute top-full right-0 z-10 mt-2 w-auto gap-3 rounded-xl bg-card dark:bg-gray-900 shadow-xl pb-4 border dark:border-gray-700">
+              <ul className="absolute top-full right-0 z-10 mt-2 w-auto gap-3 rounded-xl bg-card dark:bg-gray-900 shadow-xl pb-2 border dark:border-gray-700">
                 <div className="flex items-center justify-start py-2 px-4 gap-4 bg-primary rounded-t-xl min-w-[250px]">
                   <Image
                     src={admin?.avatar || "/logo.png"}
@@ -170,8 +170,9 @@ function TopNav() {
                 >
                   <LockKeyhole size={16} /> <span>Đổi mật khẩu</span>
                 </li>
+                <Separator className="my-2" />
                 <li
-                  className="px-4 flex items-center gap-2 hover:bg-primary hover:text-white dark:hover:bg-primary-dark dark:hover:text-white py-2 transition-colors duration-200 cursor-pointer"
+                  className="px-4 flex items-center gap-2 text-red-500 hover:bg-red-500 hover:text-white py-2 transition-colors duration-200 cursor-pointer"
                   onClick={handleLogOut}
                 >
                   <LogOut size={16} /> <span>Đăng xuất</span>

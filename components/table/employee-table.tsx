@@ -73,10 +73,8 @@ export default function EmployeeTable<TData, TValue>({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="mt-4 flex items-center justify-between">
-        <h1 className="font-bold text-primary dark:text-primary-dark text-xl">
-          Danh sách nhân viên
-        </h1>
+      <div className="mt-4 flex items-center justify-center bg-primary dark:bg-gray-800 dark:hover:bg-gray-700 transition-all duration-300 p-4 rounded-md">
+        <h1 className="font-bold text-white text-xl">Danh sách nhân viên</h1>
         <Button
           className="flex items-center gap-2 cursor-pointer text-white dark:bg-gray-800 dark:text-white dark:border-gray-700 font-semibold"
           onClick={() => router.push("employees/new")}
