@@ -106,6 +106,7 @@ export const workspaceSchema = z.object({
   name: z.string().min(3, "Tên không gian phải có ít nhất 3 ký tự"),
   openTime: z.string().nonempty("Vui lòng chọn thời gian mở cửa"),
   closeTime: z.string().nonempty("Vui lòng chọn thời gian đóng cửa"),
+  code: z.string().nonempty("Vui lòng nhập mã bàn"),
   is24h: z.number().min(0).max(1),
   category: z.string({
     required_error: "Vui lòng loại không gian hợp lệ",
@@ -135,10 +136,13 @@ export const workspaceSchema = z.object({
       message: "Giá theo ngày phải lớn hơn 0",
     }),
   facilitiesStr: z.array(z.string(), {
-    required_error: "Vui lòng nhập ít nhất một tiện ích",
+    required_error: "Vui lòng nhập ít nhất một cơ sở vật chất",
   }),
   policiesStr: z.array(z.string(), {
     required_error: "Vui lòng nhập ít nhất một chính sách",
+  }),
+  detailsStr: z.array(z.string(), {
+    required_error: "Vui lòng nhập ít nhất một chi tiết về không gian",
   }),
   imagesStr: z.array(z.string(), {
     required_error: "Vui lòng tải lên ít nhất một hình ảnh",

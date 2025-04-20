@@ -57,6 +57,7 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
           description: "",
           openTime: "",
           closeTime: "",
+          code: "",
           is24h: 0,
           area: "",
           cleanTime: "",
@@ -66,6 +67,7 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
           newImages: [],
           facilitiesStr: [],
           policiesStr: [],
+          detailsStr: [],
           capacity: "",
           category: "Bàn cá nhân",
           status: "Active",
@@ -190,8 +192,8 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
               </div>
             </div>
 
-            <div className="sm:col-span-1 flex flex-col gap-6 h-full justify-center w-full p-4 bg-primary rounded-md">
-              <Label className="text-seventh font-bold text-base ml-6">
+            <div className="sm:col-span-1 flex flex-col gap-6 h-full justify-center w-full p-4 border-2 border-primary rounded-md shadow-md">
+              <Label className="text-fourth font-bold text-base ml-6">
                 Giá tiền
               </Label>
               <FormField
@@ -199,12 +201,12 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
                 name="shortTermPrice"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-seventh font-bold text-sm">
+                    <FormLabel className="text-fourth font-bold text-sm">
                       1. Theo giờ (VND)
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="py-6 px-4 rounded-md file:bg-seventh placeholder:text-seventh text-seventh"
+                        className="py-6 px-4 rounded-md file:bg-fourth"
                         placeholder="Nhập giá theo giờ..."
                         disabled
                         {...field}
@@ -219,12 +221,12 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
                 name="longTermPrice"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-seventh font-bold text-sm">
+                    <FormLabel className="text-fourth font-bold text-sm">
                       2. Theo ngày (VND)
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="py-6 px-4 rounded-md file:bg-seventh placeholder:text-seventh text-seventh"
+                        className="py-6 px-4 rounded-md file:bg-fourth"
                         placeholder="Nhập giá theo ngày..."
                         disabled
                         {...field}
@@ -367,6 +369,68 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
                     <Input
                       className="py-6 px-4 rounded-md file:bg-seventh"
                       placeholder="Nhập thời gian dọn dẹp..."
+                      disabled
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-500 text-xs" />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="sm:col-span-2 flex flex-col gap-2 w-full">
+            <FormField
+              control={form.control}
+              name="detailsStr"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-fourth font-bold text-base ml-6 flex gap-4 items-center">
+                    <span>Chi tiết không gian</span>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <Info size={20} className="text-primary" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p className="text-white font-medium">
+                            Enter để thêm
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </FormLabel>
+                  <FormControl>
+                    <MultiText
+                      placeholder="Nhập chi tiết không gian - Enter để thêm mới..."
+                      value={field.value}
+                      handleChange={(tag) =>
+                        field.onChange([...field.value, tag])
+                      }
+                      handleRemove={(tag) =>
+                        field.onChange([
+                          ...field.value.filter((item: string) => item !== tag),
+                        ])
+                      }
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-500 text-xs" />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="sm:col-span-1 flex flex-col gap-2 w-full">
+            <FormField
+              control={form.control}
+              name="code"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                    Mã bàn (phút)
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      className="py-6 px-4 rounded-md file:bg-seventh"
+                      placeholder="Nhập mã bàn..."
                       disabled
                       {...field}
                     />
