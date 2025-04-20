@@ -57,6 +57,7 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
           description: "",
           openTime: "",
           closeTime: "",
+          code: "",
           is24h: 0,
           area: "",
           cleanTime: "",
@@ -410,6 +411,28 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
                           ...field.value.filter((item: string) => item !== tag),
                         ])
                       }
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-500 text-xs" />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="sm:col-span-1 flex flex-col gap-2 w-full">
+            <FormField
+              control={form.control}
+              name="code"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                    Mã bàn (phút)
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      className="py-6 px-4 rounded-md file:bg-seventh"
+                      placeholder="Nhập mã bàn..."
+                      disabled
+                      {...field}
                     />
                   </FormControl>
                   <FormMessage className="text-red-500 text-xs" />

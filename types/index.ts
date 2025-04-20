@@ -161,6 +161,7 @@ export interface Workspace {
   detailsStr: string[];
   createdAt: string;
   updatedAt: string;
+  code: string;
 }
 
 export interface IdentifyProps {
