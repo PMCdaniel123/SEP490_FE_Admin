@@ -135,10 +135,13 @@ export const workspaceSchema = z.object({
       message: "Giá theo ngày phải lớn hơn 0",
     }),
   facilitiesStr: z.array(z.string(), {
-    required_error: "Vui lòng nhập ít nhất một tiện ích",
+    required_error: "Vui lòng nhập ít nhất một cơ sở vật chất",
   }),
   policiesStr: z.array(z.string(), {
     required_error: "Vui lòng nhập ít nhất một chính sách",
+  }),
+  detailsStr: z.array(z.string(), {
+    required_error: "Vui lòng nhập ít nhất một chi tiết về không gian",
   }),
   imagesStr: z.array(z.string(), {
     required_error: "Vui lòng tải lên ít nhất một hình ảnh",

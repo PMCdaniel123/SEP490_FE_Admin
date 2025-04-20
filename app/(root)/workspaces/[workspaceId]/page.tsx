@@ -3,7 +3,14 @@
 import WorkspaceForm from "@/components/form/workspace-form";
 import Loader from "@/components/loader/Loader";
 import { BASE_URL } from "@/constants/environments";
-import { Facilities, Image, Policies, Price, Workspace } from "@/types";
+import {
+  Details,
+  Facilities,
+  Image,
+  Policies,
+  Price,
+  Workspace,
+} from "@/types";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -20,9 +27,7 @@ function WorkspaceDetail() {
 
     const getAmenityDetail = async () => {
       try {
-        const response = await fetch(
-          `${BASE_URL}/workspaces/${workspaceId}`
-        );
+        const response = await fetch(`${BASE_URL}/workspaces/${workspaceId}`);
         if (!response.ok) {
           throw new Error("Có lỗi xảy ra khi tải không gian.");
         }
@@ -49,6 +54,9 @@ function WorkspaceDetail() {
           ),
           imagesStr: data.getWorkSpaceByIdResult.images.map(
             (image: Image) => image.imgUrl
+          ),
+          detailsStr: data.getWorkSpaceByIdResult.details.map(
+            (detail: Details) => detail.detailName
           ),
           cleanTime: data.getWorkSpaceByIdResult.cleanTime + "",
           area: data.getWorkSpaceByIdResult.area + "",
@@ -89,7 +97,7 @@ function WorkspaceDetail() {
   }
 
   return (
-    <div className="p-4 bg-white rounded-xl">
+    <div className="p-4 bg-card rounded-xl">
       <WorkspaceForm initialData={workspaceDetail} />
     </div>
   );
