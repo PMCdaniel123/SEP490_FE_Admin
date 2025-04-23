@@ -23,12 +23,12 @@ function OwnerManagement() {
       const data = await response.json();
       const formatted = Array.isArray(data.owners)
         ? data.owners
-            .filter(
-              (owner: OwnerProps) =>
-                owner.status === "Success" ||
-                owner.status === "InActive" ||
-                owner.status === "Active"
-            )
+            // .filter(
+            //   (owner: OwnerProps) =>
+            //     owner.status === "Success" ||
+            //     owner.status === "InActive" ||
+            //     owner.status === "Active"
+            // )
             .sort(
               (a: OwnerProps, b: OwnerProps) =>
                 dayjs(b.updatedAt).unix() - dayjs(a.updatedAt).unix()

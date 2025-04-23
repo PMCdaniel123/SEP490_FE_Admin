@@ -343,8 +343,8 @@ export const OwnerTableColumns = (
           <span>Hoạt động</span>
         </p>
       ) : (
-        <p className="text-center font-medium flex items-center justify-center text-red-500">
-          <span>Ngừng hoạt động</span>
+        <p className="text-center font-medium flex items-center justify-center text-yellow-500">
+          <span>Chưa hoạt động</span>
         </p>
       );
     },

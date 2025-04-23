@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={montserrat.className} suppressHydrationWarning>
-      <body className="min-h-screen bg-card text-foreground flex items-center justify-center w-full">
+      <body className="min-h-screen dark:bg-gray-800 bg-gradient-to-r from-secondary to-third text-foreground flex items-center justify-center w-full">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Providers>
             <div className="w-5xl mx-auto flex flex-col md:flex-row items-center justify-center min-h-[600px] border border-primary rounded-md shadow-2xl">
@@ -34,7 +34,7 @@ export default function RootLayout({
                   priority
                 />
               </div>
-              <div className="flex flex-col bg-white flex-1/2 h-[600px] rounded-r-md">
+              <div className="flex flex-col bg-white dark:bg-gray-700 flex-1/2 h-[600px] rounded-r-md">
                 {children}
               </div>
             </div>
