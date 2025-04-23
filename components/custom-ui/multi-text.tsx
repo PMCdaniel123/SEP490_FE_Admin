@@ -45,7 +45,7 @@ const MultiText: React.FC<MultiTextProps> = ({
         {value.map((item, index) => (
           <p
             key={index}
-            className="bg-primary flex items-center justify-between text-white py-2 px-4 rounded-md hover:bg-secondary"
+            className="bg-primary dark:bg-gray-800 dark:hover:bg-gray-700 flex items-center justify-between text-white py-2 px-4 rounded-md hover:bg-secondary"
           >
             <span>{item}</span>
             <button

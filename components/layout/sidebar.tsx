@@ -116,8 +116,8 @@ function Sidebar() {
 
   return (
     <motion.aside
-      initial={{ width: "288px" }}
-      animate={{ width: isCollapsed ? "84px" : "288px" }}
+      initial={{ width: "276px" }}
+      animate={{ width: isCollapsed ? "84px" : "276px" }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
       className="bg-card dark:bg-black p-4 rounded-xl h-fit flex flex-col"
     >

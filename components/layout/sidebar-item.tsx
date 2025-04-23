@@ -39,7 +39,7 @@ export default function SidebarItem({
           initial={{ opacity: 1, x: 0 }}
           animate={{ opacity: collapsed ? 0 : 1, x: collapsed ? -20 : 0 }}
           transition={{ duration: 0.3 }}
-          className={`font-medium ${collapsed ? "hidden" : "block"}`}
+          className={`font-medium text-sm ${collapsed ? "hidden" : "block"}`}
         >
           {label}
         </motion.span>

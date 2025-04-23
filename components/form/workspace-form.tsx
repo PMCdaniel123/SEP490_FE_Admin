@@ -1,6 +1,6 @@
 "use client";
 
-import { Info, SquarePen } from "lucide-react";
+import { SquarePen } from "lucide-react";
 import { Separator } from "../ui/separator";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
@@ -27,12 +27,6 @@ import {
   FormMessage,
 } from "../ui/form";
 import { useEffect, useState } from "react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../ui/tooltip";
 import { Checkbox } from "../ui/checkbox";
 import { Workspace } from "@/types";
 
@@ -97,7 +91,7 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-fourth font-bold text-base ml-6">
+                      <FormLabel className="text-fourth dark:text-white font-bold text-base ml-6">
                         Tên không gian
                       </FormLabel>
                       <FormControl>
@@ -119,7 +113,7 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
                   name="is24h"
                   render={({ field }) => (
                     <FormItem className="flex items-center gap-6">
-                      <FormLabel className="text-fourth font-bold text-base ml-6">
+                      <FormLabel className="text-fourth dark:text-white font-bold text-base ml-6">
                         Mở cửa 24h
                       </FormLabel>
                       <FormControl>
@@ -151,7 +145,7 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
                     name="openTime"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-fourth font-bold text-base ml-6">
+                        <FormLabel className="text-fourth dark:text-white font-bold text-base ml-6">
                           Thời gian mở cửa
                         </FormLabel>
                         <FormControl>
@@ -173,7 +167,7 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
                     name="closeTime"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-fourth font-bold text-base ml-6">
+                        <FormLabel className="text-fourth dark:text-white font-bold text-base ml-6">
                           Thời gian đóng cửa
                         </FormLabel>
                         <FormControl>
@@ -192,8 +186,8 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
               </div>
             </div>
 
-            <div className="sm:col-span-1 flex flex-col gap-6 h-full justify-center w-full p-4 border-2 border-primary rounded-md shadow-md">
-              <Label className="text-fourth font-bold text-base ml-6">
+            <div className="sm:col-span-1 flex flex-col gap-6 h-full justify-center w-full p-4 bg-primary dark:bg-gray-800 rounded-md shadow-md">
+              <Label className="text-white font-bold text-base ml-6">
                 Giá tiền
               </Label>
               <FormField
@@ -201,12 +195,12 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
                 name="shortTermPrice"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-fourth font-bold text-sm">
+                    <FormLabel className="text-white font-bold text-sm">
                       1. Theo giờ (VND)
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="py-6 px-4 rounded-md file:bg-fourth"
+                        className="py-6 px-4 rounded-md file:bg-white placeholder:text-white text-white"
                         placeholder="Nhập giá theo giờ..."
                         disabled
                         {...field}
@@ -221,12 +215,12 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
                 name="longTermPrice"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-fourth font-bold text-sm">
+                    <FormLabel className="text-white font-bold text-sm">
                       2. Theo ngày (VND)
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="py-6 px-4 rounded-md file:bg-fourth"
+                        className="py-6 px-4 rounded-md file:bg-white placeholder:text-white text-white"
                         placeholder="Nhập giá theo ngày..."
                         disabled
                         {...field}
@@ -245,7 +239,7 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
               name="category"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                  <FormLabel className="text-fourth dark:text-white font-bold text-base ml-6">
                     Loại không gian
                   </FormLabel>
                   <FormControl>
@@ -296,7 +290,7 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
               name="area"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                  <FormLabel className="text-fourth dark:text-white font-bold text-base ml-6">
                     Diện tích (m²)
                   </FormLabel>
                   <FormControl>
@@ -318,7 +312,7 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
               name="capacity"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                  <FormLabel className="text-fourth dark:text-white font-bold text-base ml-6">
                     Sức chứa tối đa (người)
                   </FormLabel>
                   <FormControl>
@@ -340,7 +334,7 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                  <FormLabel className="text-fourth dark:text-white font-bold text-base ml-6">
                     Mô tả
                   </FormLabel>
                   <FormControl>
@@ -362,7 +356,7 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
               name="cleanTime"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                  <FormLabel className="text-fourth dark:text-white font-bold text-base ml-6">
                     Thời gian dọn dẹp (phút)
                   </FormLabel>
                   <FormControl>
@@ -384,20 +378,8 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
               name="detailsStr"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6 flex gap-4 items-center">
+                  <FormLabel className="text-fourth dark:text-white font-bold text-base ml-6 flex gap-4 items-center">
                     <span>Chi tiết không gian</span>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <Info size={20} className="text-primary" />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p className="text-white font-medium">
-                            Enter để thêm
-                          </p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
                   </FormLabel>
                   <FormControl>
                     <MultiText
@@ -424,8 +406,8 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
               name="code"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6">
-                    Mã bàn (phút)
+                  <FormLabel className="text-fourth dark:text-white font-bold text-base ml-6">
+                    Mã bàn
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -446,20 +428,8 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
               name="facilitiesStr"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6 flex gap-4 items-center">
+                  <FormLabel className="text-fourth dark:text-white font-bold text-base ml-6 flex gap-4 items-center">
                     <span>Cơ sở vật chất</span>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <Info size={20} className="text-primary" />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p className="text-white font-medium">
-                            Enter để thêm
-                          </p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
                   </FormLabel>
                   <FormControl>
                     <MultiText
@@ -486,7 +456,7 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
               name="status"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                  <FormLabel className="text-fourth dark:text-white font-bold text-base ml-6">
                     Trạng thái
                   </FormLabel>
                   <FormControl>
@@ -525,20 +495,8 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
               name="policiesStr"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6 flex gap-4 items-center">
+                  <FormLabel className="text-fourth dark:text-white font-bold text-base ml-6 flex gap-4 items-center">
                     <span>Quy định chung</span>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <Info size={20} className="text-primary" />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p className="text-white font-medium">
-                            Enter để thêm
-                          </p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
                   </FormLabel>
                   <FormControl>
                     <MultiText
@@ -565,20 +523,8 @@ function WorkspaceForm({ initialData }: WorkspaceFormProps) {
               name="imagesStr"
               render={() => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6 flex gap-4 items-center">
+                  <FormLabel className="text-fourth dark:text-white font-bold text-base ml-6 flex gap-4 items-center">
                     <span>Hình ảnh</span>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <Info size={20} className="text-primary" />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p className="text-white font-medium">
-                            Có thể thêm nhiều hình ảnh
-                          </p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
                   </FormLabel>
                   <FormControl>
                     <MultiImageUpload
