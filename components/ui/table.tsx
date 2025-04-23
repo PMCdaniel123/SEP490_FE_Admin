@@ -24,7 +24,7 @@ function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
     <thead
       data-slot="table-header"
       className={cn(
-        "[&_tr]:border-b bg-gradient-to-r from-primary to-secondary",
+        "[&_tr]:border-b bg-gradient-to-r from-primary to-secondary dark:bg-gray-800",
         className
       )}
       {...props}
