@@ -318,10 +318,12 @@ function WithdrawalDetail() {
                 <span className="font-semibold">Số tiền cần chuyển: </span>
                 {formatCurrency(Number(withdrawal?.balance))}
               </p>
-              <p>
-                <span className="font-semibold">Số tiền hiện tại: </span>
-                {formatCurrency(Number(ownerWallet?.balance))}
-              </p>
+              {withdrawal && withdrawal?.status === "Handling" && (
+                <p>
+                  <span className="font-semibold">Số tiền hiện tại: </span>
+                  {formatCurrency(Number(ownerWallet?.balance))}
+                </p>
+              )}
             </div>
           </div>
         </div>
