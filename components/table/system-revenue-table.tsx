@@ -40,7 +40,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
-export default function HighRateWorkspaceTable<TData, TValue>({
+export default function SystemRevenueTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -71,9 +71,9 @@ export default function HighRateWorkspaceTable<TData, TValue>({
   return (
     <div className="flex flex-col gap-4">
       <div className="mt-4 flex items-center justify-between">
-        <h1 className="font-bold">Top 5 không gian được đánh giá cao nhất</h1>
+        <h1 className="font-bold">Doanh thu của hệ thống</h1>
       </div>
-      <Separator className="dark:border-gray-700" />
+      <Separator className="dark:border-white" />
       <div className="flex items-center">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -161,6 +161,26 @@ export default function HighRateWorkspaceTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
+      </div>
+      <div className="flex items-center justify-end space-x-2 py-4">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+          className="dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700"
+        >
+          Trước
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+          className="dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700"
+        >
+          Kế tiếp
+        </Button>
       </div>
     </div>
   );

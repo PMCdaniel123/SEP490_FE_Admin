@@ -243,6 +243,7 @@ export interface OwnerWithdrawalProps {
   bankAccountName: string;
   balance: string;
   managerResponse: string | null;
+  walletBalance: number;
 }
 
 export interface CustomerWithdrawalProps {
@@ -322,4 +323,37 @@ export interface HighRatingWorkspace {
   area: number;
   capacity: number;
   category: string;
+}
+
+export interface SystemRevenueProps {
+  bookingId: number;
+  ownerName: string;
+  workspaceName: string;
+  price: number;
+  dateOfBooking: string;
+  status: string;
+}
+
+export interface OwnerWallet {
+  id: number;
+  ownerWalletId: number;
+  balance: number;
+  status: string;
+  bankName: string;
+  bankAccountName: string;
+  bankNumber: string;
+  ownerId: number;
+  ownerName: string;
+  licenseName: string;
+}
+
+export interface RevenuePerDay {
+  day: string; // e.g., 'Mon'
+  date: string; // e.g., '2025-03-21'
+  revenue: number;
+}
+
+export interface RevenuePerMonth {
+  month: string; // e.g. "01/2024"
+  revenue: number;
 }

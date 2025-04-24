@@ -33,7 +33,7 @@ export default function OwnerRevenueChart({ data }: { data: OwnerRevenue[] }) {
       ) : (
         <ResponsiveContainer width="100%" height={300}>
           <BarChart layout="vertical" data={sortedData}>
-            <CartesianGrid strokeDasharray="3 3" />
+            <CartesianGrid strokeDasharray="1 1" />
             <XAxis
               type="number"
               tickFormatter={(value) =>
@@ -41,6 +41,8 @@ export default function OwnerRevenueChart({ data }: { data: OwnerRevenue[] }) {
               }
               fontSize={12}
               tickMargin={12}
+              stroke="currentColor"
+              className="text-gray-700 dark:text-gray-300"
             />
             <YAxis
               type="category"
@@ -48,13 +50,35 @@ export default function OwnerRevenueChart({ data }: { data: OwnerRevenue[] }) {
               width={180}
               fontSize={12}
               tickMargin={8}
+              stroke="currentColor"
+              className="text-gray-700 dark:text-gray-300"
             />
-            <Tooltip
+            {/* <Tooltip
               formatter={(value: number) => [
                 `${new Intl.NumberFormat("vi-VN").format(value)} ₫`,
                 "Doanh thu",
               ]}
+            /> */}
+            <Tooltip
+              content={({ payload, label, active }) => {
+                if (active && payload && payload.length) {
+                  return (
+                    <div className="bg-white dark:bg-gray-800 border dark:border-gray-700 p-3 rounded shadow text-sm text-gray-800 dark:text-gray-200">
+                      <p className="font-medium mb-2">{label}</p>
+                      <p>
+                        Doanh thu:{" "}
+                        {new Intl.NumberFormat("vi-VN").format(
+                          payload[0].value as number
+                        )}{" "}
+                        ₫
+                      </p>
+                    </div>
+                  );
+                }
+                return null;
+              }}
             />
+
             <Bar dataKey="totalRevenue" radius={[0, 10, 10, 0]} barSize={30}>
               {sortedData.map((entry, index) => (
                 <Cell

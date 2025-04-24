@@ -5,6 +5,7 @@ import {
   HighRatingWorkspace,
   OwnerProps,
   OwnerRevenue,
+  SystemRevenueProps,
   Workspace,
 } from "@/types";
 import dayjs from "dayjs";
@@ -206,6 +207,43 @@ export const fetchHighRatingWorkspaceList = async (
       theme: "light",
     });
     setHighRatingWorkspaceList([]);
+    setLoading(false);
+  }
+};
+
+export const fetchSystemRevenueList = async (
+  setSystemRevenueList: React.Dispatch<
+    React.SetStateAction<SystemRevenueProps[]>
+  >,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  adminId: string | null
+) => {
+  try {
+    const response = await fetch(`${BASE_URL}/getrevenueforadmin/${adminId}`);
+
+    if (!response.ok) {
+      throw new Error("Có lỗi xảy ra khi tải danh sách không gian.");
+    }
+    const data = await response.json();
+    const formatted =
+      data.bookingInformation === null || data.bookingInformation === undefined
+        ? []
+        : data.bookingInformation.sort(
+            (a: SystemRevenueProps, b: SystemRevenueProps) =>
+              dayjs(b.dateOfBooking).unix() - dayjs(a.dateOfBooking).unix()
+          );
+    setSystemRevenueList(formatted);
+    setLoading(false);
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Đã xảy ra lỗi!";
+    toast.error(errorMessage, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      theme: "light",
+    });
+    setSystemRevenueList([]);
     setLoading(false);
   }
 };
