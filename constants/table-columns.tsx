@@ -333,7 +333,7 @@ export const OwnerTableColumns = (
       );
     },
     cell: ({ row }) => {
-      return row.getValue("status") === "InActive" ? (
+      return row.getValue("status") === "Fail" ? (
         <p className="text-center font-medium flex items-center justify-center text-red-500">
           <span>Bị chặn</span>
         </p>
