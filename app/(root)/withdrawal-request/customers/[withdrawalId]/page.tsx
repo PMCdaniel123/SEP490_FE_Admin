@@ -171,9 +171,11 @@ function WithdrawalDetail() {
     <>
       <div className="flex flex-col gap-4">
         <div className="p-4 bg-card rounded-xl pt-10 gap-6 flex flex-col">
-          <h1 className="text-xl font-bold text-center text-primary">
-            Thông tin yêu cầu rút tiền
-          </h1>
+          <div className="mt-4 flex items-center justify-center bg-primary dark:bg-gray-800 dark:hover:bg-gray-700 transition-all duration-300 p-4 rounded-md">
+            <h1 className="font-bold text-white text-xl">
+              Thông tin yêu cầu rút tiền
+            </h1>
+          </div>
           {withdrawal && withdrawal?.status === "Handling" && (
             <div className="flex items-center justify-end gap-4">
               {Number(withdrawal?.balance) > 0 && (
@@ -194,7 +196,7 @@ function WithdrawalDetail() {
           )}
           <Separator className="mb-4 dark:border-gray-700" />
           <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
-            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-white px-4">
+            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
               <CalendarClock className="h-5 w-5 text-primary dark:text-primary-dark" />
               <span>Trạng thái yêu cầu</span>
             </h2>
@@ -238,7 +240,7 @@ function WithdrawalDetail() {
         </div>
         <div className="p-4 bg-card rounded-xl py-10">
           <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
-            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-white px-4">
+            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
               <Wallet2 className="h-5 w-5 text-primary dark:text-primary-dark" />
               <span>Tài khoản ngân hàng</span>
             </h2>

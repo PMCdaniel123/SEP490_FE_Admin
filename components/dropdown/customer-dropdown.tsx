@@ -3,6 +3,7 @@ import {
   LockKeyhole,
   LockKeyholeOpen,
   MoreHorizontal,
+  TriangleAlert,
 } from "lucide-react";
 import { Button } from "../ui/button";
 import {
@@ -16,6 +17,9 @@ import { CustomerProps } from "@/types";
 import CustomerModal from "../modal/customer-modal";
 import { BASE_URL } from "@/constants/environments";
 import { toast } from "react-toastify";
+import { LoadingOutlined } from "@ant-design/icons";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores";
 
 function CustomerDropdown({
   customer,
@@ -27,13 +31,16 @@ function CustomerDropdown({
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { admin } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     if (!customer) return;
   }, [customer]);
 
   const handleBan = async () => {
-    setLoading(true);
+    setIsLoading(true);
     try {
       const response = await fetch(
         `${BASE_URL}/users/bancustomer/${customer.id}`,
@@ -48,7 +55,7 @@ function CustomerDropdown({
 
       const data = await response.json();
       console.log(data);
-      setLoading(false);
+      setIsLoading(false);
       onStatusChange();
       toast.success("Chặn thành công", {
         position: "top-right",
@@ -65,7 +72,7 @@ function CustomerDropdown({
         hideProgressBar: false,
         theme: "light",
       });
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -130,15 +137,15 @@ function CustomerDropdown({
           >
             <Eye size={16} /> <span>Xem thông tin chi tiết</span>
           </li>
-          {customer.isBan === 0 && (
+          {Number(admin?.id || "0") === 1 && customer.isBan === 0 && (
             <li
               className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer"
-              onClick={handleBan}
+              onClick={() => setIsModalOpen(true)}
             >
               <LockKeyhole size={16} /> <span>Chặn</span>
             </li>
           )}
-          {customer.isBan === 1 && (
+          {Number(admin?.id || "0") === 1 && customer.isBan === 1 && (
             <li
               className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer"
               onClick={handleUnban}
@@ -158,6 +165,37 @@ function CustomerDropdown({
         footer={null}
       >
         <CustomerModal customer={customer} onStatusChange={onStatusChange} />
+      </Modal>
+
+      <Modal
+        title={
+          <p className="text-xl font-bold text-primary flex items-center gap-2">
+            <span className="text-yellow-400">
+              <TriangleAlert />
+            </span>{" "}
+            <span>Lưu ý</span>
+          </p>
+        }
+        open={isModalOpen}
+        onCancel={() => setIsModalOpen(!isModalOpen)}
+        footer={[
+          <button
+            key="reject"
+            disabled={isLoading}
+            onClick={handleBan}
+            className={`px-4 py-2 rounded-lg border border-red-500 text-red-500`}
+          >
+            {isLoading ? (
+              <LoadingOutlined style={{ color: "white" }} />
+            ) : (
+              <span>Xác nhận</span>
+            )}
+          </button>,
+        ]}
+      >
+        <p className="text-gray-700 dark:text-gray-300 py-4">
+          Bạn có muốn chặn tài khoản khách hàng này không?
+        </p>
       </Modal>
     </>
   );

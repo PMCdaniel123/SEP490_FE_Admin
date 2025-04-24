@@ -5,7 +5,12 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { BASE_URL } from "@/constants/environments";
 import { RootState } from "@/stores";
-import { EmployeeProps, formatCurrency, OwnerWithdrawalProps } from "@/types";
+import {
+  EmployeeProps,
+  formatCurrency,
+  OwnerWallet,
+  OwnerWithdrawalProps,
+} from "@/types";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
 import dayjs from "dayjs";
@@ -21,6 +26,7 @@ function WithdrawalDetail() {
     null
   );
   const [employee, setEmployee] = useState<EmployeeProps | null>(null);
+  const [ownerWallet, setOwnerWallet] = useState<OwnerWallet | null>(null);
   const [loading, setLoading] = useState(true);
   const [isAccepted, setIsAccepted] = useState(false);
   const [isRejected, setIsRejected] = useState(false);
@@ -102,6 +108,49 @@ function WithdrawalDetail() {
     fetchEmployee();
   }, [withdrawal]);
 
+  useEffect(() => {
+    if (!withdrawal) {
+      return;
+    }
+
+    if (!withdrawal.workspaceOwnerId) {
+      return;
+    }
+
+    setLoading(true);
+    const fetchOwnerWallet = async () => {
+      try {
+        const response = await fetch(
+          `${BASE_URL}/owner-wallets/${withdrawal.workspaceOwnerId}`
+        );
+
+        if (!response.ok) {
+          throw new Error("Có lỗi xảy ra khi tải ví doanh nghiệp.");
+        }
+
+        const data = await response.json();
+        setOwnerWallet(data);
+        if (Number(data?.balance) < Number(withdrawal?.balance)) {
+          setMessage("Số tiền hiện tại nhỏ hơn số tiền của yêu cầu rút.");
+        }
+        setLoading(false);
+      } catch (error) {
+        const errorMessage =
+          error instanceof Error ? error.message : "Đã xảy ra lỗi!";
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          theme: "light",
+        });
+        setOwnerWallet(null);
+        setLoading(false);
+      }
+    };
+
+    fetchOwnerWallet();
+  }, [withdrawal]);
+
   if (loading) {
     return (
       <div className="text-center">
@@ -164,19 +213,22 @@ function WithdrawalDetail() {
     <>
       <div className="flex flex-col gap-4">
         <div className="p-4 bg-card rounded-xl pt-10 gap-6 flex flex-col">
-          <h1 className="text-xl font-bold text-center text-primary">
-            Thông tin yêu cầu rút tiền
-          </h1>
+          <div className="mt-4 flex items-center justify-center bg-primary dark:bg-gray-800 dark:hover:bg-gray-700 transition-all duration-300 p-4 rounded-md">
+            <h1 className="font-bold text-white text-xl">
+              Thông tin yêu cầu rút tiền
+            </h1>
+          </div>
           {withdrawal && withdrawal?.status === "Handling" && (
             <div className="flex items-center justify-end gap-4">
-              {Number(withdrawal?.balance) > 0 && (
-                <button
-                  onClick={() => setIsAccepted(true)}
-                  className="px-4 py-2 rounded-lg border border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300"
-                >
-                  Chấp nhận
-                </button>
-              )}
+              {Number(withdrawal?.balance) > 0 &&
+                Number(ownerWallet?.balance) >= Number(withdrawal?.balance) && (
+                  <button
+                    onClick={() => setIsAccepted(true)}
+                    className="px-4 py-2 rounded-lg border border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300"
+                  >
+                    Chấp nhận
+                  </button>
+                )}
               <button
                 onClick={() => setIsRejected(true)}
                 className="px-4 py-2 rounded-lg border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-colors duration-300"
@@ -187,7 +239,7 @@ function WithdrawalDetail() {
           )}
           <Separator className="mb-4 dark:border-gray-700" />
           <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
-            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-white px-4">
+            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
               <CalendarClock className="h-5 w-5 text-primary dark:text-primary-dark" />
               <span>Trạng thái yêu cầu</span>
             </h2>
@@ -231,7 +283,7 @@ function WithdrawalDetail() {
         </div>
         <div className="p-4 bg-card rounded-xl py-10">
           <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
-            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-white px-4">
+            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
               <Wallet2 className="h-5 w-5 text-primary dark:text-primary-dark" />
               <span>Tài khoản ngân hàng</span>
             </h2>
@@ -263,9 +315,15 @@ function WithdrawalDetail() {
                 {withdrawal?.bankNumber}
               </p>
               <p>
-                <span className="font-semibold">Số tiền: </span>
+                <span className="font-semibold">Số tiền cần chuyển: </span>
                 {formatCurrency(Number(withdrawal?.balance))}
               </p>
+              {withdrawal && withdrawal?.status === "Handling" && (
+                <p>
+                  <span className="font-semibold">Số tiền hiện tại: </span>
+                  {formatCurrency(Number(ownerWallet?.balance))}
+                </p>
+              )}
             </div>
           </div>
         </div>
