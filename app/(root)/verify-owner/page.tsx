@@ -56,7 +56,7 @@ function VerifyOwnerManagement() {
   }
 
   return (
-    <div className="p-4 bg-card rounded-xl">
+    <div className="p-4 bg-card rounded-md">
       <VerifyTable columns={VerifyTableColumns} data={verifyList} />
     </div>
   );

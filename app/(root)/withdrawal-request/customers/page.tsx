@@ -60,7 +60,7 @@ function WithdrawalRequestManagement() {
   }
 
   return (
-    <div className="p-4 bg-card rounded-xl">
+    <div className="p-4 bg-card rounded-md">
       <CustomerWithdrawalTable
         columns={CustomerWithdrawalTableColumns}
         data={withdrawal}

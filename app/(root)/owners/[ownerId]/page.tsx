@@ -181,12 +181,14 @@ function OwnerDetail() {
 
   return (
     <>
-      <div className="p-4 bg-card rounded-xl">
-        <div className="flex flex-col gap-6 mt-10">
-          <h1 className="text-xl font-bold text-center text-primary">
-            Thông tin chi tiết doanh nghiệp
-          </h1>
-          <div className="mt-4 flex justify-end">
+      <div className="p-4 bg-card rounded-md">
+        <div className="flex flex-col gap-6">
+          <div className="w-full mx-auto bg-primary border border-primary rounded-md p-3">
+            <h1 className="text-base font-bold text-center text-white flex items-center justify-center gap-4">
+              Thông tin chi tiết doanh nghiệp
+            </h1>
+          </div>
+          <div className="flex justify-end">
             {ownerDetail?.status === "Success" ? (
               <button
                 className="border rounded-md font-semibold border-red-500 text-red-500 px-6 py-2 hover:bg-red-500 hover:text-white transition-colors duration-300"
@@ -218,14 +220,14 @@ function OwnerDetail() {
             )}
           </div>
           <Separator className="mb-4 dark:border-gray-700" />
-          <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
-            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
+          <div className="border border-primary dark:bg-gray-800 p-6 rounded-md relative">
+            <h2 className="font-semibold text-base mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
               <User className="h-5 w-5 text-primary dark:text-primary-dark" />
               Thông tin chung
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300 mt-4">
               <div className="col-span-1 md:col-span-2 flex gap-4 items-end">
-                <span className="font-semibold">Ảnh đại diện: </span>
+                <span className="font-semibold text-sm">Ảnh đại diện: </span>
                 <div className="w-24 h-24 bg-gray-200 rounded-full overflow-hidden border">
                   {ownerDetail?.avatar ? (
                     <img
@@ -246,15 +248,15 @@ function OwnerDetail() {
                   )}
                 </div>
               </div>
-              <p>
+              <p className="text-sm">
                 <span className="font-semibold">Email:</span>{" "}
                 {ownerDetail?.email}
               </p>
-              <p>
+              <p className="text-sm">
                 <span className="font-semibold">Số điện thoại:</span>{" "}
                 {ownerDetail?.phone}
               </p>
-              <p>
+              <p className="text-sm">
                 <span className="font-semibold">Trạng thái:</span>{" "}
                 {(ownerDetail?.status === "Success" ||
                   ownerDetail?.status === "Active") && (
@@ -264,14 +266,14 @@ function OwnerDetail() {
                   <span className="text-red-500">Bị chặn</span>
                 )}
               </p>
-              <p>
+              <p className="text-sm">
                 <span className="font-semibold">Ngày tạo tài khoản:</span>{" "}
                 {ownerDetail?.createdAt
                   ? dayjs(ownerDetail?.createdAt).format("HH:mm DD/MM/YYYY")
                   : "Chưa cập nhật"}
               </p>
               {ownerDetail?.userId && (
-                <p>
+                <p className="text-sm">
                   <span className="font-semibold">
                     Mã nhân viên xử lý yêu cầu:{" "}
                   </span>
@@ -279,7 +281,7 @@ function OwnerDetail() {
                 </p>
               )}
               {ownerDetail?.userId && (
-                <p>
+                <p className="text-sm">
                   <span className="font-semibold">
                     Nhân viên xử lý yêu cầu:{" "}
                   </span>
@@ -287,7 +289,7 @@ function OwnerDetail() {
                 </p>
               )}
               {ownerDetail?.userId && (
-                <p>
+                <p className="text-sm">
                   <span className="font-semibold">Ngày xử lý: </span>
                   {dayjs(ownerDetail?.updatedAt).format("HH:mm DD/MM/YYYY")}
                 </p>
@@ -295,25 +297,25 @@ function OwnerDetail() {
             </div>
           </div>
           <Separator className="my-4 dark:border-gray-700" />
-          <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
-            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
+          <div className="border border-primary dark:bg-gray-800 p-6 rounded-md relative">
+            <h2 className="font-semibold text-base mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
               <Globe className="h-5 w-5 text-primary dark:text-primary-dark" />
               Tài khoản mạng xã hội
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300 mt-4">
-              <Link href={ownerDetail?.facebook || ""}>
+              <Link className="text-sm" href={ownerDetail?.facebook || ""}>
                 <span className="font-semibold">Facebook:</span>{" "}
                 <span className="text-primary hover:text-secondary underline">
                   {ownerDetail?.facebook}
                 </span>
               </Link>
-              <Link href={ownerDetail?.instagram || ""}>
+              <Link className="text-sm" href={ownerDetail?.instagram || ""}>
                 <span className="font-semibold">Instagram:</span>{" "}
                 <span className="text-primary hover:text-secondary underline">
                   {ownerDetail?.instagram}
                 </span>
               </Link>
-              <Link href={ownerDetail?.tiktok || ""}>
+              <Link className="text-sm" href={ownerDetail?.tiktok || ""}>
                 <span className="font-semibold">Tiktok:</span>{" "}
                 <span className="text-primary hover:text-secondary underline">
                   {ownerDetail?.tiktok}
@@ -322,43 +324,43 @@ function OwnerDetail() {
             </div>
           </div>
           <Separator className="my-4 dark:border-gray-700" />
-          <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
-            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
+          <div className="border border-primary dark:bg-gray-800 p-6 rounded-md relative">
+            <h2 className="font-semibold text-base mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
               <FileText className="h-5 w-5 text-primary dark:text-primary-dark" />
               Giấy phép kinh doanh
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300 mt-4">
-              <p>
+              <p className="text-sm">
                 <span className="font-semibold">Họ và tên:</span>{" "}
                 {ownerDetail?.ownerName}
               </p>
-              <p>
+              <p className="text-sm">
                 <span className="font-semibold">Giới tính:</span>{" "}
                 {ownerDetail?.sex}
               </p>
-              <p>
+              <p className="text-sm">
                 <span className="font-semibold">
                   Ngày đăng kí doanh nghiệp:
                 </span>{" "}
                 {dayjs(ownerDetail?.registrationDate).format("DD/MM/YYYY")}
               </p>
-              <p>
+              <p className="text-sm">
                 <span className="font-semibold">Tên công ty:</span>{" "}
                 {ownerDetail?.licenseName}
               </p>
-              <p>
+              <p className="text-sm">
                 <span className="font-semibold">Số giấy phép:</span>{" "}
                 {ownerDetail?.licenseNumber}
               </p>
-              <p className="md:col-span-2">
+              <p className="md:col-span-2 text-sm">
                 <span className="font-semibold">Địa chỉ:</span>{" "}
                 {ownerDetail?.licenseAddress}
               </p>
-              <p>
+              <p className="text-sm">
                 <span className="font-semibold">Vốn điều lệ:</span>{" "}
                 {ownerDetail?.charterCapital}
               </p>
-              <p>
+              <p className="text-sm">
                 <span className="font-semibold">Tệp đính kèm:</span>{" "}
                 <a
                   href={ownerDetail?.licenseFile}
@@ -390,7 +392,7 @@ function OwnerDetail() {
             key="reject"
             disabled={isLoading}
             onClick={handleBan}
-            className={`px-4 py-2 rounded-lg border border-red-500 text-red-500`}
+            className={`px-4 py-2 rounded-md border border-red-500 text-red-500`}
           >
             {isLoading ? (
               <LoadingOutlined style={{ color: "white" }} />

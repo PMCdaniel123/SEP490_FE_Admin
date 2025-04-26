@@ -84,7 +84,7 @@ const AdminNotification = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="absolute right-0 mt-2 w-80 bg-card shadow-lg rounded-lg border dark:border-gray-700 overflow-hidden z-50"
+          className="absolute right-0 mt-2 w-80 bg-card shadow-lg rounded-md border dark:border-gray-700 overflow-hidden z-50"
         >
           <div className="px-4 py-2 font-semibold border-b dark:border-gray-700 text-black dark:text-white">
             Thông báo

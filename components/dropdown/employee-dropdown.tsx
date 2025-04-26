@@ -139,7 +139,7 @@ function EmployeeDropdown({
           >
             <Eye size={16} /> <span>Xem thông tin chi tiết</span>
           </li>
-          {Number(admin?.id || "0") === 1 && employee.isBan === 0 && (
+          {Number(admin?.role || "0") === 1 && employee.isBan === 0 && (
             <li
               className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer"
               onClick={() => setIsModalOpen(true)}
@@ -147,7 +147,7 @@ function EmployeeDropdown({
               <LockKeyhole size={16} /> <span>Chặn</span>
             </li>
           )}
-          {Number(admin?.id || "0") === 1 && employee.isBan === 1 && (
+          {Number(admin?.role || "0") === 1 && employee.isBan === 1 && (
             <li
               className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer"
               onClick={handleUnban}
@@ -185,7 +185,7 @@ function EmployeeDropdown({
             key="reject"
             disabled={isLoading}
             onClick={handleBan}
-            className={`px-4 py-2 rounded-lg border border-red-500 text-red-500`}
+            className={`px-4 py-2 rounded-md border border-red-500 text-red-500`}
           >
             {isLoading ? (
               <LoadingOutlined style={{ color: "white" }} />
