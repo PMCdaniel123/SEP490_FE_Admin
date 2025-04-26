@@ -217,7 +217,7 @@ function Sidebar() {
             collapsed={isCollapsed}
           />
         )}
-        {(role === 1 || role === 2 || role === 3) && (
+        {(role === 3) && (
           <SidebarItem
             icon={KeyRound}
             label="Xác thực doanh nghiệp"
@@ -225,7 +225,7 @@ function Sidebar() {
             collapsed={isCollapsed}
           />
         )}
-        {(role === 1 || role === 2) && (
+        {(role === 2) && (
           <SidebarItem
             icon={Banknote}
             label="Yêu cầu rút tiền"
@@ -254,14 +254,6 @@ function Sidebar() {
             </Link>
           </SidebarItem>
         )}
-        {/* {(role === 1 || role === 2) && (
-          <SidebarItem
-            icon={Banknote}
-            label="Doanh nghiệp rút tiền"
-            href="/withdrawal-request/owners"
-            collapsed={isCollapsed}
-          />
-        )} */}
       </nav>
     </motion.aside>
   );

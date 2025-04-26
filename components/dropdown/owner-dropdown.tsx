@@ -20,6 +20,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores";
+import Cookies from "js-cookie";
 
 function OwnerDropdown({
   owner,
@@ -32,6 +33,8 @@ function OwnerDropdown({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { admin } = useSelector((state: RootState) => state.auth);
+  const token =
+    typeof window !== "undefined" ? Cookies.get("admin_token") : null;
 
   useEffect(() => {
     if (!owner) return;
@@ -42,6 +45,10 @@ function OwnerDropdown({
     try {
       const response = await fetch(`${BASE_URL}/owners/banowner/${owner.id}`, {
         method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (!response.ok) {
@@ -78,6 +85,10 @@ function OwnerDropdown({
         `${BASE_URL}/owners/unbanowner/${owner.id}`,
         {
           method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 

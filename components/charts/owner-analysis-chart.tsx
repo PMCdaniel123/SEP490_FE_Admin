@@ -69,7 +69,7 @@ export default function OwnerAnalysisChart({
   }, [chartData]);
 
   return (
-    <Card className="flex flex-col h-full">
+    <Card className="flex flex-col h-full bg-gray-800">
       <CardHeader>
         <CardTitle className="mt-4 font-bold">Số lượng doanh nghiệp</CardTitle>
       </CardHeader>

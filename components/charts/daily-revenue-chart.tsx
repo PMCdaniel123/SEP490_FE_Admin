@@ -33,14 +33,22 @@ const DailyRevenueChart: React.FC<Props> = ({ bookings }) => {
             margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="day" tickMargin={10} tick={{ fontSize: 10 }} />
+            <XAxis
+              dataKey="day"
+              tickMargin={10}
+              tick={{ fontSize: 10 }}
+              stroke="currentColor"
+              className="text-gray-700 dark:text-gray-300"
+            />
             <YAxis
-              width={80}
+              width={100}
               tick={{ fontSize: 10 }}
               tickMargin={8}
               tickFormatter={(value) =>
                 new Intl.NumberFormat("vi-VN").format(value) + " ₫"
               }
+              stroke="currentColor"
+              className="text-gray-700 dark:text-gray-300"
             />
             <Tooltip
               formatter={(value: number) => [

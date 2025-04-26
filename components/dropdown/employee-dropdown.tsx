@@ -22,6 +22,7 @@ import { toast } from "react-toastify";
 import { LoadingOutlined } from "@ant-design/icons";
 import { RootState } from "@/stores";
 import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
 
 function EmployeeDropdown({
   employee,
@@ -36,6 +37,8 @@ function EmployeeDropdown({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { admin } = useSelector((state: RootState) => state.auth);
+  const token =
+    typeof window !== "undefined" ? Cookies.get("admin_token") : null;
 
   useEffect(() => {
     if (!employee) return;
@@ -48,6 +51,10 @@ function EmployeeDropdown({
         `${BASE_URL}/users/banstaff/${employee.id}`,
         {
           method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -85,6 +92,10 @@ function EmployeeDropdown({
         `${BASE_URL}/users/unbanstaff/${employee.id}`,
         {
           method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 

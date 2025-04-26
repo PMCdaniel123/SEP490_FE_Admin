@@ -4,6 +4,7 @@
 import Loader from "@/components/loader/Loader";
 import { Separator } from "@/components/ui/separator";
 import { BASE_URL } from "@/constants/environments";
+import { RootState } from "@/stores";
 import { EmployeeProps, OwnerProps } from "@/types";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
@@ -19,7 +20,9 @@ import {
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 function OwnerDetail() {
   const { ownerId } = useParams() as { ownerId: string };
@@ -29,6 +32,9 @@ function OwnerDetail() {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { admin } = useSelector((state: RootState) => state.auth);
+  const token =
+    typeof window !== "undefined" ? Cookies.get("admin_token") : null;
 
   useEffect(() => {
     if (!ownerId) return;
@@ -104,6 +110,10 @@ function OwnerDetail() {
         `${BASE_URL}/owners/banowner/${ownerDetail?.id}`,
         {
           method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -141,6 +151,10 @@ function OwnerDetail() {
         `${BASE_URL}/owners/unbanowner/${ownerDetail?.id}`,
         {
           method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -188,40 +202,42 @@ function OwnerDetail() {
               Thông tin chi tiết doanh nghiệp
             </h1>
           </div>
-          <div className="flex justify-end">
-            {ownerDetail?.status === "Success" ? (
-              <button
-                className="border rounded-md font-semibold border-red-500 text-red-500 px-6 py-2 hover:bg-red-500 hover:text-white transition-colors duration-300"
-                onClick={() => setIsModalOpen(true)}
-              >
-                {loading ? (
-                  <LoadingOutlined style={{ color: "red" }} />
-                ) : (
-                  <span className="flex items-center gap-2">
-                    <LockKeyhole size={16} /> Chặn
-                  </span>
-                )}
-              </button>
-            ) : ownerDetail?.status === "Fail" ? (
-              <button
-                className="border rounded-md font-semibold border-yellow-500 text-yellow-500 px-6 py-2 hover:bg-yellow-500 hover:text-white transition-colors duration-300"
-                onClick={handleUnban}
-              >
-                {loading ? (
-                  <LoadingOutlined style={{ color: "yellow" }} />
-                ) : (
-                  <span className="flex items-center gap-2">
-                    <LockKeyholeOpen size={16} /> Mở chặn
-                  </span>
-                )}
-              </button>
-            ) : (
-              <></>
-            )}
-          </div>
+          {Number(admin?.role || "0") === 1 && (
+            <div className="flex justify-end">
+              {ownerDetail?.status === "Success" ? (
+                <button
+                  className="border rounded-md font-semibold border-red-500 text-red-500 px-6 py-2 hover:bg-red-500 hover:text-white transition-colors duration-300"
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  {loading ? (
+                    <LoadingOutlined style={{ color: "red" }} />
+                  ) : (
+                    <span className="flex items-center gap-2">
+                      <LockKeyhole size={16} /> Chặn
+                    </span>
+                  )}
+                </button>
+              ) : ownerDetail?.status === "Fail" ? (
+                <button
+                  className="border rounded-md font-semibold border-yellow-500 text-yellow-500 px-6 py-2 hover:bg-yellow-500 hover:text-white transition-colors duration-300"
+                  onClick={handleUnban}
+                >
+                  {loading ? (
+                    <LoadingOutlined style={{ color: "yellow" }} />
+                  ) : (
+                    <span className="flex items-center gap-2">
+                      <LockKeyholeOpen size={16} /> Mở chặn
+                    </span>
+                  )}
+                </button>
+              ) : (
+                <></>
+              )}
+            </div>
+          )}
           <Separator className="mb-4 dark:border-gray-700" />
           <div className="border border-primary dark:bg-gray-800 p-6 rounded-md relative">
-            <h2 className="font-semibold text-base mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
+            <h2 className="font-semibold text-base mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4 pb-2">
               <User className="h-5 w-5 text-primary dark:text-primary-dark" />
               Thông tin chung
             </h2>
@@ -298,7 +314,7 @@ function OwnerDetail() {
           </div>
           <Separator className="my-4 dark:border-gray-700" />
           <div className="border border-primary dark:bg-gray-800 p-6 rounded-md relative">
-            <h2 className="font-semibold text-base mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
+            <h2 className="font-semibold text-base mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4 pb-2">
               <Globe className="h-5 w-5 text-primary dark:text-primary-dark" />
               Tài khoản mạng xã hội
             </h2>
@@ -325,7 +341,7 @@ function OwnerDetail() {
           </div>
           <Separator className="my-4 dark:border-gray-700" />
           <div className="border border-primary dark:bg-gray-800 p-6 rounded-md relative">
-            <h2 className="font-semibold text-base mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
+            <h2 className="font-semibold text-base mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4 pb-2">
               <FileText className="h-5 w-5 text-primary dark:text-primary-dark" />
               Giấy phép kinh doanh
             </h2>
