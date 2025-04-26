@@ -16,6 +16,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 function VerifyOwnerDetail() {
   const { verifyId } = useParams() as { verifyId: string };
@@ -30,6 +31,8 @@ function VerifyOwnerDetail() {
   const router = useRouter();
   const { admin } = useSelector((state: RootState) => state.auth);
   const [employee, setEmployee] = useState<EmployeeProps | null>(null);
+  const token =
+    typeof window !== "undefined" ? Cookies.get("admin_token") : null;
 
   useEffect(() => {
     if (!verifyId) return;
@@ -121,6 +124,7 @@ function VerifyOwnerDetail() {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             status,

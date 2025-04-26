@@ -20,6 +20,7 @@ import { toast } from "react-toastify";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores";
+import Cookies from "js-cookie";
 
 function CustomerDropdown({
   customer,
@@ -34,6 +35,8 @@ function CustomerDropdown({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { admin } = useSelector((state: RootState) => state.auth);
+  const token =
+    typeof window !== "undefined" ? Cookies.get("admin_token") : null;
 
   useEffect(() => {
     if (!customer) return;
@@ -46,6 +49,10 @@ function CustomerDropdown({
         `${BASE_URL}/users/bancustomer/${customer.id}`,
         {
           method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -83,6 +90,10 @@ function CustomerDropdown({
         `${BASE_URL}/users/unbancustomer/${customer.id}`,
         {
           method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 

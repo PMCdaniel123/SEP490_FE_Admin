@@ -19,6 +19,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 function WithdrawalDetail() {
   const { withdrawalId } = useParams() as { withdrawalId: string };
@@ -34,6 +35,8 @@ function WithdrawalDetail() {
   const [message, setMessage] = useState("");
   const router = useRouter();
   const { admin } = useSelector((state: RootState) => state.auth);
+  const token =
+    typeof window !== "undefined" ? Cookies.get("admin_token") : null;
 
   useEffect(() => {
     if (!withdrawalId) {
@@ -168,6 +171,7 @@ function WithdrawalDetail() {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             status,

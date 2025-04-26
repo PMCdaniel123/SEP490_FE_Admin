@@ -27,10 +27,13 @@ import { useRouter } from "next/navigation";
 import { LoadingOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import { BASE_URL } from "@/constants/environments";
+import Cookies from "js-cookie";
 
 function EmployeeForm() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const token =
+    typeof window !== "undefined" ? Cookies.get("admin_token") : null;
   const form = useForm<z.infer<typeof employeeSchema>>({
     resolver: zodResolver(employeeSchema),
     defaultValues: {
@@ -54,6 +57,7 @@ function EmployeeForm() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(values),
       });

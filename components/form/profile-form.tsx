@@ -31,6 +31,7 @@ import { Button, Upload as AntUpload, ConfigProvider } from "antd";
 import ImgCrop from "antd-img-crop";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores";
+import Cookies from "js-cookie";
 
 interface ProfileFormProps {
   employee: EmployeeProps | null;
@@ -40,6 +41,8 @@ interface ProfileFormProps {
 function ProfileForm({ employee, isEdit }: ProfileFormProps) {
   const { admin } = useSelector((state: RootState) => state.auth);
   const [loading, setLoading] = useState(false);
+  const token =
+    typeof window !== "undefined" ? Cookies.get("admin_token") : null;
   const form = useForm<z.infer<typeof employeeFormSchema>>({
     resolver: zodResolver(employeeFormSchema),
     defaultValues: {
@@ -81,6 +84,10 @@ function ProfileForm({ employee, isEdit }: ProfileFormProps) {
     try {
       const response = await fetch(`${BASE_URL}/images/upload`, {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: formData,
       });
 
@@ -139,6 +146,7 @@ function ProfileForm({ employee, isEdit }: ProfileFormProps) {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(requestData),
       });
