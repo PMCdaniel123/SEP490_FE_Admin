@@ -63,7 +63,7 @@ function OwnerManagement() {
   }
 
   return (
-    <div className="p-4 bg-card rounded-xl">
+    <div className="p-4 bg-card rounded-md">
       <OwnerTable
         columns={OwnerTableColumns(fetchOwnerList)}
         data={ownerList}

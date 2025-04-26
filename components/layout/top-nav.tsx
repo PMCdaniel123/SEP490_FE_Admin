@@ -115,7 +115,7 @@ function TopNav() {
         <div className="flex items-center justify-end w-full mb-4 gap-4">
           <div ref={dropdownRef} className="relative">
             <div
-              className="group flex items-center justify-center bg-card rounded-xl py-2 px-4 gap-4 hover:bg-primary hover:text-white dark:hover:bg-primary-dark dark:hover:text-white cursor-pointer transition-colors duration-200"
+              className="group flex items-center justify-center bg-card rounded-md py-2 px-4 gap-4 hover:bg-primary hover:text-white dark:hover:bg-primary-dark dark:hover:text-white cursor-pointer transition-colors duration-200"
               onClick={() => setOpen(!open)}
             >
               <Image
@@ -135,8 +135,8 @@ function TopNav() {
               />
             </div>
             {open && (
-              <ul className="absolute top-full right-0 z-10 mt-2 w-auto gap-3 rounded-xl bg-card dark:bg-gray-900 shadow-xl pb-2 border dark:border-gray-700">
-                <div className="flex items-center justify-start py-2 px-4 gap-4 bg-primary rounded-t-xl min-w-[250px]">
+              <ul className="absolute top-full right-0 z-10 mt-2 w-auto gap-3 rounded-md bg-card dark:bg-gray-900 shadow-xl pb-2 border dark:border-gray-700">
+                <div className="flex items-center justify-start py-2 px-4 gap-4 bg-primary rounded-t-md min-w-[250px]">
                   <Image
                     src={admin?.avatar || "/logo.png"}
                     alt="Logo"

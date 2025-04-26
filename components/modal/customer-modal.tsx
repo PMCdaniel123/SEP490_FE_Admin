@@ -160,7 +160,7 @@ function CustomerModal({
           </p>
         </div>
         <div className="mt-4 flex justify-end">
-          {Number(admin?.id || "0") === 1 &&
+          {Number(admin?.role || "0") === 1 &&
             (customer.isBan === 0 ? (
               <button
                 className="border rounded-md font-semibold border-red-500 text-red-500 px-6 py-2 hover:bg-red-500 hover:text-white transition-colors duration-300"
@@ -207,7 +207,7 @@ function CustomerModal({
             key="reject"
             disabled={isLoading}
             onClick={handleBan}
-            className={`px-4 py-2 rounded-lg border border-red-500 text-red-500`}
+            className={`px-4 py-2 rounded-md border border-red-500 text-red-500`}
           >
             {isLoading ? (
               <LoadingOutlined style={{ color: "white" }} />

@@ -164,10 +164,10 @@ function VerifyOwnerDetail() {
 
   return (
     <>
-      <div className="p-4 bg-card rounded-xl">
-        <div className="flex flex-col gap-6 mt-10">
-          <div className="w-full mx-auto bg-primary border border-primary rounded-lg p-6 mb-4">
-            <h1 className="text-xl font-bold text-center text-white flex items-center justify-center gap-4">
+      <div className="p-4 bg-card rounded-md">
+        <div className="flex flex-col gap-6">
+          <div className="w-full mx-auto bg-primary border border-primary rounded-md p-3 mb-4">
+            <h1 className="text-base font-bold text-center text-white flex items-center justify-center gap-4">
               <BadgeInfo /> Xác thực doanh nghiệp
             </h1>
           </div>
@@ -175,26 +175,26 @@ function VerifyOwnerDetail() {
             <div className="flex items-center justify-end gap-4">
               <button
                 onClick={() => setIsAccepted(true)}
-                className="px-4 py-2 rounded-lg border border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300"
+                className="px-4 py-2 rounded-md border border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300"
               >
                 Chấp nhận
               </button>
               <button
                 onClick={() => setIsRejected(true)}
-                className="px-4 py-2 rounded-lg border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-colors duration-300"
+                className="px-4 py-2 rounded-md border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-colors duration-300"
               >
                 Từ chối
               </button>
             </div>
           )}
           <Separator className="mb-4 dark:border-gray-700" />
-          <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
-            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
+          <div className="border border-primary dark:bg-gray-800 p-6 rounded-md relative">
+            <h2 className="font-semibold text-base mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
               <User className="h-5 w-5 text-primary dark:text-primary-dark" />
               Thông tin chung
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300 mt-4">
-              <p>
+              <p className="text-sm">
                 <span className="font-semibold">Trạng thái:</span>{" "}
                 {verifyDetail?.status === "Handling" ? (
                   <span className="text-yellow-500">Chờ xác thực</span>
@@ -204,14 +204,14 @@ function VerifyOwnerDetail() {
                   <span className="text-red-500">Xác thực thất bại</span>
                 )}
               </p>
-              <p>
+              <p className="text-sm">
                 <span className="font-semibold">Ngày tạo:</span>{" "}
                 {verifyDetail?.createdAt
                   ? dayjs(verifyDetail?.createdAt).format("HH:mm DD/MM/YYYY")
                   : "Chưa cập nhật"}
               </p>
               {verifyDetail?.userId && (
-                <p>
+                <p className="text-sm">
                   <span className="font-semibold">
                     ID nhân viên xử lý yêu cầu:{" "}
                   </span>
@@ -219,7 +219,7 @@ function VerifyOwnerDetail() {
                 </p>
               )}
               {verifyDetail?.userId && (
-                <p>
+                <p className="text-sm">
                   <span className="font-semibold">
                     Nhân viên xử lý yêu cầu:{" "}
                   </span>
@@ -227,13 +227,13 @@ function VerifyOwnerDetail() {
                 </p>
               )}
               {verifyDetail?.userId && (
-                <p>
+                <p className="text-sm">
                   <span className="font-semibold">Tin nhắn: </span>
                   {verifyDetail?.message}
                 </p>
               )}
               {verifyDetail?.userId && (
-                <p>
+                <p className="text-sm">
                   <span className="font-semibold">Ngày xử lý: </span>
                   {dayjs(verifyDetail?.updatedAt).format("HH:mm DD/MM/YYYY")}
                 </p>
@@ -241,25 +241,25 @@ function VerifyOwnerDetail() {
             </div>
           </div>
           <Separator className="my-4 dark:border-gray-700" />
-          <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
-            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
+          <div className="border border-primary dark:bg-gray-800 p-6 rounded-md relative">
+            <h2 className="font-semibold text-base mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
               <Globe className="h-5 w-5 text-primary dark:text-primary-dark" />
               Tài khoản mạng xã hội
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300 mt-4">
-              <Link href={verifyDetail?.facebook || ""}>
+              <Link className="text-sm" href={verifyDetail?.facebook || ""}>
                 <span className="font-semibold">Facebook:</span>{" "}
                 <span className="text-primary hover:text-secondary underline">
                   {verifyDetail?.facebook || "Chưa cập nhật"}
                 </span>
               </Link>
-              <Link href={verifyDetail?.instagram || ""}>
+              <Link className="text-sm" href={verifyDetail?.instagram || ""}>
                 <span className="font-semibold">Instagram:</span>{" "}
                 <span className="text-primary hover:text-secondary underline">
                   {verifyDetail?.instagram || "Chưa cập nhật"}
                 </span>
               </Link>
-              <Link href={verifyDetail?.tiktok || ""}>
+              <Link className="text-sm" href={verifyDetail?.tiktok || ""}>
                 <span className="font-semibold">Tiktok:</span>{" "}
                 <span className="text-primary hover:text-secondary underline">
                   {verifyDetail?.tiktok || "Chưa cập nhật"}
@@ -268,39 +268,39 @@ function VerifyOwnerDetail() {
             </div>
           </div>
           <Separator className="my-4 dark:border-gray-700" />
-          <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
-            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
+          <div className="border border-primary dark:bg-gray-800 p-6 rounded-md relative">
+            <h2 className="font-semibold text-base mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
               <FileText className="h-5 w-5 text-primary dark:text-primary-dark" />
               Giấy phép kinh doanh
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300 mt-4">
-              <p>
+              <p className="text-sm">
                 <span className="font-semibold">Họ và tên:</span>{" "}
                 {verifyDetail?.ownerName}
               </p>
-              <p>
+              <p className="text-sm">
                 <span className="font-semibold">
                   Ngày đăng kí doanh nghiệp:
                 </span>{" "}
                 {dayjs(verifyDetail?.registrationDate).format("DD/MM/YYYY")}
               </p>
-              <p>
+              <p className="text-sm">
                 <span className="font-semibold">Tên công ty:</span>{" "}
                 {verifyDetail?.licenseName}
               </p>
-              <p>
+              <p className="text-sm">
                 <span className="font-semibold">Số giấy phép:</span>{" "}
                 {verifyDetail?.licenseNumber}
               </p>
-              <p className="md:col-span-2">
+              <p className="md:col-span-2 text-sm">
                 <span className="font-semibold">Địa chỉ:</span>{" "}
                 {verifyDetail?.licenseAddress}
               </p>
-              <p>
+              <p className="text-sm">
                 <span className="font-semibold">Vốn điều lệ:</span>{" "}
                 {formatCurrency(Number(verifyDetail?.charterCapital))}
               </p>
-              <p>
+              <p className="text-sm">
                 <span className="font-semibold">Tệp đính kèm:</span>{" "}
                 <a
                   href={verifyDetail?.licenseFile}
@@ -332,7 +332,7 @@ function VerifyOwnerDetail() {
             key="accept"
             disabled={isLoading}
             onClick={() => handleChangeStatus("Success")}
-            className="px-4 py-2 rounded-lg border border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300"
+            className="px-4 py-2 rounded-md border border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300"
           >
             {isLoading ? (
               <LoadingOutlined style={{ color: "white" }} />
@@ -363,7 +363,7 @@ function VerifyOwnerDetail() {
             key="reject"
             disabled={isLoading || message === ""}
             onClick={() => handleChangeStatus("Fail")}
-            className={`px-4 py-2 rounded-lg border border-red-500 text-red-500 ${
+            className={`px-4 py-2 rounded-md border border-red-500 text-red-500 ${
               message === ""
                 ? "cursor-not-allowed"
                 : "hover:bg-red-500 hover:text-white transition-colors duration-300"

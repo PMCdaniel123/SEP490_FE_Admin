@@ -179,7 +179,7 @@ function ProfileForm({ employee, isEdit }: ProfileFormProps) {
               name="avatar"
               render={() => (
                 <FormItem className="flex gap-4 items-center">
-                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                  <FormLabel className="text-fourth dark:text-white font-bold text-sm ml-6">
                     Ảnh đại diện
                   </FormLabel>
                   <FormControl>
@@ -250,12 +250,12 @@ function ProfileForm({ employee, isEdit }: ProfileFormProps) {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                  <FormLabel className="text-fourth dark:text-white font-bold text-sm ml-6">
                     Họ và tên
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="py-6 px-4 rounded-md file:bg-seventh"
+                      className="py-4 px-4 rounded-md file:bg-seventh"
                       placeholder="Nhập họ và tên"
                       disabled={!isEdit}
                       {...field}
@@ -272,7 +272,7 @@ function ProfileForm({ employee, isEdit }: ProfileFormProps) {
               name="sex"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                  <FormLabel className="text-fourth dark:text-white font-bold text-sm ml-6">
                     Giới tính
                   </FormLabel>
                   <FormControl>
@@ -281,7 +281,7 @@ function ProfileForm({ employee, isEdit }: ProfileFormProps) {
                       onValueChange={(value) => field.onChange(value)}
                       disabled={!isEdit}
                     >
-                      <SelectTrigger className="py-6 px-4 rounded-md w-full dark:bg-gray-800 dark:text-white dark:border-gray-700">
+                      <SelectTrigger className="py-4 px-4 rounded-md w-full dark:bg-gray-800 dark:text-white dark:border-gray-700">
                         <SelectValue placeholder="Chọn giới tính" />
                       </SelectTrigger>
                       <SelectContent>
@@ -317,12 +317,12 @@ function ProfileForm({ employee, isEdit }: ProfileFormProps) {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                  <FormLabel className="text-fourth dark:text-white font-bold text-sm ml-6">
                     Email
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="py-6 px-4 rounded-md file:bg-seventh"
+                      className="py-4 px-4 rounded-md file:bg-seventh"
                       placeholder="Nhập email"
                       disabled
                       {...field}
@@ -339,12 +339,12 @@ function ProfileForm({ employee, isEdit }: ProfileFormProps) {
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                  <FormLabel className="text-fourth dark:text-white font-bold text-sm ml-6">
                     Số điện thoại
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="py-6 px-4 rounded-md file:bg-seventh"
+                      className="py-4 px-4 rounded-md file:bg-seventh"
                       placeholder="Nhập số điện thoại"
                       disabled
                       {...field}
@@ -361,12 +361,12 @@ function ProfileForm({ employee, isEdit }: ProfileFormProps) {
               name="dateOfBirth"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                  <FormLabel className="text-fourth dark:text-white font-bold text-sm ml-6">
                     Ngày sinh
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="py-6 px-4 rounded-md file:bg-seventh"
+                      className="py-4 px-4 rounded-md file:bg-seventh"
                       placeholder="Nhập ngày sinh"
                       disabled={!isEdit}
                       type="date"
@@ -384,12 +384,12 @@ function ProfileForm({ employee, isEdit }: ProfileFormProps) {
               name="location"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-fourth font-bold text-base ml-6">
+                  <FormLabel className="text-fourth dark:text-white font-bold text-sm ml-6">
                     Địa chỉ
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="py-6 px-4 rounded-md file:bg-seventh"
+                      className="py-4 px-4 rounded-md file:bg-seventh"
                       placeholder="Nhập địa chỉ"
                       disabled={!isEdit}
                       {...field}

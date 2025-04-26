@@ -32,7 +32,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { useState } from "react";
-import { Separator } from "../ui/separator";
 import { CirclePlus, Info } from "lucide-react";
 import { useRouter } from "next/navigation";
 import getHeaderText from "@/constants/format-header";
@@ -73,8 +72,10 @@ export default function EmployeeTable<TData, TValue>({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="mt-4 flex items-center justify-center bg-primary dark:bg-gray-800 dark:hover:bg-gray-700 transition-all duration-300 p-4 rounded-md">
-        <h1 className="font-bold text-white text-xl">Danh sách nhân viên</h1>
+      <div className="flex items-center justify-center bg-gradient-to-r from-primary to-secondary dark:bg-gray-800 dark:hover:bg-gray-700 transition-all duration-300 p-3 rounded-md">
+        <h1 className="font-bold text-white text-base">Danh sách nhân viên</h1>
+      </div>
+      <div className="flex items-center justify-end">
         <Button
           className="flex items-center gap-2 cursor-pointer text-white dark:bg-gray-800 dark:text-white dark:border-gray-700 font-semibold"
           onClick={() => router.push("employees/new")}
@@ -83,7 +84,6 @@ export default function EmployeeTable<TData, TValue>({
           <span>Tạo nhân viên mới</span>
         </Button>
       </div>
-      <Separator className="mb-4 dark:border-gray-700" />
       <div className="flex items-center">
         <Input
           placeholder="Tên nhân viên..."

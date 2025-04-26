@@ -113,8 +113,8 @@ export default function OwnerPage() {
   return (
     <div className="flex flex-1 flex-col gap-4">
       <div className="grid gap-4 md:grid-cols-3">
-        <div className="col-span-1 rounded-xl bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-3 p-4 md:min-h-32">
-          <div className="col-span-1 flex items-center justify-center flex-col bg-yellow-300 rounded-xl text-white">
+        <div className="col-span-1 rounded-md bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-3 p-4 md:min-h-32">
+          <div className="col-span-1 flex items-center justify-center flex-col bg-yellow-300 rounded-md text-white">
             <PiggyBank size={42} />
             <p className="text-sm font-medium">Doanh thu</p>
           </div>
@@ -127,8 +127,8 @@ export default function OwnerPage() {
             </p>
           </div>
         </div>
-        <div className="col-span-1 rounded-xl bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-3 p-4 md:min-h-32">
-          <div className="col-span-1 flex items-center justify-center flex-col bg-purple-300 rounded-xl text-white">
+        <div className="col-span-1 rounded-md bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-3 p-4 md:min-h-32">
+          <div className="col-span-1 flex items-center justify-center flex-col bg-purple-300 rounded-md text-white">
             <PiggyBank size={42} />
             <p className="text-sm font-medium">Doanh thu</p>
           </div>
@@ -141,8 +141,8 @@ export default function OwnerPage() {
             </p>
           </div>
         </div>
-        <div className="col-span-1 rounded-xl bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-3 p-4 md:min-h-32">
-          <div className="col-span-1 flex items-center justify-center flex-col bg-pink-300 rounded-xl text-white">
+        <div className="col-span-1 rounded-md bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-3 p-4 md:min-h-32">
+          <div className="col-span-1 flex items-center justify-center flex-col bg-pink-300 rounded-md text-white">
             <PiggyBank size={42} />
             <p className="text-sm font-medium">Doanh thu</p>
           </div>
@@ -155,8 +155,8 @@ export default function OwnerPage() {
         </div>
       </div>
       <div className="grid gap-4 md:grid-cols-4">
-        <div className="col-span-1 rounded-xl bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-3 p-4 md:min-h-24">
-          <div className="col-span-1 flex items-center justify-center bg-[#67CADF] rounded-xl text-white">
+        <div className="col-span-1 rounded-md bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-3 p-4 md:min-h-24">
+          <div className="col-span-1 flex items-center justify-center bg-[#67CADF] rounded-md text-white">
             <UsersRound size={36} />
           </div>
           <div className="col-span-2 flex flex-col items-center justify-center gap-2">
@@ -166,8 +166,8 @@ export default function OwnerPage() {
             </p>
           </div>
         </div>
-        <div className="col-span-1 rounded-xl bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-3 p-4 md:min-h-24">
-          <div className="col-span-1 flex items-center justify-center bg-[#27D095] rounded-xl text-white">
+        <div className="col-span-1 rounded-md bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-3 p-4 md:min-h-24">
+          <div className="col-span-1 flex items-center justify-center bg-[#27D095] rounded-md text-white">
             <Sofa size={36} />
           </div>
           <div className="col-span-2 flex flex-col items-center justify-center gap-2">
@@ -177,8 +177,8 @@ export default function OwnerPage() {
             </p>
           </div>
         </div>
-        <div className="col-span-1 rounded-xl bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-3 p-4 md:min-h-24">
-          <div className="col-span-1 flex items-center justify-center bg-[#FCBA03] rounded-xl text-white">
+        <div className="col-span-1 rounded-md bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-3 p-4 md:min-h-24">
+          <div className="col-span-1 flex items-center justify-center bg-[#FCBA03] rounded-md text-white">
             <BriefcaseBusiness size={36} />
           </div>
           <div className="col-span-2 flex flex-col items-center justify-center gap-2">
@@ -188,8 +188,8 @@ export default function OwnerPage() {
             </p>
           </div>
         </div>
-        <div className="col-span-1 rounded-xl bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-3 p-4 md:min-h-24">
-          <div className="col-span-1 flex items-center justify-center bg-[#F54F5F] rounded-xl text-white">
+        <div className="col-span-1 rounded-md bg-card dark:bg-gray-800 grid gap-4 md:grid-cols-3 p-4 md:min-h-24">
+          <div className="col-span-1 flex items-center justify-center bg-[#F54F5F] rounded-md text-white">
             <CircleUserRound size={36} />
           </div>
           <div className="col-span-2 flex flex-col items-center justify-center gap-2">
@@ -200,34 +200,34 @@ export default function OwnerPage() {
           </div>
         </div>
       </div>
-      <div className="col-span-3 bg-card dark:bg-gray-800 rounded-xl p-4">
+      <div className="col-span-3 bg-card dark:bg-gray-800 rounded-md p-4">
         <SystemRevenueTable
           columns={SystemRevenueTableColumns}
           data={systemRevenueList}
         />
       </div>
-      <div className="col-span-3 bg-card dark:bg-gray-800 rounded-xl p-4">
+      <div className="col-span-3 bg-card dark:bg-gray-800 rounded-md p-4">
         <DailyRevenueChart bookings={systemRevenueList} />
       </div>
-      <div className="col-span-3 bg-card dark:bg-gray-800 rounded-xl p-4">
+      <div className="col-span-3 bg-card dark:bg-gray-800 rounded-md p-4">
         <MonthlyRevenueChart bookings={systemRevenueList} />
       </div>
       <div className="grid gap-4 md:grid-cols-3">
-        <div className="col-span-2 bg-card dark:bg-gray-800 rounded-xl h-full p-4">
+        <div className="col-span-2 bg-card dark:bg-gray-800 rounded-md h-full p-4">
           <OwnerRevenueChart data={ownerRevenueList} />
         </div>
-        <div className="col-span-1 bg-card dark:bg-gray-800 rounded-xl">
+        <div className="col-span-1 bg-card dark:bg-gray-800 rounded-md">
           <CustomerAnalysisChart customerList={customerList} />
         </div>
       </div>
       <div className="grid gap-4 md:grid-cols-3">
-        <div className="col-span-2 bg-card dark:bg-gray-800 rounded-xl h-full p-4">
+        <div className="col-span-2 bg-card dark:bg-gray-800 rounded-md h-full p-4">
           <HighRateWorkspaceTable
             columns={HighRateWorkspaceTableColumns}
             data={highRatingWorkspaceList}
           />
         </div>
-        <div className="col-span-1 bg-card dark:bg-gray-800 rounded-xl h-fit">
+        <div className="col-span-1 bg-card dark:bg-gray-800 rounded-md h-fit">
           <OwnerAnalysisChart ownerList={ownerList} />
         </div>
       </div>

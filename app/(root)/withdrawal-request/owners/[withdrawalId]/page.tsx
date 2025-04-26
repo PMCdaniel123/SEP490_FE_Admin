@@ -212,7 +212,7 @@ function WithdrawalDetail() {
   return (
     <>
       <div className="flex flex-col gap-4">
-        <div className="p-4 bg-card rounded-xl pt-10 gap-6 flex flex-col">
+        <div className="p-4 bg-card rounded-md pt-10 gap-6 flex flex-col">
           <div className="mt-4 flex items-center justify-center bg-primary dark:bg-gray-800 dark:hover:bg-gray-700 transition-all duration-300 p-4 rounded-md">
             <h1 className="font-bold text-white text-xl">
               Thông tin yêu cầu rút tiền
@@ -224,21 +224,21 @@ function WithdrawalDetail() {
                 Number(ownerWallet?.balance) >= Number(withdrawal?.balance) && (
                   <button
                     onClick={() => setIsAccepted(true)}
-                    className="px-4 py-2 rounded-lg border border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300"
+                    className="px-4 py-2 rounded-md border border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300"
                   >
                     Chấp nhận
                   </button>
                 )}
               <button
                 onClick={() => setIsRejected(true)}
-                className="px-4 py-2 rounded-lg border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-colors duration-300"
+                className="px-4 py-2 rounded-md border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-colors duration-300"
               >
                 Từ chối
               </button>
             </div>
           )}
           <Separator className="mb-4 dark:border-gray-700" />
-          <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
+          <div className="border border-primary dark:bg-gray-800 p-6 rounded-md relative">
             <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
               <CalendarClock className="h-5 w-5 text-primary dark:text-primary-dark" />
               <span>Trạng thái yêu cầu</span>
@@ -281,8 +281,8 @@ function WithdrawalDetail() {
             </div>
           </div>
         </div>
-        <div className="p-4 bg-card rounded-xl py-10">
-          <div className="border border-primary dark:bg-gray-800 p-6 rounded-lg relative">
+        <div className="p-4 bg-card rounded-md py-10">
+          <div className="border border-primary dark:bg-gray-800 p-6 rounded-md relative">
             <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">
               <Wallet2 className="h-5 w-5 text-primary dark:text-primary-dark" />
               <span>Tài khoản ngân hàng</span>
@@ -345,7 +345,7 @@ function WithdrawalDetail() {
             key="accept"
             disabled={isLoading}
             onClick={() => handleChangeStatus("Success")}
-            className="px-4 py-2 rounded-lg border border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300"
+            className="px-4 py-2 rounded-md border border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300"
           >
             {isLoading ? (
               <LoadingOutlined style={{ color: "green" }} />
@@ -376,7 +376,7 @@ function WithdrawalDetail() {
             key="reject"
             disabled={isLoading || message === ""}
             onClick={() => handleChangeStatus("Fail")}
-            className={`px-4 py-2 rounded-lg border border-red-500 text-red-500 ${
+            className={`px-4 py-2 rounded-md border border-red-500 text-red-500 ${
               message === ""
                 ? "cursor-not-allowed"
                 : "hover:bg-red-500 hover:text-white transition-colors duration-300"

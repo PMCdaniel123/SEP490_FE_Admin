@@ -31,7 +31,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { useState } from "react";
-import { Separator } from "../ui/separator";
 import { Info } from "lucide-react";
 import getHeaderText from "@/constants/format-header";
 
@@ -70,23 +69,12 @@ export default function OwnerWithdrawalTable<TData, TValue>({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="mt-4 flex items-center justify-center bg-primary dark:bg-gray-800 dark:hover:bg-gray-700 transition-all duration-300 p-4 rounded-md">
-        <h1 className="font-bold text-white text-xl">
+      <div className="flex items-center justify-center bg-gradient-to-r from-primary to-secondary dark:bg-gray-800 dark:hover:bg-gray-700 transition-all duration-300 p-3 rounded-md">
+        <h1 className="font-bold text-white text-base">
           Danh sách yêu cầu rút tiền từ doanh nghiệp
         </h1>
       </div>
-      <Separator className="mb-4 dark:border-gray-700" />
       <div className="flex items-center">
-        {/* <Input
-          placeholder="Số tài khoản ngân hàng..."
-          value={
-            (table.getColumn("bankNumber")?.getFilterValue() as string) ?? ""
-          }
-          onChange={(event) =>
-            table.getColumn("bankNumber")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm dark:bg-gray-800 dark:text-white dark:border-gray-700"
-        /> */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button

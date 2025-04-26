@@ -41,7 +41,7 @@ const MultiText: React.FC<MultiTextProps> = ({
         disabled
         className="py-6 px-4 rounded-md file:bg-seventh hidden"
       />
-      <div className="flex flex-col gap-2 mt-2">
+      <div className="flex flex-col gap-2">
         {value.map((item, index) => (
           <p
             key={index}

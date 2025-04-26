@@ -119,12 +119,12 @@ function Sidebar() {
       initial={{ width: "276px" }}
       animate={{ width: isCollapsed ? "84px" : "276px" }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="bg-card dark:bg-black p-4 rounded-xl h-fit flex flex-col"
+      className="bg-card dark:bg-black p-4 rounded-md h-fit flex flex-col"
     >
       <motion.button
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="mb-2 flex justify-center items-center w-full p-4 rounded-lg bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 hover:bg-gray-300 dark:hover:text-white transition"
+        className="mb-2 flex justify-center items-center w-full p-4 rounded-md bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 hover:bg-gray-300 dark:hover:text-white transition"
       >
         <LayoutList className="w-5 h-5" />
       </motion.button>
@@ -145,7 +145,7 @@ function Sidebar() {
         </motion.h1>
         <button
           onClick={toggleTheme}
-          className="p-4 rounded-lg bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-all duration-300"
+          className="p-4 rounded-md bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-all duration-300"
           aria-label={
             theme === "light"
               ? "Chuyển sang chế độ tối"

@@ -26,7 +26,7 @@ export default function SidebarItem({
 
   const ItemContent = (
     <div
-      className={`flex text-base items-center justify-between gap-2 px-4 py-4 rounded-lg transition-colors duration-200 cursor-pointer ${
+      className={`flex text-base items-center justify-between gap-2 px-4 py-4 rounded-md transition-colors duration-200 cursor-pointer ${
         isParentActive
           ? "bg-gradient-to-r from-primary to-secondary text-white"
           : "text-fourth dark:text-white hover:bg-primary hover:text-white"

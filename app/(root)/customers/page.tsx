@@ -53,7 +53,7 @@ function CustomerManagement() {
   }
 
   return (
-    <div className="p-4 bg-card rounded-xl">
+    <div className="p-4 bg-card rounded-md">
       <CustomerTable
         columns={CustomerTableColumns(fetchCustomerList)}
         data={customerList}

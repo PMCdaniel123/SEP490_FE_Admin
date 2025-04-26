@@ -51,7 +51,7 @@ function EmployeeManagement() {
   }
 
   return (
-    <div className="p-4 bg-card rounded-xl">
+    <div className="p-4 bg-card rounded-md">
       <EmployeeTable
         columns={EmployeeTableColumns(fetchEmployeeList)}
         data={employeeList}
