@@ -50,11 +50,30 @@ const DailyRevenueChart: React.FC<Props> = ({ bookings }) => {
               stroke="currentColor"
               className="text-gray-700 dark:text-gray-300"
             />
-            <Tooltip
+            {/* <Tooltip
               formatter={(value: number) => [
                 `${new Intl.NumberFormat("vi-VN").format(value)} ₫`,
                 "Doanh thu",
               ]}
+            /> */}
+            <Tooltip
+              content={({ payload, label, active }) => {
+                if (active && payload && payload.length) {
+                  return (
+                    <div className="bg-white dark:bg-gray-600 border dark:border-gray-700 p-3 rounded shadow text-sm text-gray-800 dark:text-gray-200">
+                      <p className="font-medium mb-2">{label}</p>
+                      <p>
+                        Doanh thu:{" "}
+                        {new Intl.NumberFormat("vi-VN").format(
+                          payload[0].value as number
+                        )}{" "}
+                        ₫
+                      </p>
+                    </div>
+                  );
+                }
+                return null;
+              }}
             />
             <Line
               type="monotone"

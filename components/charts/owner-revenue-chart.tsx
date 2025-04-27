@@ -63,7 +63,7 @@ export default function OwnerRevenueChart({ data }: { data: OwnerRevenue[] }) {
               content={({ payload, label, active }) => {
                 if (active && payload && payload.length) {
                   return (
-                    <div className="bg-white dark:bg-gray-800 border dark:border-gray-700 p-3 rounded shadow text-sm text-gray-800 dark:text-gray-200">
+                    <div className="bg-white dark:bg-gray-600 border dark:border-gray-700 p-3 rounded shadow text-sm text-gray-800 dark:text-gray-200">
                       <p className="font-medium mb-2">{label}</p>
                       <p>
                         Doanh thu:{" "}

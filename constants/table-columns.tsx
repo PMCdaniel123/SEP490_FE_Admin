@@ -527,7 +527,7 @@ export const WorkspaceTableColumns: ColumnDef<Workspace>[] = [
     cell: ({ row }) => {
       return (
         <p className="text-center font-medium">
-          KH{Number(row.getValue("id")).toString().padStart(4, "0")}
+          WS{Number(row.getValue("id")).toString().padStart(4, "0")}
         </p>
       );
     },
@@ -702,7 +702,7 @@ export const HighRateWorkspaceTableColumns: ColumnDef<HighRatingWorkspace>[] = [
     cell: ({ row }) => {
       return (
         <p className="text-center font-medium">
-          KH{Number(row.getValue("id")).toString().padStart(4, "0")}
+          WS{Number(row.getValue("id")).toString().padStart(4, "0")}
         </p>
       );
     },
