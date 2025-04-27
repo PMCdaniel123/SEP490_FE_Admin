@@ -75,7 +75,7 @@ export default function CustomerAnalysisChart({
   }, [chartData]);
 
   return (
-    <Card className="flex flex-col h-full bg-gray-800">
+    <Card className="flex flex-col h-full bg-card">
       <CardHeader>
         <CardTitle className="mt-4 font-bold">Số lượng khách hàng</CardTitle>
       </CardHeader>
