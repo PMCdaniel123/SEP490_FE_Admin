@@ -185,7 +185,7 @@ function Sidebar() {
             collapsed={isCollapsed}
           />
         )}
-        {(role === 1 || role === 2) && (
+        {(role === 1 || role === 2 || role === 3) && (
           <SidebarItem
             icon={UsersRound}
             label="Khách hàng"

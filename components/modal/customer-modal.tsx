@@ -124,7 +124,7 @@ function CustomerModal({
       <div className="mt-8">
         <div className="flex items-center gap-2">
           <Image
-            src={customer?.avatar || "/logo.png"}
+            src={customer?.avatar || "/owner_icon.png"}
             height={60}
             width={60}
             alt={customer?.name || ""}

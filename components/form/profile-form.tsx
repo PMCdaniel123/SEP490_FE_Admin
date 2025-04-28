@@ -204,7 +204,7 @@ function ProfileForm({ employee, isEdit }: ProfileFormProps) {
                           />
                         ) : (
                           <img
-                            src="/logo.png"
+                            src="/owner_icon.png"
                             alt="Default Avatar"
                             className="w-full h-full object-cover"
                           />
