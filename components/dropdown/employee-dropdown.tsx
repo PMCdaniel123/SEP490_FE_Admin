@@ -150,22 +150,26 @@ function EmployeeDropdown({
           >
             <Eye size={16} /> <span>Xem thông tin chi tiết</span>
           </li>
-          {Number(admin?.role || "0") === 1 && employee.isBan === 0 && (
-            <li
-              className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer"
-              onClick={() => setIsModalOpen(true)}
-            >
-              <LockKeyhole size={16} /> <span>Chặn</span>
-            </li>
-          )}
-          {Number(admin?.role || "0") === 1 && employee.isBan === 1 && (
-            <li
-              className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer"
-              onClick={handleUnban}
-            >
-              <LockKeyholeOpen size={16} /> <span>Mở chặn</span>
-            </li>
-          )}
+          {Number(admin?.role || "0") === 1 &&
+            employee.isBan === 0 &&
+            employee.roleName === "Staff" && (
+              <li
+                className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer"
+                onClick={() => setIsModalOpen(true)}
+              >
+                <LockKeyhole size={16} /> <span>Chặn</span>
+              </li>
+            )}
+          {Number(admin?.role || "0") === 1 &&
+            employee.isBan === 1 &&
+            employee.roleName === "Staff" && (
+              <li
+                className="px-4 rounded-sm flex items-center gap-2 hover:bg-primary hover:text-white py-1 transition-colors duration-200 cursor-pointer"
+                onClick={handleUnban}
+              >
+                <LockKeyholeOpen size={16} /> <span>Mở chặn</span>
+              </li>
+            )}
         </DropdownMenuContent>
       </DropdownMenu>
 

@@ -124,7 +124,7 @@ function EmployeeModal({
       <div className="mt-8">
         <div className="flex items-center gap-2">
           <Image
-            src={employee?.avatar || "/logo.png"}
+            src={employee?.avatar || "/owner_icon.png"}
             height={60}
             width={60}
             alt={employee?.name || ""}
@@ -180,6 +180,7 @@ function EmployeeModal({
         </div>
         <div className="mt-4 flex justify-end">
           {Number(admin?.role || "0") === 1 &&
+            employee.roleName === "Staff" &&
             (employee.isBan === 0 ? (
               <button
                 className="border rounded-md font-semibold border-red-500 text-red-500 px-6 py-2 hover:bg-red-500 hover:text-white transition-colors duration-300"

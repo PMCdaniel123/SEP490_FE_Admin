@@ -119,7 +119,7 @@ function TopNav() {
               onClick={() => setOpen(!open)}
             >
               <Image
-                src={admin?.avatar || "/logo.png"}
+                src={admin?.avatar || "/owner_icon.png"}
                 alt="Logo"
                 width={40}
                 height={40}
@@ -138,7 +138,7 @@ function TopNav() {
               <ul className="absolute top-full right-0 z-10 mt-2 w-auto gap-3 rounded-md bg-card dark:bg-gray-900 shadow-xl pb-2 border dark:border-gray-700">
                 <div className="flex items-center justify-start py-2 px-4 gap-4 bg-primary rounded-t-md min-w-[250px]">
                   <Image
-                    src={admin?.avatar || "/logo.png"}
+                    src={admin?.avatar || "/owner_icon.png"}
                     alt="Logo"
                     width={40}
                     height={40}
