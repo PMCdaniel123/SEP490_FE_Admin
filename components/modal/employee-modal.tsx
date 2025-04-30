@@ -184,7 +184,7 @@ function EmployeeModal({
             (employee.isBan === 0 ? (
               <button
                 className="border rounded-md font-semibold border-red-500 text-red-500 px-6 py-2 hover:bg-red-500 hover:text-white transition-colors duration-300"
-                onClick={handleBan}
+                onClick={() => setIsModalOpen(true)}
               >
                 {loading ? (
                   <LoadingOutlined style={{ color: "red" }} />

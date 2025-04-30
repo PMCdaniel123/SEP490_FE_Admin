@@ -63,16 +63,36 @@ export default function OwnerPage() {
   const thisMonth = now.getMonth();
   const thisYear = now.getFullYear();
 
+  // useEffect(() => {
+  //   if (!admin) return;
+  //   fetchCustomerList(setCustomerList, setLoading);
+  //   fetchWorkspaceList(setWorkspaceList, setLoading);
+  //   fetchEmployeeList(setEmployeeList, setLoading);
+  //   fetchOwnerList(setOwnerList, setLoading);
+  //   fetchOwnerRevenueList(setOwnerRevenueList, setLoading);
+  //   fetchHighRatingWorkspaceList(setHighRatingWorkspaceList, setLoading);
+  //   fetchSystemRevenueList(setSystemRevenueList, setLoading, admin?.id);
+  //   setLoading(false);
+  // }, [admin]);
+
   useEffect(() => {
     if (!admin) return;
-    fetchCustomerList(setCustomerList, setLoading);
-    fetchWorkspaceList(setWorkspaceList, setLoading);
-    fetchEmployeeList(setEmployeeList, setLoading);
-    fetchOwnerList(setOwnerList, setLoading);
-    fetchOwnerRevenueList(setOwnerRevenueList, setLoading);
-    fetchHighRatingWorkspaceList(setHighRatingWorkspaceList, setLoading);
-    fetchSystemRevenueList(setSystemRevenueList, setLoading, admin?.id);
-    setLoading(false);
+
+    const loadData = async () => {
+      setLoading(true);
+      await Promise.all([
+        fetchCustomerList(setCustomerList),
+        fetchWorkspaceList(setWorkspaceList),
+        fetchEmployeeList(setEmployeeList),
+        fetchOwnerList(setOwnerList),
+        fetchOwnerRevenueList(setOwnerRevenueList),
+        fetchHighRatingWorkspaceList(setHighRatingWorkspaceList),
+        fetchSystemRevenueList(setSystemRevenueList, admin?.id),
+      ]);
+      setLoading(false);
+    };
+
+    loadData();
   }, [admin]);
 
   let todayRevenue = 0;

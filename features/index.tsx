@@ -12,10 +12,8 @@ import dayjs from "dayjs";
 import { toast } from "react-toastify";
 
 export const fetchCustomerList = async (
-  setCustomerList: React.Dispatch<React.SetStateAction<CustomerProps[]>>,
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setCustomerList: React.Dispatch<React.SetStateAction<CustomerProps[]>>
 ) => {
-  setLoading(true);
   try {
     const response = await fetch(`${BASE_URL}/users/customers`);
     if (!response.ok)
@@ -35,14 +33,11 @@ export const fetchCustomerList = async (
       theme: "light",
     });
     setCustomerList([]);
-  } finally {
-    setLoading(false);
   }
 };
 
 export const fetchEmployeeList = async (
-  setEmployeeList: React.Dispatch<React.SetStateAction<EmployeeProps[]>>,
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setEmployeeList: React.Dispatch<React.SetStateAction<EmployeeProps[]>>
 ) => {
   try {
     const response = await fetch(`${BASE_URL}/users`);
@@ -54,7 +49,6 @@ export const fetchEmployeeList = async (
     const formatted =
       data.users === null || data.users === undefined ? [] : data.users;
     setEmployeeList(formatted);
-    setLoading(false);
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Đã xảy ra lỗi!";
@@ -65,13 +59,11 @@ export const fetchEmployeeList = async (
       theme: "light",
     });
     setEmployeeList([]);
-    setLoading(false);
   }
 };
 
 export const fetchOwnerList = async (
-  setOwnerList: React.Dispatch<React.SetStateAction<OwnerProps[]>>,
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setOwnerList: React.Dispatch<React.SetStateAction<OwnerProps[]>>
 ) => {
   try {
     const response = await fetch(`${BASE_URL}/workspace-owners`);
@@ -94,7 +86,6 @@ export const fetchOwnerList = async (
           )
       : [];
     setOwnerList(formatted);
-    setLoading(false);
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Đã xảy ra lỗi!";
@@ -105,13 +96,11 @@ export const fetchOwnerList = async (
       theme: "light",
     });
     setOwnerList([]);
-    setLoading(false);
   }
 };
 
 export const fetchWorkspaceList = async (
-  setWorkspaceList: React.Dispatch<React.SetStateAction<Workspace[]>>,
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setWorkspaceList: React.Dispatch<React.SetStateAction<Workspace[]>>
 ) => {
   try {
     const response = await fetch(`${BASE_URL}/workspaces`);
@@ -128,7 +117,6 @@ export const fetchWorkspaceList = async (
         workspace.prices.find((price) => price.category === "Ngày")?.price || 0,
     }));
     setWorkspaceList(formatted);
-    setLoading(false);
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Đã xảy ra lỗi!";
@@ -139,13 +127,11 @@ export const fetchWorkspaceList = async (
       theme: "light",
     });
     setWorkspaceList([]);
-    setLoading(false);
   }
 };
 
 export const fetchOwnerRevenueList = async (
-  setOwnerRevenueList: React.Dispatch<React.SetStateAction<OwnerRevenue[]>>,
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setOwnerRevenueList: React.Dispatch<React.SetStateAction<OwnerRevenue[]>>
 ) => {
   try {
     const response = await fetch(`${BASE_URL}/owners/revenue`);
@@ -158,7 +144,6 @@ export const fetchOwnerRevenueList = async (
     const data = await response.json();
     const formatted = data === null || data === undefined ? [] : data;
     setOwnerRevenueList(formatted);
-    setLoading(false);
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Đã xảy ra lỗi!";
@@ -169,15 +154,13 @@ export const fetchOwnerRevenueList = async (
       theme: "light",
     });
     setOwnerRevenueList([]);
-    setLoading(false);
   }
 };
 
 export const fetchHighRatingWorkspaceList = async (
   setHighRatingWorkspaceList: React.Dispatch<
     React.SetStateAction<HighRatingWorkspace[]>
-  >,
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  >
 ) => {
   try {
     const response = await fetch(`${BASE_URL}/users/searchbyrate`);
@@ -196,7 +179,6 @@ export const fetchHighRatingWorkspaceList = async (
                 b.rate - a.rate
             );
     setHighRatingWorkspaceList(formatted);
-    setLoading(false);
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Đã xảy ra lỗi!";
@@ -207,7 +189,6 @@ export const fetchHighRatingWorkspaceList = async (
       theme: "light",
     });
     setHighRatingWorkspaceList([]);
-    setLoading(false);
   }
 };
 
@@ -215,7 +196,6 @@ export const fetchSystemRevenueList = async (
   setSystemRevenueList: React.Dispatch<
     React.SetStateAction<SystemRevenueProps[]>
   >,
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
   adminId: string | null
 ) => {
   try {
@@ -233,7 +213,6 @@ export const fetchSystemRevenueList = async (
               dayjs(b.dateOfBooking).unix() - dayjs(a.dateOfBooking).unix()
           );
     setSystemRevenueList(formatted);
-    setLoading(false);
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Đã xảy ra lỗi!";
@@ -244,6 +223,5 @@ export const fetchSystemRevenueList = async (
       theme: "light",
     });
     setSystemRevenueList([]);
-    setLoading(false);
   }
 };
