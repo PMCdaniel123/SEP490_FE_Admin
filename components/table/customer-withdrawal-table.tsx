@@ -108,6 +108,11 @@ export default function CustomerWithdrawalTable<TData, TValue>({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+      <p className="text-gray-500 text-sm mt-4">
+        Có {table.getFilteredRowModel().rows.length} yêu cầu rút tiền từ khách
+        hàng trên hệ thống
+      </p>
+      1
       <div className="rounded-md border dark:border-gray-700">
         <Table>
           <TableHeader className="dark:bg-gray-800">
