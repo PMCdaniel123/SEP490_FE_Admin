@@ -17,6 +17,7 @@ interface Props {
 
 const DailyRevenueChart: React.FC<Props> = ({ bookings }) => {
   const data = getRevenuePerDay(bookings);
+  console.log(data);
 
   return (
     <div className="flex flex-col gap-4">

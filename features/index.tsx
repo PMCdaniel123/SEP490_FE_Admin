@@ -210,7 +210,7 @@ export const fetchSystemRevenueList = async (
         ? []
         : data.bookingInformation.sort(
             (a: SystemRevenueProps, b: SystemRevenueProps) =>
-              dayjs(b.dateOfBooking).unix() - dayjs(a.dateOfBooking).unix()
+              dayjs(a.dateOfBooking).unix() - dayjs(b.dateOfBooking).unix()
           );
     setSystemRevenueList(formatted);
   } catch (error) {

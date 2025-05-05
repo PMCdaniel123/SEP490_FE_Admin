@@ -108,6 +108,10 @@ export default function OwnerWithdrawalTable<TData, TValue>({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+      <p className="text-gray-500 text-sm mt-4">
+        Có {table.getFilteredRowModel().rows.length} yêu cầu rút tiền từ doanh
+        nghiệp trên hệ thống
+      </p>
       <div className="rounded-md border dark:border-gray-700">
         <Table>
           <TableHeader className="dark:bg-gray-800">
