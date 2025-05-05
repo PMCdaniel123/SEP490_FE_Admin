@@ -10,13 +10,17 @@ import {
 } from "recharts";
 import { Separator } from "../ui/separator";
 import { getRevenuePerMonth } from "@/constants/chart-config";
+import dayjs from "dayjs";
 
 interface Props {
   bookings: SystemRevenueProps[];
 }
 
 const MonthlyRevenueChart: React.FC<Props> = ({ bookings }) => {
-  const data = getRevenuePerMonth(bookings);
+  const sortBooking = bookings.sort((a, b) => {
+    return dayjs(a.dateOfBooking).unix() - dayjs(b.dateOfBooking).unix();
+  });
+  const data = getRevenuePerMonth(sortBooking);
 
   return (
     <div className="flex flex-col gap-4 h-full">

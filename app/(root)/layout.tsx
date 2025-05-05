@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "../globals.css";
-import TopNav from "@/components/layout/top-nav";
-import Sidebar from "@/components/layout/sidebar";
 import { ToastContainer } from "react-toastify";
 import { Providers } from "@/stores/Providers";
 import { ThemeProvider } from "next-themes";
+import RootLayoutClient from "@/components/layout/root-layout-client";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -25,15 +24,7 @@ export default function RootLayout({
       <body className={montserrat.className}>
         <ThemeProvider attribute="class" defaultTheme="light">
           <Providers>
-            <div className="flex bg-third p-4 gap-4 min-h-screen w-full">
-              <div className="h-fit sticky top-4">
-                <Sidebar />
-              </div>
-              <main className="flex-1 sticky top-4 h-fit">
-                <TopNav />
-                {children}
-              </main>
-            </div>
+            <RootLayoutClient>{children}</RootLayoutClient>
           </Providers>
         </ThemeProvider>
         <ToastContainer />
