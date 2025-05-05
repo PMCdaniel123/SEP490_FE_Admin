@@ -112,7 +112,6 @@ export default function CustomerWithdrawalTable<TData, TValue>({
         Có {table.getFilteredRowModel().rows.length} yêu cầu rút tiền từ khách
         hàng trên hệ thống
       </p>
-      1
       <div className="rounded-md border dark:border-gray-700">
         <Table>
           <TableHeader className="dark:bg-gray-800">
