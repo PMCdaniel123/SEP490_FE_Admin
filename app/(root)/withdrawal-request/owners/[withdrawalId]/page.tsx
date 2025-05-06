@@ -293,6 +293,13 @@ function WithdrawalDetail() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300 mt-2">
               <p>
+                <span className="font-semibold">Mã doanh nghiệp: </span>
+                DN
+                {Number(withdrawal?.workspaceOwnerId)
+                  .toString()
+                  .padStart(4, "0")}
+              </p>
+              <p>
                 <span className="font-semibold">Tiêu đề: </span>
                 {withdrawal?.title}
               </p>
@@ -324,7 +331,9 @@ function WithdrawalDetail() {
               </p>
               {withdrawal && withdrawal?.status === "Handling" && (
                 <p>
-                  <span className="font-semibold">Số tiền hiện tại: </span>
+                  <span className="font-semibold">
+                    Số tiền hiện tại của doanh nghiệp:{" "}
+                  </span>
                   {formatCurrency(Number(ownerWallet?.balance))}
                 </p>
               )}

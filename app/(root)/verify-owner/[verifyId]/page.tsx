@@ -278,6 +278,11 @@ function VerifyOwnerDetail() {
               Giấy phép kinh doanh
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300 mt-4">
+              <p className="text-sm col-span-2">
+                <span className="font-semibold">Mã doanh nghiệp: </span>
+                DN
+                {Number(verifyDetail?.ownerId).toString().padStart(4, "0")}
+              </p>
               <p className="text-sm">
                 <span className="font-semibold">Họ và tên:</span>{" "}
                 {verifyDetail?.ownerName}
