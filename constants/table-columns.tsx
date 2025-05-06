@@ -571,14 +571,14 @@ export const WorkspaceTableColumns: ColumnDef<Workspace>[] = [
     },
   },
   {
-    accessorKey: "shortTermPrice",
+    accessorKey: "ownerId",
     header: ({ column }) => {
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           className="text-white font-semibold text-sm text-center items-center flex justify-center cursor-pointer"
         >
-          <p>Giá giờ</p>
+          <p>Mã doanh nghiệp</p>
           <ArrowUpDown size={16} className="ml-2" />
         </div>
       );
@@ -586,28 +586,7 @@ export const WorkspaceTableColumns: ColumnDef<Workspace>[] = [
     cell: ({ row }) => {
       return (
         <p className="text-center font-medium">
-          {formatCurrency(Number(row.getValue("shortTermPrice")))}
-        </p>
-      );
-    },
-  },
-  {
-    accessorKey: "longTermPrice",
-    header: ({ column }) => {
-      return (
-        <div
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-white font-semibold text-sm text-center items-center flex justify-center cursor-pointer"
-        >
-          <p>Giá ngày</p>
-          <ArrowUpDown size={16} className="ml-2" />
-        </div>
-      );
-    },
-    cell: ({ row }) => {
-      return (
-        <p className="text-center font-medium">
-          {formatCurrency(Number(row.getValue("longTermPrice")))}
+          DN{Number(row.getValue("ownerId")).toString().padStart(4, "0")}
         </p>
       );
     },

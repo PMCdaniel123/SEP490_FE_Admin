@@ -34,7 +34,7 @@ function WithdrawalDetail() {
   const router = useRouter();
   const { admin } = useSelector((state: RootState) => state.auth);
   const token =
-      typeof window !== "undefined" ? Cookies.get("admin_token") : null;
+    typeof window !== "undefined" ? Cookies.get("admin_token") : null;
 
   useEffect(() => {
     if (!withdrawalId) {
@@ -249,6 +249,10 @@ function WithdrawalDetail() {
               <span>Tài khoản ngân hàng</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300 mt-2">
+              <p>
+                <span className="font-semibold">Mã khách hàng: </span>
+                KH{Number(withdrawal?.customerId).toString().padStart(4, "0")}
+              </p>
               <p>
                 <span className="font-semibold">Tiêu đề: </span>
                 {withdrawal?.title}
