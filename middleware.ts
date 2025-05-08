@@ -8,8 +8,8 @@ const roleRoutes: { [key: string]: number[] } = {
   "/owners": [1, 2, 3],
   "/workspaces": [1, 2, 3],
   "/employees": [1],
-  "/verify-owner": [3],
-  "/withdrawal-request": [2],
+  "/verify-owner": [1, 3],
+  "/withdrawal-request": [1, 2],
 };
 
 export async function middleware(req: NextRequest) {

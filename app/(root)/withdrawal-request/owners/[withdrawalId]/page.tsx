@@ -222,25 +222,28 @@ function WithdrawalDetail() {
               Thông tin yêu cầu rút tiền
             </h1>
           </div>
-          {withdrawal && withdrawal?.status === "Handling" && (
-            <div className="flex items-center justify-end gap-4">
-              {Number(withdrawal?.balance) > 0 &&
-                Number(ownerWallet?.balance) >= Number(withdrawal?.balance) && (
-                  <button
-                    onClick={() => setIsAccepted(true)}
-                    className="px-4 py-2 rounded-md border border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300"
-                  >
-                    Chấp nhận
-                  </button>
-                )}
-              <button
-                onClick={() => setIsRejected(true)}
-                className="px-4 py-2 rounded-md border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-colors duration-300"
-              >
-                Từ chối
-              </button>
-            </div>
-          )}
+          {Number(admin?.role) === 2 &&
+            withdrawal &&
+            withdrawal?.status === "Handling" && (
+              <div className="flex items-center justify-end gap-4">
+                {Number(withdrawal?.balance) > 0 &&
+                  Number(ownerWallet?.balance) >=
+                    Number(withdrawal?.balance) && (
+                    <button
+                      onClick={() => setIsAccepted(true)}
+                      className="px-4 py-2 rounded-md border border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300"
+                    >
+                      Chấp nhận
+                    </button>
+                  )}
+                <button
+                  onClick={() => setIsRejected(true)}
+                  className="px-4 py-2 rounded-md border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-colors duration-300"
+                >
+                  Từ chối
+                </button>
+              </div>
+            )}
           <Separator className="mb-4 dark:border-gray-700" />
           <div className="border border-primary dark:bg-gray-800 p-6 rounded-md relative">
             <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-primary absolute -top-4 left-4 bg-card px-4">

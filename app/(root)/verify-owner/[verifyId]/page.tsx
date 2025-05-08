@@ -175,7 +175,7 @@ function VerifyOwnerDetail() {
               <BadgeInfo /> Xác thực doanh nghiệp
             </h1>
           </div>
-          {verifyDetail?.status === "Handling" && (
+          {Number(admin?.role) === 3 && verifyDetail?.status === "Handling" && (
             <div className="flex items-center justify-end gap-4">
               <button
                 onClick={() => setIsAccepted(true)}

@@ -217,7 +217,7 @@ function Sidebar() {
             collapsed={isCollapsed}
           />
         )}
-        {(role === 3) && (
+        {(role === 1 || role === 3) && (
           <SidebarItem
             icon={KeyRound}
             label="Xác thực doanh nghiệp"
@@ -225,7 +225,7 @@ function Sidebar() {
             collapsed={isCollapsed}
           />
         )}
-        {(role === 2) && (
+        {(role === 1 || role === 2) && (
           <SidebarItem
             icon={Banknote}
             label="Yêu cầu rút tiền"
