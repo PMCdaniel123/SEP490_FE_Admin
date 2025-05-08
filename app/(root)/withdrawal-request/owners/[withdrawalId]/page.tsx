@@ -1,7 +1,6 @@
 "use client";
 
 import Loader from "@/components/loader/Loader";
-import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { BASE_URL } from "@/constants/environments";
 import { RootState } from "@/stores";
@@ -20,6 +19,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
+import { Textarea } from "@/components/ui/textarea";
 
 function WithdrawalDetail() {
   const { withdrawalId } = useParams() as { withdrawalId: string };
@@ -406,7 +406,7 @@ function WithdrawalDetail() {
         <p className="text-gray-700 dark:text-gray-300 py-4">
           Bạn có muốn từ chối yêu cầu rút tiền này không?
         </p>
-        <Input
+        <Textarea
           placeholder="Lý do"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
